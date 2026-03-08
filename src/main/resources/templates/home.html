@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scoresheet League Ranker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Lato', Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+            color: rgba(0, 0, 0, 0.87);
+            background: #f4f4f4;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: #1976d2;
+            color: #fff;
+            padding: 24px 0;
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .header p {
+            max-width: 800px;
+            margin: 8px auto 0;
+            padding: 0 16px;
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 16px 32px;
+        }
+
+        .section-title {
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        .league-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .league-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #fff;
+            padding: 16px 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.15s;
+        }
+
+        .league-card:hover {
+            border-color: #1976d2;
+            box-shadow: 0 2px 8px rgba(25, 118, 210, 0.15);
+        }
+
+        .league-info h2 {
+            font-size: 16px;
+            font-weight: 700;
+            color: #1976d2;
+            margin-bottom: 4px;
+        }
+
+        .league-info p {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .league-arrow {
+            color: #1976d2;
+            font-size: 20px;
+        }
+
+        .features {
+            margin-top: 32px;
+            padding: 20px;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .features h3 {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #1a1a1a;
+        }
+
+        .features ul {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 8px;
+        }
+
+        .features li {
+            font-size: 13px;
+            color: #666;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .features li::before {
+            content: "\2713";
+            position: absolute;
+            left: 0;
+            color: #388e3c;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Scoresheet League Ranker</h1>
+        <p>View undrafted players ranked by projection systems</p>
+    </div>
+
+    <div class="container">
+        <div class="section-title">Select a League</div>
+
+        <div class="league-list">
+            <a th:each="league : ${leagues}"
+               th:href="@{/league/{id}(id=${league.id})}"
+               class="league-card">
+                <div class="league-info">
+                    <h2 th:text="${league.name}">League Name</h2>
+                    <p>View undrafted players and projections</p>
+                </div>
+                <span class="league-arrow">&rarr;</span>
+            </a>
+        </div>
+
+        <div class="features">
+            <h3>Features</h3>
+            <ul>
+                <li>Real-time undrafted player data from Scoresheet</li>
+                <li>Three projection systems: Steamer, ZiPS, OOPSY</li>
+                <li>Filter by position</li>
+                <li>Ranked by projected WAR</li>
+                <li>Batting and pitching stats</li>
+                <li>Excludes already-drafted players</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>

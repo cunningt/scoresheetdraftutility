@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${league.name} + ' - Undrafted Players'">League</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Lato', Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+            color: rgba(0, 0, 0, 0.87);
+            background: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        /* Header */
+        .page-header {
+            background: #fff;
+            border-bottom: 1px solid #ddd;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+        }
+
+        .page-header h1 {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a1a;
+            margin-bottom: 4px;
+        }
+
+        .page-header .subtitle {
+            font-size: 13px;
+            color: #666;
+        }
+
+        /* Navigation */
+        .nav-tabs {
+            display: flex;
+            gap: 0;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .nav-tabs a {
+            padding: 10px 16px;
+            text-decoration: none;
+            color: #1976d2;
+            font-size: 13px;
+            font-weight: 700;
+            border-right: 1px solid #ddd;
+            transition: background 0.15s;
+        }
+
+        .nav-tabs a:last-child { border-right: none; }
+        .nav-tabs a:hover { background: #f5f5f5; }
+        .nav-tabs a.active { background: #1976d2; color: #fff; }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            align-items: center;
+            background: #fff;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 16px;
+        }
+
+        .control-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-group label {
+            font-size: 12px;
+            font-weight: 700;
+            color: #666;
+            text-transform: uppercase;
+        }
+
+        select {
+            padding: 6px 10px;
+            font-size: 13px;
+            font-family: inherit;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            min-width: 120px;
+        }
+
+        select:hover { border-color: #1976d2; }
+        select:focus { outline: none; border-color: #1976d2; box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2); }
+
+        .btn {
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: inherit;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: background 0.15s;
+        }
+
+        .btn-refresh {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+        .btn-refresh:hover { background: #bbdefb; }
+
+        .stats-info {
+            margin-left: auto;
+            font-size: 12px;
+            color: #666;
+        }
+        .stats-info strong { color: #1a1a1a; }
+
+        /* Table Container */
+        .table-wrapper {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .table-scroll {
+            overflow-x: auto;
+            max-height: calc(100vh - 280px);
+            overflow-y: auto;
+        }
+
+        /* Stats Table - FanGraphs Style */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        th {
+            background: #f8f9fa;
+            border-bottom: 2px solid #dee2e6;
+            padding: 6px 5px;
+            text-align: left;
+            font-size: 10px;
+            font-weight: 700;
+            color: #495057;
+            text-transform: uppercase;
+            white-space: nowrap;
+            position: sticky;
+            top: 0;
+        }
+
+        th.numeric { text-align: right; }
+        th.sortable { cursor: pointer; user-select: none; }
+        th.sortable:hover { background: #e9ecef; }
+        th.sortable::after { content: ''; margin-left: 2px; }
+        th.sortable.asc::after { content: '\25B2'; font-size: 8px; }
+        th.sortable.desc::after { content: '\25BC'; font-size: 8px; }
+
+        td {
+            padding: 5px 5px;
+            border-bottom: 1px solid #eee;
+            white-space: nowrap;
+            font-size: 12px;
+        }
+
+        td.numeric {
+            text-align: right;
+            font-variant-numeric: tabular-nums;
+        }
+
+        /* Alternating rows */
+        tbody tr:nth-child(even) { background: #fafafa; }
+        tbody tr:hover { background: #fff3e0; }
+
+        /* Rank column */
+        td.rank {
+            font-weight: 700;
+            color: #1976d2;
+            text-align: center;
+            width: 30px;
+        }
+
+        /* Player name */
+        td.player-name {
+            font-weight: 700;
+            color: #1a1a1a;
+            min-width: 120px;
+        }
+
+        td.player-name a {
+            color: #1976d2;
+            text-decoration: none;
+        }
+        td.player-name a:hover { text-decoration: underline; }
+
+        /* Position badge */
+        .pos {
+            display: inline-block;
+            padding: 1px 4px;
+            border-radius: 3px;
+            font-size: 10px;
+            font-weight: 700;
+            min-width: 22px;
+            text-align: center;
+        }
+
+        .pos-P { background: #e3f2fd; color: #1565c0; }
+        .pos-SR { background: #e8eaf6; color: #3949ab; }
+        .pos-C { background: #fce4ec; color: #c2185b; }
+        .pos-1B { background: #e8f5e9; color: #2e7d32; }
+        .pos-2B { background: #fff3e0; color: #e65100; }
+        .pos-3B { background: #f3e5f5; color: #7b1fa2; }
+        .pos-SS { background: #e0f2f1; color: #00695c; }
+        .pos-OF { background: #fffde7; color: #f9a825; }
+        .pos-DH { background: #efebe9; color: #5d4037; }
+
+        /* WAR styling */
+        .war { font-weight: 700; }
+        .war-elite { color: #d32f2f; }      /* 5+ */
+        .war-great { color: #f57c00; }      /* 3-5 */
+        .war-good { color: #388e3c; }       /* 2-3 */
+        .war-average { color: #1976d2; }    /* 1-2 */
+        .war-below { color: #757575; }      /* 0-1 */
+        .war-negative { color: #9e9e9e; }   /* <0 */
+
+        /* No projection indicator */
+        .no-proj {
+            color: #bdbdbd;
+            font-style: italic;
+        }
+
+        /* Eligibility column */
+        td.eligibility {
+            font-size: 10px;
+            color: #666;
+            max-width: 140px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Splits columns */
+        td.splits {
+            font-size: 9px;
+            font-family: monospace;
+            letter-spacing: -0.5px;
+        }
+
+        /* Team */
+        td.team {
+            font-size: 10px;
+            color: #666;
+        }
+
+        /* Age */
+        td.age {
+            color: #666;
+            text-align: center;
+            font-size: 11px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .controls { flex-direction: column; align-items: stretch; }
+            .stats-info { margin-left: 0; margin-top: 8px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-header">
+        <div class="container">
+            <h1 th:text="${league.name}">League Name</h1>
+            <p class="subtitle">Undrafted Players - Ranked by Projected WAR</p>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- League Navigation -->
+        <nav class="nav-tabs">
+            <a th:each="l : ${leagues}"
+               th:href="@{/league/{id}(id=${l.id}, projection=${selectedProjection})}"
+               th:text="${l.name}"
+               th:classappend="${l.id == league.id} ? 'active' : ''">League</a>
+        </nav>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="control-group">
+                <label for="projection">Projection</label>
+                <select id="projection" onchange="updateFilters()">
+                    <option th:each="sys : ${projectionSystems}"
+                            th:value="${sys}"
+                            th:text="${#strings.toUpperCase(sys)}"
+                            th:selected="${sys == selectedProjection}">System</option>
+                </select>
+            </div>
+
+            <div class="control-group">
+                <label for="position">Position</label>
+                <select id="position" onchange="updateFilters()">
+                    <option th:each="pos : ${positions}"
+                            th:value="${pos}"
+                            th:text="${pos}"
+                            th:selected="${pos == selectedPosition}">Position</option>
+                </select>
+            </div>
+
+            <a th:href="@{/league/{id}/refresh(id=${league.id}, projection=${selectedProjection})}"
+               class="btn btn-refresh">Refresh Data</a>
+
+            <div class="stats-info">
+                <span><strong th:text="${#lists.size(rankedPlayers)}">0</strong> players</span>
+                <span> | </span>
+                <span th:text="${#strings.toUpperCase(selectedProjection)}">STEAMER</span>
+                <span> projections</span>
+            </div>
+        </div>
+
+        <!-- Stats Table -->
+        <div class="table-wrapper">
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="sortable numeric" data-col="0" data-type="num" style="width: 35px; text-align: center;">#</th>
+                            <th class="sortable" data-col="1" data-type="text">Player</th>
+                            <th class="sortable" data-col="2" data-type="text" style="width: 35px;">Pos</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" style="font-size: 10px;">Elig</th>
+                            <th class="sortable" data-col="4" data-type="text" style="width: 40px;">Team</th>
+                            <th class="sortable numeric" data-col="5" data-type="num" style="width: 35px;">Age</th>
+                            <th class="sortable numeric" data-col="6" data-type="num" style="width: 45px;">WAR</th>
+                            <!-- Batting stats - shown for non-pitchers -->
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="7" data-type="num">BB%</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="8" data-type="num">K%</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="9" data-type="num">AVG</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="10" data-type="num">OBP</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="11" data-type="num">SLG</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="12" data-type="num">ISO</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="13" data-type="num">BABIP</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="14" data-type="num">wOBA</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="15" data-type="num">wRC+</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="16" data-type="num">Off</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="sortable numeric" data-col="17" data-type="num">Def</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric" title="BA/OBP/SLG adjustment vs RHP" style="font-size: 10px;">vsR</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric" title="BA/OBP/SLG adjustment vs LHP" style="font-size: 10px;">vsL</th>
+                            <!-- Pitching stats - shown for P and SR -->
+                            <th th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="sortable numeric" data-col="7" data-type="num">IP</th>
+                            <th th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="sortable numeric" data-col="8" data-type="num">ERA</th>
+                            <th th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="sortable numeric" data-col="9" data-type="num">WHIP</th>
+                            <th th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="sortable numeric" data-col="10" data-type="num">K/9</th>
+                            <th th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="sortable numeric" data-col="11" data-type="num">BB/9</th>
+                            <th th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="sortable numeric" data-col="12" data-type="num">K-BB%</th>
+                            <th th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="sortable numeric" data-col="13" data-type="num">FIP</th>
+                            <th th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="sortable numeric" data-col="14" data-type="num">ADP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="rp : ${rankedPlayers}">
+                            <td class="rank" th:text="${rp.rank}">1</td>
+                            <td class="player-name" th:text="${rp.player.fullName}">Player Name</td>
+                            <td>
+                                <span class="pos"
+                                      th:classappend="'pos-' + ${rp.player.position}"
+                                      th:text="${rp.player.position}">P</span>
+                            </td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="eligibility"
+                                th:text="${rp.player.positionsWithRanges}">2B (4.25), SS (4.78)</td>
+                            <td class="team" th:text="${rp.projectedTeam}">NYY</td>
+                            <td class="age numeric" th:text="${rp.player.age}">25</td>
+                            <td class="war numeric"
+                                th:classappend="${rp.war >= 5} ? 'war-elite' : (${rp.war >= 3} ? 'war-great' : (${rp.war >= 2} ? 'war-good' : (${rp.war >= 1} ? 'war-average' : (${rp.war >= 0} ? 'war-below' : 'war-negative'))))"
+                                th:text="${rp.hasProjection()} ? ${#numbers.formatDecimal(rp.war, 1, 1)} : '-'">2.5</td>
+
+                            <!-- Batting stats - shown for non-pitchers -->
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.bbPct * 100, 1, 1)} + '%' : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.kPct * 100, 1, 1)} + '%' : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.avg, 1, 3)} : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.obp, 1, 3)} : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.slg, 1, 3)} : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.iso, 1, 3)} : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.babip, 1, 3)} : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.wOBA, 1, 3)} : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.wRCPlus, 1, 0)} : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.off, 1, 1)} : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.def, 1, 1)} : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric splits"
+                                th:text="${rp.player.splitsVsR}">-4/-7/-6</td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" class="numeric splits"
+                                th:text="${rp.player.splitsVsL}">+9/+15/+14</td>
+
+                            <!-- Pitching stats - shown for P and SR -->
+                            <td th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="numeric"
+                                th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.inningsPitched, 1, 0)} : '-'"></td>
+                            <td th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="numeric"
+                                th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.era, 1, 2)} : '-'"></td>
+                            <td th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="numeric"
+                                th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.whip, 1, 2)} : '-'"></td>
+                            <td th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="numeric"
+                                th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.k9, 1, 2)} : '-'"></td>
+                            <td th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="numeric"
+                                th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.bb9, 1, 2)} : '-'"></td>
+                            <td th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="numeric"
+                                th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.kMinusBbPct * 100, 1, 1)} + '%' : '-'"></td>
+                            <td th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="numeric"
+                                th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.fip, 1, 2)} : '-'"></td>
+                            <td th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="numeric"
+                                th:text="${rp.pitchingProjection != null and rp.pitchingProjection.adp > 0} ? ${#numbers.formatDecimal(rp.pitchingProjection.adp, 1, 0)} : '-'"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script th:inline="javascript">
+        function updateFilters() {
+            const projection = document.getElementById('projection').value;
+            const position = document.getElementById('position').value;
+            const leagueId = [[${league.id}]];
+            window.location.href = `/league/${leagueId}?projection=${projection}&position=${position}`;
+        }
+
+        // Table sorting
+        document.addEventListener('DOMContentLoaded', function() {
+            const table = document.querySelector('table');
+            const thead = table.querySelector('thead tr');
+            const tbody = table.querySelector('tbody');
+            const allHeaders = thead.querySelectorAll('th');
+
+            allHeaders.forEach((header, colIndex) => {
+                if (!header.classList.contains('sortable')) return;
+
+                header.addEventListener('click', () => {
+                    const type = header.dataset.type;
+                    const isAsc = header.classList.contains('asc');
+
+                    // Remove sort classes from all headers
+                    allHeaders.forEach(h => h.classList.remove('asc', 'desc'));
+
+                    // Toggle sort direction
+                    header.classList.add(isAsc ? 'desc' : 'asc');
+
+                    // Get rows and sort
+                    const rows = Array.from(tbody.querySelectorAll('tr'));
+                    rows.sort((a, b) => {
+                        let aVal = a.cells[colIndex]?.textContent.trim() || '';
+                        let bVal = b.cells[colIndex]?.textContent.trim() || '';
+
+                        if (type === 'num') {
+                            // Handle '-' values (no projection) - always sort to end
+                            const aEmpty = aVal === '-';
+                            const bEmpty = bVal === '-';
+                            if (aEmpty && bEmpty) return 0;
+                            if (aEmpty) return 1;  // a goes after b
+                            if (bEmpty) return -1; // b goes after a
+
+                            aVal = parseFloat(aVal.replace('%', '')) || 0;
+                            bVal = parseFloat(bVal.replace('%', '')) || 0;
+
+                            return isAsc ? aVal - bVal : bVal - aVal;
+                        } else {
+                            return isAsc ? bVal.localeCompare(aVal) : aVal.localeCompare(bVal);
+                        }
+                    });
+
+                    // Re-append sorted rows
+                    rows.forEach(row => tbody.appendChild(row));
+                });
+            });
+        });
+    </script>
+</body>
+</html>
