@@ -13,21 +13,20 @@ import com.scoutingthestatline.ranker.model.SavantPitchingStats;
 import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
-import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.io.InputStreamReader;
+import java.io.Reader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
 public class ProjectionService {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectionService.class);
-
-    @Value("${scoresheet.projections.dir:.}")
-    private String projectionsDir;
 
     private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "steamer", "zips", "savant", "adp");
 
@@ -65,17 +64,18 @@ public class ProjectionService {
 
     private void loadBattingProjections(String system) throws IOException, CsvException {
         String filename = system + "-batting-projections.csv";
-        Path filePath = Path.of(projectionsDir, filename);
+        Resource resource = new ClassPathResource(filename);
 
-        if (!filePath.toFile().exists()) {
-            log.warn("Batting projections file not found: {}", filePath);
+        if (!resource.exists()) {
+            log.warn("Batting projections file not found: {}", filename);
             return;
         }
 
-        log.info("Loading batting projections from {}", filePath);
+        log.info("Loading batting projections from classpath: {}", filename);
         Map<Integer, BattingProjection> projections = new HashMap<>();
 
-        try (CSVReader reader = new CSVReader(new FileReader(filePath.toFile()))) {
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
             List<String[]> rows = reader.readAll();
             if (rows.isEmpty()) return;
 
@@ -139,17 +139,18 @@ public class ProjectionService {
 
     private void loadPitchingProjections(String system) throws IOException, CsvException {
         String filename = system + "-pitching-projections.csv";
-        Path filePath = Path.of(projectionsDir, filename);
+        Resource resource = new ClassPathResource(filename);
 
-        if (!filePath.toFile().exists()) {
-            log.warn("Pitching projections file not found: {}", filePath);
+        if (!resource.exists()) {
+            log.warn("Pitching projections file not found: {}", filename);
             return;
         }
 
-        log.info("Loading pitching projections from {}", filePath);
+        log.info("Loading pitching projections from classpath: {}", filename);
         Map<Integer, PitchingProjection> projections = new HashMap<>();
 
-        try (CSVReader reader = new CSVReader(new FileReader(filePath.toFile()))) {
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
             List<String[]> rows = reader.readAll();
             if (rows.isEmpty()) return;
 
@@ -209,16 +210,18 @@ public class ProjectionService {
     }
 
     private void loadSavantBattingStats() throws IOException, CsvException {
-        Path filePath = Path.of(projectionsDir, "savant-batting.csv");
+        String filename = "savant-batting.csv";
+        Resource resource = new ClassPathResource(filename);
 
-        if (!filePath.toFile().exists()) {
-            log.warn("Savant batting stats file not found: {}", filePath);
+        if (!resource.exists()) {
+            log.warn("Savant batting stats file not found: {}", filename);
             return;
         }
 
-        log.info("Loading Savant batting stats from {}", filePath);
+        log.info("Loading Savant batting stats from classpath: {}", filename);
 
-        try (CSVReader reader = new CSVReader(new FileReader(filePath.toFile()))) {
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
             List<String[]> rows = reader.readAll();
             if (rows.isEmpty()) return;
 
@@ -273,16 +276,18 @@ public class ProjectionService {
     }
 
     private void loadSavantPitchingStats() throws IOException, CsvException {
-        Path filePath = Path.of(projectionsDir, "savant-pitching.csv");
+        String filename = "savant-pitching.csv";
+        Resource resource = new ClassPathResource(filename);
 
-        if (!filePath.toFile().exists()) {
-            log.warn("Savant pitching stats file not found: {}", filePath);
+        if (!resource.exists()) {
+            log.warn("Savant pitching stats file not found: {}", filename);
             return;
         }
 
-        log.info("Loading Savant pitching stats from {}", filePath);
+        log.info("Loading Savant pitching stats from classpath: {}", filename);
 
-        try (CSVReader reader = new CSVReader(new FileReader(filePath.toFile()))) {
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
             List<String[]> rows = reader.readAll();
             if (rows.isEmpty()) return;
 
@@ -334,16 +339,18 @@ public class ProjectionService {
     }
 
     private void loadNfbcMapping() throws IOException, CsvException {
-        Path filePath = Path.of(projectionsDir, "sfbbplayeridmap.csv");
+        String filename = "sfbbplayeridmap.csv";
+        Resource resource = new ClassPathResource(filename);
 
-        if (!filePath.toFile().exists()) {
-            log.warn("NFBC player ID mapping file not found: {}", filePath);
+        if (!resource.exists()) {
+            log.warn("NFBC player ID mapping file not found: {}", filename);
             return;
         }
 
-        log.info("Loading NFBC to MLB ID mapping from {}", filePath);
+        log.info("Loading NFBC to MLB ID mapping from classpath: {}", filename);
 
-        try (CSVReader reader = new CSVReader(new FileReader(filePath.toFile()))) {
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
             List<String[]> rows = reader.readAll();
             if (rows.isEmpty()) return;
 
@@ -372,18 +379,19 @@ public class ProjectionService {
     }
 
     private void loadADPData() throws IOException, CsvException {
-        Path filePath = Path.of(projectionsDir, "ADP.tsv");
+        String filename = "ADP.tsv";
+        Resource resource = new ClassPathResource(filename);
 
-        if (!filePath.toFile().exists()) {
-            log.warn("ADP file not found: {}", filePath);
+        if (!resource.exists()) {
+            log.warn("ADP file not found: {}", filename);
             return;
         }
 
-        log.info("Loading ADP data from {}", filePath);
+        log.info("Loading ADP data from classpath: {}", filename);
 
         CSVParser tsvParser = new CSVParserBuilder().withSeparator('\t').build();
-        try (CSVReader reader = new CSVReaderBuilder(new FileReader(filePath.toFile()))
-                .withCSVParser(tsvParser).build()) {
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReaderBuilder(fileReader).withCSVParser(tsvParser).build()) {
             List<String[]> rows = reader.readAll();
             if (rows.isEmpty()) return;
 
