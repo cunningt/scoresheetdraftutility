@@ -4,8 +4,8 @@ import com.scoutingthestatline.ranker.model.League;
 import com.scoutingthestatline.ranker.model.RankedPlayer;
 import com.scoutingthestatline.ranker.service.RankingService;
 import com.scoutingthestatline.ranker.service.ScoresheetService;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,13 +14,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
-@Slf4j
 @Controller
-@RequiredArgsConstructor
 public class LeagueController {
+
+    private static final Logger log = LoggerFactory.getLogger(LeagueController.class);
 
     private final ScoresheetService scoresheetService;
     private final RankingService rankingService;
+
+    public LeagueController(ScoresheetService scoresheetService, RankingService rankingService) {
+        this.scoresheetService = scoresheetService;
+        this.rankingService = rankingService;
+    }
 
     @GetMapping("/")
     public String home(Model model) {

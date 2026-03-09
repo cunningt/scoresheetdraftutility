@@ -1,41 +1,32 @@
 package com.scoutingthestatline.ranker.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
-@Data
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
-public class Player {
-    private int scoresheetId;
-    private int mlbamId;
-    private String firstName;
-    private String lastName;
-    private String team;
-    private String position;
-    private String handedness;
-    private int age;
+public record Player(
+    int scoresheetId,
+    int mlbamId,
+    String firstName,
+    String lastName,
+    String team,
+    String position,
+    String handedness,
+    int age,
 
     // Positional ranges (null/0 means can't play that position)
-    private Double range1B;
-    private Double range2B;
-    private Double range3B;
-    private Double rangeSS;
-    private Double rangeOF;
+    Double range1B,
+    Double range2B,
+    Double range3B,
+    Double rangeSS,
+    Double rangeOF,
 
     // Split adjustments vs RHP (BA, OBP, SLG)
-    private Integer baVsR;
-    private Integer obpVsR;
-    private Integer slgVsR;
+    Integer baVsR,
+    Integer obpVsR,
+    Integer slgVsR,
 
     // Split adjustments vs LHP (BA, OBP, SLG)
-    private Integer baVsL;
-    private Integer obpVsL;
-    private Integer slgVsL;
-
+    Integer baVsL,
+    Integer obpVsL,
+    Integer slgVsL
+) {
     public String getFullName() {
         return firstName + " " + lastName;
     }

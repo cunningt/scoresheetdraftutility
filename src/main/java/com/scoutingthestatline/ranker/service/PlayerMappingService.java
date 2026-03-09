@@ -2,13 +2,13 @@ package com.scoutingthestatline.ranker.service;
 
 import com.scoutingthestatline.ranker.model.Player;
 import jakarta.annotation.PostConstruct;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -18,9 +18,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-@Slf4j
 @Service
 public class PlayerMappingService {
+
+    private static final Logger log = LoggerFactory.getLogger(PlayerMappingService.class);
 
     @Value("${scoresheet.players.url:https://www.scoresheet.com/FOR_WWW/BL_Players_2026.tsv}")
     private String playersUrl;
@@ -87,27 +88,27 @@ public class PlayerMappingService {
                     Integer obpVsL = parseIntSafe(parts.length > 22 ? parts[22] : "");
                     Integer slgVsL = parseIntSafe(parts.length > 23 ? parts[23] : "");
 
-                    Player player = Player.builder()
-                            .scoresheetId(scoresheetId)
-                            .mlbamId(mlbamId)
-                            .position(position)
-                            .handedness(handedness)
-                            .age(age)
-                            .team(team)
-                            .firstName(firstName)
-                            .lastName(lastName)
-                            .range1B(range1B)
-                            .range2B(range2B)
-                            .range3B(range3B)
-                            .rangeSS(rangeSS)
-                            .rangeOF(rangeOF)
-                            .baVsR(baVsR)
-                            .obpVsR(obpVsR)
-                            .slgVsR(slgVsR)
-                            .baVsL(baVsL)
-                            .obpVsL(obpVsL)
-                            .slgVsL(slgVsL)
-                            .build();
+                    Player player = new Player(
+                            scoresheetId,
+                            mlbamId,
+                            firstName,
+                            lastName,
+                            team,
+                            position,
+                            handedness,
+                            age,
+                            range1B,
+                            range2B,
+                            range3B,
+                            rangeSS,
+                            rangeOF,
+                            baVsR,
+                            obpVsR,
+                            slgVsR,
+                            baVsL,
+                            obpVsL,
+                            slgVsL
+                    );
 
                     playersByScoresheet.put(scoresheetId, player);
                     playersByMlbam.put(mlbamId, player);
@@ -134,7 +135,7 @@ public class PlayerMappingService {
 
     public int getMlbamId(int scoresheetId) {
         Player player = playersByScoresheet.get(scoresheetId);
-        return player != null ? player.getMlbamId() : 0;
+        return player != null ? player.mlbamId() : 0;
     }
 
     private Double parseDoubleSafe(String value) {

@@ -1,17 +1,24 @@
 package com.scoutingthestatline.ranker.service;
 
-import com.scoutingthestatline.ranker.model.*;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import com.scoutingthestatline.ranker.model.ADPData;
+import com.scoutingthestatline.ranker.model.BattingProjection;
+import com.scoutingthestatline.ranker.model.League;
+import com.scoutingthestatline.ranker.model.PitchingProjection;
+import com.scoutingthestatline.ranker.model.Player;
+import com.scoutingthestatline.ranker.model.RankedPlayer;
+import com.scoutingthestatline.ranker.model.SavantBattingStats;
+import com.scoutingthestatline.ranker.model.SavantPitchingStats;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class RankingService {
+
+    private static final Logger log = LoggerFactory.getLogger(RankingService.class);
 
     private final PlayerMappingService playerMappingService;
     private final ProjectionService projectionService;
@@ -19,6 +26,14 @@ public class RankingService {
 
     // Cache of undrafted player IDs per league
     private final Map<String, Set<Integer>> undraftedCache = new HashMap<>();
+
+    public RankingService(PlayerMappingService playerMappingService,
+                          ProjectionService projectionService,
+                          ScoresheetService scoresheetService) {
+        this.playerMappingService = playerMappingService;
+        this.projectionService = projectionService;
+        this.scoresheetService = scoresheetService;
+    }
 
     public Set<Integer> getUndraftedPlayerIds(String leagueId, boolean refresh) {
         if (!refresh && undraftedCache.containsKey(leagueId)) {
@@ -49,25 +64,44 @@ public class RankingService {
             }
 
             Player player = playerOpt.get();
-            int mlbamId = player.getMlbamId();
+            int mlbamId = player.mlbamId();
 
-            RankedPlayer.RankedPlayerBuilder builder = RankedPlayer.builder()
-                    .player(player)
-                    .projectionSystem(projectionSystem);
+            BattingProjection battingProjection = null;
+            PitchingProjection pitchingProjection = null;
+            SavantBattingStats savantBatting = null;
+            SavantPitchingStats savantPitching = null;
+            ADPData adpData = null;
 
             if (player.isPitcher()) {
-                Optional<PitchingProjection> pitchingProj = projectionService.getPitchingProjection(projectionSystem, mlbamId);
-                pitchingProj.ifPresent(builder::pitchingProjection);
+                if (!"savant".equals(projectionSystem) && !"adp".equals(projectionSystem)) {
+                    pitchingProjection = projectionService.getPitchingProjection(projectionSystem, mlbamId).orElse(null);
+                }
+                savantPitching = projectionService.getSavantPitchingStats(mlbamId).orElse(null);
             } else {
-                Optional<BattingProjection> battingProj = projectionService.getBattingProjection(projectionSystem, mlbamId);
-                battingProj.ifPresent(builder::battingProjection);
+                if (!"savant".equals(projectionSystem) && !"adp".equals(projectionSystem)) {
+                    battingProjection = projectionService.getBattingProjection(projectionSystem, mlbamId).orElse(null);
+                }
+                savantBatting = projectionService.getSavantBattingStats(mlbamId).orElse(null);
             }
 
-            rankedPlayers.add(builder.build());
+            // Always load ADP data if available
+            adpData = projectionService.getADPData(mlbamId).orElse(null);
+
+            rankedPlayers.add(new RankedPlayer(0, player, battingProjection, pitchingProjection,
+                    savantBatting, savantPitching, adpData, projectionSystem));
         }
 
-        // Sort by WAR descending
-        rankedPlayers.sort((a, b) -> Double.compare(b.getWar(), a.getWar()));
+        // Sort by appropriate metric
+        if ("adp".equals(projectionSystem)) {
+            // For ADP: sort by ADP ascending (lower is better)
+            rankedPlayers.sort((a, b) -> Double.compare(a.getAdp(), b.getAdp()));
+        } else if ("savant".equals(projectionSystem)) {
+            // For Savant: sort by barrel% for batters, xERA percentile (inverted) for pitchers
+            rankedPlayers.sort((a, b) -> Double.compare(b.getSavantRankValue(), a.getSavantRankValue()));
+        } else {
+            // Sort by WAR descending
+            rankedPlayers.sort((a, b) -> Double.compare(b.getWar(), a.getWar()));
+        }
 
         // Assign ranks
         for (int i = 0; i < rankedPlayers.size(); i++) {
@@ -103,15 +137,15 @@ public class RankingService {
             return player.isPitcher();
         } else if (positionFilter.equals("P")) {
             // P = Starting pitchers only (not SR)
-            return "P".equals(player.getPosition());
+            return "P".equals(player.position());
         } else if (positionFilter.equals("SR")) {
             // SR = Short Relievers
-            return "SR".equals(player.getPosition());
+            return "SR".equals(player.position());
         } else if (positionFilter.equals("BATTER")) {
             // All non-pitchers
             return !player.isPitcher();
         } else {
-            return player.getPosition().equals(positionFilter);
+            return player.position().equals(positionFilter);
         }
     }
 

@@ -1,24 +1,45 @@
 package com.scoutingthestatline.ranker.config;
 
 import com.scoutingthestatline.ranker.model.League;
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Component
 @ConfigurationProperties(prefix = "scoresheet")
 public class LeagueProperties {
 
     private List<LeagueConfig> leagues = new ArrayList<>();
 
-    @Data
+    public List<LeagueConfig> getLeagues() {
+        return leagues;
+    }
+
+    public void setLeagues(List<LeagueConfig> leagues) {
+        this.leagues = leagues;
+    }
+
     public static class LeagueConfig {
         private String id;
         private String name;
+
+        public String getId() {
+            return id;
+        }
+
+        public void setId(String id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
 
         public League toLeague() {
             // Derive dirLgw from id
@@ -34,13 +55,7 @@ public class LeagueProperties {
                 statsMl = "BL";
             }
 
-            return League.builder()
-                    .id(id)
-                    .name(name)
-                    .dirLgw(dirLgw)
-                    .statsMl(statsMl)
-                    .teamN(1)
-                    .build();
+            return new League(id, name, dirLgw, statsMl, 1);
         }
     }
 

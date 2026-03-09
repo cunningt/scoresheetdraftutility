@@ -2,12 +2,12 @@ package com.scoutingthestatline.ranker.service;
 
 import com.scoutingthestatline.ranker.config.LeagueProperties;
 import com.scoutingthestatline.ranker.model.League;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.htmlunit.BrowserVersion;
 import org.htmlunit.WebClient;
 import org.htmlunit.html.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,10 +17,10 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-@Slf4j
 @Service
-@RequiredArgsConstructor
 public class ScoresheetService {
+
+    private static final Logger log = LoggerFactory.getLogger(ScoresheetService.class);
 
     private final LeagueProperties leagueProperties;
 
@@ -36,13 +36,17 @@ public class ScoresheetService {
     private WebClient webClient;
     private boolean loggedIn = false;
 
+    public ScoresheetService(LeagueProperties leagueProperties) {
+        this.leagueProperties = leagueProperties;
+    }
+
     public List<League> getLeagues() {
         return leagueProperties.toLeagues();
     }
 
     public Optional<League> getLeague(String leagueId) {
         return getLeagues().stream()
-                .filter(l -> l.getId().equals(leagueId))
+                .filter(l -> l.id().equals(leagueId))
                 .findFirst();
     }
 
@@ -213,7 +217,7 @@ public class ScoresheetService {
             }
 
             log.info("Found {} undrafted player IDs for league {} (excluded {} drafted)",
-                    playerIds.size(), league.getId(), draftedIds.size());
+                    playerIds.size(), league.id(), draftedIds.size());
             return playerIds;
 
         } catch (Exception e) {

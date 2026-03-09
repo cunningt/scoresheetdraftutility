@@ -1,15 +1,17 @@
 package com.scoutingthestatline.ranker.config;
 
 import jakarta.annotation.PostConstruct;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
-@Slf4j
 @Component
 public class LoginValidator {
+
+    private static final Logger log = LoggerFactory.getLogger(LoginValidator.class);
 
     private static final Set<String> PLACEHOLDER_VALUES = Set.of(
             "", "YOUR_FIRST_NAME", "YOUR_LAST_NAME", "YOUR_PASSWORD",
