@@ -352,7 +352,15 @@
                 </label>
             </div>
 
-            <a th:href="@{/league/{id}/refresh(id=${league.id}, projection=${selectedProjection}, showDrafted=${showDrafted})}"
+            <div class="control-group">
+                <label for="activeRosterOnly">
+                    <input type="checkbox" id="activeRosterOnly" onchange="updateFilters()"
+                           th:checked="${activeRosterOnly}"/>
+                    Active Roster Only
+                </label>
+            </div>
+
+            <a th:href="@{/league/{id}/refresh(id=${league.id}, projection=${selectedProjection}, showDrafted=${showDrafted}, activeRosterOnly=${activeRosterOnly})}"
                class="btn btn-refresh">Refresh Data</a>
 
             <div class="stats-info">
@@ -412,7 +420,8 @@
                             <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="11" data-type="num">BB/9</th>
                             <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="12" data-type="num">K-BB%</th>
                             <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="13" data-type="num">FIP</th>
-                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="14" data-type="num">ADP</th>
+                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'adp'}" class="sortable numeric" data-col="14" data-type="num" title="Scoresheet Simulation Value">SS/SIM</th>
+                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="15" data-type="num">ADP</th>
                             <!-- Savant pitching stats (P/SR, savant projection) -->
                             <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection == 'savant'}" class="sortable numeric" data-col="7" data-type="num" title="Expected ERA Percentile">xERA</th>
                             <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection == 'savant'}" class="sortable numeric" data-col="8" data-type="num" title="Expected wOBA Percentile">xwOBA</th>
@@ -511,6 +520,8 @@
                                 th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.kMinusBbPct * 100, 1, 1)} + '%' : '-'"></td>
                             <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.fip, 1, 2)} : '-'"></td>
+                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'adp'}" class="numeric"
+                                th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.ssSim, 1, 1)} : '-'"></td>
                             <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null and rp.pitchingProjection.adp > 0} ? ${#numbers.formatDecimal(rp.pitchingProjection.adp, 1, 0)} : '-'"></td>
 
@@ -543,8 +554,9 @@
             const projection = document.getElementById('projection').value;
             const position = document.getElementById('position').value;
             const showDrafted = document.getElementById('showDrafted').checked;
+            const activeRosterOnly = document.getElementById('activeRosterOnly').checked;
             const leagueId = [[${league.id}]];
-            window.location.href = `/league/${leagueId}?projection=${projection}&position=${position}&showDrafted=${showDrafted}`;
+            window.location.href = `/league/${leagueId}?projection=${projection}&position=${position}&showDrafted=${showDrafted}&activeRosterOnly=${activeRosterOnly}`;
         }
 
         // Table sorting

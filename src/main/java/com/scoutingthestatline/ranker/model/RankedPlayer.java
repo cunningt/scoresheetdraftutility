@@ -10,22 +10,30 @@ public class RankedPlayer {
     private final SavantBattingStats savantBattingStats;
     private final SavantPitchingStats savantPitchingStats;
     private final ADPData adpData;
+    private final boolean onActiveRoster;
     private final String projectionSystem;
 
     public RankedPlayer(int rank, Player player, BattingProjection battingProjection,
                         PitchingProjection pitchingProjection, String projectionSystem) {
-        this(rank, player, battingProjection, pitchingProjection, null, null, null, projectionSystem);
+        this(rank, player, battingProjection, pitchingProjection, null, null, null, false, projectionSystem);
     }
 
     public RankedPlayer(int rank, Player player, BattingProjection battingProjection,
                         PitchingProjection pitchingProjection, SavantBattingStats savantBattingStats,
                         SavantPitchingStats savantPitchingStats, String projectionSystem) {
-        this(rank, player, battingProjection, pitchingProjection, savantBattingStats, savantPitchingStats, null, projectionSystem);
+        this(rank, player, battingProjection, pitchingProjection, savantBattingStats, savantPitchingStats, null, false, projectionSystem);
     }
 
     public RankedPlayer(int rank, Player player, BattingProjection battingProjection,
                         PitchingProjection pitchingProjection, SavantBattingStats savantBattingStats,
                         SavantPitchingStats savantPitchingStats, ADPData adpData, String projectionSystem) {
+        this(rank, player, battingProjection, pitchingProjection, savantBattingStats, savantPitchingStats, adpData, false, projectionSystem);
+    }
+
+    public RankedPlayer(int rank, Player player, BattingProjection battingProjection,
+                        PitchingProjection pitchingProjection, SavantBattingStats savantBattingStats,
+                        SavantPitchingStats savantPitchingStats, ADPData adpData, boolean onActiveRoster,
+                        String projectionSystem) {
         this.rank = rank;
         this.player = player;
         this.battingProjection = battingProjection;
@@ -33,6 +41,7 @@ public class RankedPlayer {
         this.savantBattingStats = savantBattingStats;
         this.savantPitchingStats = savantPitchingStats;
         this.adpData = adpData;
+        this.onActiveRoster = onActiveRoster;
         this.projectionSystem = projectionSystem;
     }
 
@@ -74,6 +83,10 @@ public class RankedPlayer {
 
     public double getAdp() {
         return adpData != null ? adpData.adp() : Double.MAX_VALUE;
+    }
+
+    public boolean isOnActiveRoster() {
+        return onActiveRoster;
     }
 
     public double getWar() {

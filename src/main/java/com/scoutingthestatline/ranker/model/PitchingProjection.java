@@ -36,4 +36,12 @@ public record PitchingProjection(
     double fpts,
     double spts,
     double adp
-) {}
+) {
+    /**
+     * Calculate SS/SIM (Scoresheet Simulation) value.
+     * Formula: 1.53 × (IP / 9) × (4.70 - ERA) + 0.89
+     */
+    public double ssSim() {
+        return 1.53 * (inningsPitched / 9.0) * (4.70 - era) + 0.89;
+    }
+}

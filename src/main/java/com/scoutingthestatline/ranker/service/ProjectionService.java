@@ -44,10 +44,16 @@ public class ProjectionService {
     // NFBC ID to MLB ID mapping
     private final Map<Integer, Integer> nfbcToMlbId = new HashMap<>();
 
+    // Active roster players (MLB IDs)
+    private final Set<Integer> activeRosterPlayers = new HashSet<>();
+
     @PostConstruct
     public void loadProjections() throws IOException, CsvException {
         // Load NFBC to MLB ID mapping first (needed for ADP)
         loadNfbcMapping();
+
+        // Load active roster data
+        loadActiveRosterData();
 
         for (String system : PROJECTION_SYSTEMS) {
             if ("savant".equals(system)) {
@@ -449,6 +455,44 @@ public class ProjectionService {
         log.info("Loaded {} ADP entries", adpData.size());
     }
 
+    private void loadActiveRosterData() throws IOException, CsvException {
+        String filename = "rosterresource.csv";
+        Resource resource = new ClassPathResource(filename);
+
+        if (!resource.exists()) {
+            log.warn("Roster resource file not found: {}", filename);
+            return;
+        }
+
+        log.info("Loading active roster data from classpath: {}", filename);
+
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
+            List<String[]> rows = reader.readAll();
+            if (rows.isEmpty()) return;
+
+            String[] header = rows.get(0);
+            Map<String, Integer> colIndex = new HashMap<>();
+            for (int i = 0; i < header.length; i++) {
+                colIndex.put(header[i].replace("\uFEFF", "").trim(), i);
+            }
+
+            for (int i = 1; i < rows.size(); i++) {
+                String[] row = rows.get(i);
+                try {
+                    int mlbId = parseIntSafe(getColumn(row, colIndex, "mlb_id"));
+                    if (mlbId > 0) {
+                        activeRosterPlayers.add(mlbId);
+                    }
+                } catch (Exception e) {
+                    // ignore
+                }
+            }
+        }
+
+        log.info("Loaded {} active roster players", activeRosterPlayers.size());
+    }
+
     private String getColumn(String[] row, Map<String, Integer> colIndex, String columnName) {
         Integer idx = colIndex.get(columnName);
         if (idx == null || idx >= row.length) return "";
@@ -499,5 +543,9 @@ public class ProjectionService {
 
     public Optional<ADPData> getADPData(int mlbamId) {
         return Optional.ofNullable(adpData.get(mlbamId));
+    }
+
+    public boolean isOnActiveRoster(int mlbamId) {
+        return activeRosterPlayers.contains(mlbamId);
     }
 }

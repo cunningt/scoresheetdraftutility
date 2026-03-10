@@ -106,8 +106,11 @@ public class RankingService {
             // Always load ADP data if available
             adpData = projectionService.getADPData(mlbamId).orElse(null);
 
+            // Check if player is on active roster
+            boolean onActiveRoster = projectionService.isOnActiveRoster(mlbamId);
+
             rankedPlayers.add(new RankedPlayer(0, player, battingProjection, pitchingProjection,
-                    savantBatting, savantPitching, adpData, projectionSystem));
+                    savantBatting, savantPitching, adpData, onActiveRoster, projectionSystem));
         }
 
         // Sort by appropriate metric
@@ -131,15 +134,14 @@ public class RankingService {
     }
 
     public List<RankedPlayer> getFilteredRankedPlayers(String leagueId, String projectionSystem,
-                                                        String positionFilter, boolean refresh, boolean showDrafted) {
+                                                        String positionFilter, boolean refresh, boolean showDrafted,
+                                                        boolean activeRosterOnly) {
         List<RankedPlayer> allPlayers = getRankedPlayers(leagueId, projectionSystem, refresh, showDrafted);
 
-        if (positionFilter == null || positionFilter.isEmpty() || positionFilter.equals("ALL")) {
-            return allPlayers;
-        }
-
         List<RankedPlayer> filtered = allPlayers.stream()
-                .filter(rp -> matchesPosition(rp.getPlayer(), positionFilter))
+                .filter(rp -> !activeRosterOnly || rp.isOnActiveRoster())
+                .filter(rp -> positionFilter == null || positionFilter.isEmpty() ||
+                              positionFilter.equals("ALL") || matchesPosition(rp.getPlayer(), positionFilter))
                 .collect(Collectors.toList());
 
         // Re-rank filtered list
