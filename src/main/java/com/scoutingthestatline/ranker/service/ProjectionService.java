@@ -28,7 +28,7 @@ public class ProjectionService {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectionService.class);
 
-    private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "steamer", "zips", "savant", "adp");
+    private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "oopsy-peak", "steamer", "zips", "savant", "adp");
 
     // Map: projection system -> mlbamId -> projection
     private final Map<String, Map<Integer, BattingProjection>> battingProjections = new HashMap<>();
@@ -62,8 +62,15 @@ public class ProjectionService {
         }
     }
 
+    private String getProjectionFilename(String system, String type) {
+        if ("oopsy-peak".equals(system)) {
+            return "oopsy-peakprojections-" + type + ".csv";
+        }
+        return system + "-" + type + "-projections.csv";
+    }
+
     private void loadBattingProjections(String system) throws IOException, CsvException {
-        String filename = system + "-batting-projections.csv";
+        String filename = getProjectionFilename(system, "batting");
         Resource resource = new ClassPathResource(filename);
 
         if (!resource.exists()) {
@@ -138,7 +145,7 @@ public class ProjectionService {
     }
 
     private void loadPitchingProjections(String system) throws IOException, CsvException {
-        String filename = system + "-pitching-projections.csv";
+        String filename = getProjectionFilename(system, "pitching");
         Resource resource = new ClassPathResource(filename);
 
         if (!resource.exists()) {

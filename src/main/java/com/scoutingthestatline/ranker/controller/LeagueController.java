@@ -39,9 +39,11 @@ public class LeagueController {
             @RequestParam(defaultValue = "steamer") String projection,
             @RequestParam(defaultValue = "BATTER") String position,
             @RequestParam(defaultValue = "false") boolean refresh,
+            @RequestParam(defaultValue = "false") boolean showDrafted,
             Model model) {
 
-        log.info("Viewing league {} with projection {} and position filter {}", leagueId, projection, position);
+        log.info("Viewing league {} with projection {} and position filter {}, showDrafted={}",
+                leagueId, projection, position, showDrafted);
 
         League league = scoresheetService.getLeague(leagueId).orElse(null);
         if (league == null) {
@@ -49,7 +51,7 @@ public class LeagueController {
         }
 
         List<RankedPlayer> rankedPlayers = rankingService.getFilteredRankedPlayers(
-                leagueId, projection, position, refresh);
+                leagueId, projection, position, refresh, showDrafted);
 
         model.addAttribute("league", league);
         model.addAttribute("leagues", scoresheetService.getLeagues());
@@ -57,6 +59,7 @@ public class LeagueController {
         model.addAttribute("projectionSystems", rankingService.getProjectionSystems());
         model.addAttribute("selectedProjection", projection);
         model.addAttribute("selectedPosition", position);
+        model.addAttribute("showDrafted", showDrafted);
         model.addAttribute("positions", List.of("BATTER", "Pitcher", "P", "SR", "C", "1B", "2B", "3B", "SS", "OF", "DH"));
 
         return "league";

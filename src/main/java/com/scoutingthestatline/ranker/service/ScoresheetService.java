@@ -144,6 +144,7 @@ public class ScoresheetService {
 
             Set<Integer> playerIds = new HashSet<>();
             Set<Integer> draftedIds = new HashSet<>();
+            Set<Integer> rankingListIds = new HashSet<>();
 
             // Get all frames on the page
             List<FrameWindow> frames = page.getFrames();
@@ -154,18 +155,11 @@ public class ScoresheetService {
                     HtmlPage framePage = (HtmlPage) frame.getEnclosedPage();
                     String frameHtml = framePage.getBody().asXml();
 
-                    // Pattern for drafted players (with class="faint")
-                    Pattern draftedPattern = Pattern.compile(
-                            "<a[^>]*href=\"#p(\\d+)\"[^>]*class=\"faint\"[^>]*>");
-                    Matcher draftedMatcher = draftedPattern.matcher(frameHtml);
-                    while (draftedMatcher.find()) {
-                        try {
-                            int id = Integer.parseInt(draftedMatcher.group(1));
-                            draftedIds.add(id);
-                        } catch (NumberFormatException e) {
-                            // ignore
-                        }
-                    }
+                    // First, find players in the "Ranking list:" section - these should NOT be treated as drafted
+                    extractRankingListPlayerIds(frameHtml, rankingListIds);
+
+                    // Pattern for drafted players (with class="faint") - but exclude ranking list players
+                    extractDraftedPlayerIds(frameHtml, draftedIds, rankingListIds);
 
                     // Pattern for all player links
                     Pattern playerPattern = Pattern.compile(
@@ -190,17 +184,11 @@ public class ScoresheetService {
             // Also check the main page body
             String mainHtml = page.getBody().asXml();
 
-            Pattern draftedPattern = Pattern.compile(
-                    "<a[^>]*href=\"#p(\\d+)\"[^>]*class=\"faint\"[^>]*>");
-            Matcher draftedMatcher = draftedPattern.matcher(mainHtml);
-            while (draftedMatcher.find()) {
-                try {
-                    int id = Integer.parseInt(draftedMatcher.group(1));
-                    draftedIds.add(id);
-                } catch (NumberFormatException e) {
-                    // ignore
-                }
-            }
+            // First, find players in the "Ranking list:" section
+            extractRankingListPlayerIds(mainHtml, rankingListIds);
+
+            // Then find drafted players, excluding ranking list
+            extractDraftedPlayerIds(mainHtml, draftedIds, rankingListIds);
 
             Pattern playerPattern = Pattern.compile(
                     "<a[^>]*href=\"#p(\\d+)\"[^>]*id=\"p\\d+\"[^>]*target=\"Rank\"[^>]*>");
@@ -216,13 +204,175 @@ public class ScoresheetService {
                 }
             }
 
-            log.info("Found {} undrafted player IDs for league {} (excluded {} drafted)",
-                    playerIds.size(), league.id(), draftedIds.size());
+            // Add ranking list players to undrafted set
+            playerIds.addAll(rankingListIds);
+            log.info("Found {} undrafted player IDs for league {} (excluded {} drafted, {} from ranking list)",
+                    playerIds.size(), league.id(), draftedIds.size(), rankingListIds.size());
             return playerIds;
 
         } catch (Exception e) {
             log.error("Error fetching undrafted players: {}", e.getMessage(), e);
             return Collections.emptySet();
+        }
+    }
+
+    public Set<Integer> fetchAllPlayerIds(League league) {
+        try {
+            ensureLoggedIn();
+            WebClient client = getWebClient();
+
+            String url = league.getUndraftedPlayersUrl();
+            log.info("Fetching all players from: {}", url);
+
+            HtmlPage page = client.getPage(url);
+            client.waitForBackgroundJavaScript(8000);
+
+            Set<Integer> allPlayerIds = new HashSet<>();
+            Set<Integer> rankingListIds = new HashSet<>();
+
+            // Get all frames on the page
+            List<FrameWindow> frames = page.getFrames();
+
+            for (FrameWindow frame : frames) {
+                try {
+                    HtmlPage framePage = (HtmlPage) frame.getEnclosedPage();
+                    String frameHtml = framePage.getBody().asXml();
+
+                    // Extract ranking list players
+                    extractRankingListPlayerIds(frameHtml, rankingListIds);
+
+                    // Pattern for all player links (both drafted and undrafted)
+                    Pattern playerPattern = Pattern.compile(
+                            "<a[^>]*href=\"#p(\\d+)\"[^>]*id=\"p\\d+\"[^>]*target=\"Rank\"[^>]*>");
+                    Matcher playerMatcher = playerPattern.matcher(frameHtml);
+                    while (playerMatcher.find()) {
+                        try {
+                            int id = Integer.parseInt(playerMatcher.group(1));
+                            allPlayerIds.add(id);
+                        } catch (NumberFormatException e) {
+                            // ignore
+                        }
+                    }
+
+                } catch (Exception e) {
+                    log.debug("Error processing frame: {}", e.getMessage());
+                }
+            }
+
+            // Also check the main page body
+            String mainHtml = page.getBody().asXml();
+            extractRankingListPlayerIds(mainHtml, rankingListIds);
+
+            Pattern playerPattern = Pattern.compile(
+                    "<a[^>]*href=\"#p(\\d+)\"[^>]*id=\"p\\d+\"[^>]*target=\"Rank\"[^>]*>");
+            Matcher playerMatcher = playerPattern.matcher(mainHtml);
+            while (playerMatcher.find()) {
+                try {
+                    int id = Integer.parseInt(playerMatcher.group(1));
+                    allPlayerIds.add(id);
+                } catch (NumberFormatException e) {
+                    // ignore
+                }
+            }
+
+            // Add ranking list players
+            allPlayerIds.addAll(rankingListIds);
+
+            log.info("Found {} total player IDs for league {}", allPlayerIds.size(), league.id());
+            return allPlayerIds;
+
+        } catch (Exception e) {
+            log.error("Error fetching all players: {}", e.getMessage(), e);
+            return Collections.emptySet();
+        }
+    }
+
+    /**
+     * Extract player IDs from the "Ranking list:" section.
+     * These players may have faint styling but should be treated as undrafted.
+     */
+    private void extractRankingListPlayerIds(String html, Set<Integer> rankingListIds) {
+        // Find the "Ranking list:" section
+        int rankingListStart = html.toLowerCase().indexOf("ranking list:");
+        if (rankingListStart == -1) {
+            return;
+        }
+
+        // Look for the end of the ranking list section
+        String afterRankingList = html.substring(rankingListStart);
+
+        // Find where the ranking list section likely ends
+        int endIndex = afterRankingList.length();
+
+        // Check for position group headers (e.g., "C:", "1B:", "P:", etc.)
+        Pattern positionHeaderPattern = Pattern.compile("(?:<br[^>]*>|<p>|<div>|\\n)\\s*(?:C|1B|2B|3B|SS|OF|DH|P|SR)\\s*:", Pattern.CASE_INSENSITIVE);
+        Matcher positionMatcher = positionHeaderPattern.matcher(afterRankingList);
+        if (positionMatcher.find()) {
+            endIndex = Math.min(endIndex, positionMatcher.start());
+        }
+
+        // Also check for other structural breaks
+        String[] sectionBreaks = {"<hr", "<table", "Available players:"};
+        for (String breakPattern : sectionBreaks) {
+            int breakIdx = afterRankingList.toLowerCase().indexOf(breakPattern.toLowerCase());
+            if (breakIdx > 0) {
+                endIndex = Math.min(endIndex, breakIdx);
+            }
+        }
+
+        String rankingSection = afterRankingList.substring(0, endIndex);
+
+        // The ranking list is in a textarea with format: "166  P   Cody Ponce"
+        // Extract the textarea content first
+        Pattern textareaPattern = Pattern.compile("<textarea[^>]*name=\"ranks\"[^>]*>(.*?)</textarea>", Pattern.DOTALL);
+        Matcher textareaMatcher = textareaPattern.matcher(rankingSection);
+
+        if (textareaMatcher.find()) {
+            String textareaContent = textareaMatcher.group(1);
+
+            // Parse lines - format is: ID  POS  Name (e.g., "166  P   Cody Ponce")
+            Pattern linePattern = Pattern.compile("^\\s*(\\d+)\\s+", Pattern.MULTILINE);
+            Matcher lineMatcher = linePattern.matcher(textareaContent);
+            while (lineMatcher.find()) {
+                try {
+                    int id = Integer.parseInt(lineMatcher.group(1));
+                    rankingListIds.add(id);
+                } catch (NumberFormatException e) {
+                    // ignore
+                }
+            }
+        }
+
+        // Also check for anchor link patterns as fallback
+        Pattern playerIdPattern = Pattern.compile("href=\"#p(\\d+)\"");
+        Matcher playerMatcher = playerIdPattern.matcher(rankingSection);
+        while (playerMatcher.find()) {
+            try {
+                int id = Integer.parseInt(playerMatcher.group(1));
+                rankingListIds.add(id);
+            } catch (NumberFormatException e) {
+                // ignore
+            }
+        }
+    }
+
+    /**
+     * Extract drafted player IDs (those with faint class), excluding ranking list players.
+     */
+    private void extractDraftedPlayerIds(String html, Set<Integer> draftedIds, Set<Integer> rankingListIds) {
+        Pattern draftedPattern = Pattern.compile(
+                "<a[^>]*href=\"#p(\\d+)\"[^>]*class=\"faint\"[^>]*>");
+        Matcher draftedMatcher = draftedPattern.matcher(html);
+        while (draftedMatcher.find()) {
+            try {
+                int id = Integer.parseInt(draftedMatcher.group(1));
+                // Only mark as drafted if NOT in the ranking list
+                if (!rankingListIds.contains(id)) {
+                    draftedIds.add(id);
+                }
+            } catch (NumberFormatException e) {
+                // ignore
+            }
         }
     }
 

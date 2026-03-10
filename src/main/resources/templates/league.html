@@ -110,6 +110,15 @@
         select:hover { border-color: #1976d2; }
         select:focus { outline: none; border-color: #1976d2; box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.2); }
 
+        .control-group input[type="checkbox"] {
+            margin-right: 6px;
+            cursor: pointer;
+        }
+
+        .control-group label {
+            cursor: pointer;
+        }
+
         .btn {
             padding: 6px 12px;
             font-size: 12px;
@@ -335,7 +344,15 @@
                 </select>
             </div>
 
-            <a th:href="@{/league/{id}/refresh(id=${league.id}, projection=${selectedProjection})}"
+            <div class="control-group">
+                <label for="showDrafted">
+                    <input type="checkbox" id="showDrafted" onchange="updateFilters()"
+                           th:checked="${showDrafted}"/>
+                    Show Drafted
+                </label>
+            </div>
+
+            <a th:href="@{/league/{id}/refresh(id=${league.id}, projection=${selectedProjection}, showDrafted=${showDrafted})}"
                class="btn btn-refresh">Refresh Data</a>
 
             <div class="stats-info">
@@ -525,8 +542,9 @@
         function updateFilters() {
             const projection = document.getElementById('projection').value;
             const position = document.getElementById('position').value;
+            const showDrafted = document.getElementById('showDrafted').checked;
             const leagueId = [[${league.id}]];
-            window.location.href = `/league/${leagueId}?projection=${projection}&position=${position}`;
+            window.location.href = `/league/${leagueId}?projection=${projection}&position=${position}&showDrafted=${showDrafted}`;
         }
 
         // Table sorting

@@ -24,8 +24,9 @@ public class RankingService {
     private final ProjectionService projectionService;
     private final ScoresheetService scoresheetService;
 
-    // Cache of undrafted player IDs per league
+    // Cache of player IDs per league
     private final Map<String, Set<Integer>> undraftedCache = new HashMap<>();
+    private final Map<String, Set<Integer>> allPlayersCache = new HashMap<>();
 
     public RankingService(PlayerMappingService playerMappingService,
                           ProjectionService projectionService,
@@ -51,12 +52,30 @@ public class RankingService {
         return playerIds;
     }
 
-    public List<RankedPlayer> getRankedPlayers(String leagueId, String projectionSystem, boolean refresh) {
-        Set<Integer> undraftedIds = getUndraftedPlayerIds(leagueId, refresh);
+    public Set<Integer> getAllPlayerIds(String leagueId, boolean refresh) {
+        if (!refresh && allPlayersCache.containsKey(leagueId)) {
+            return allPlayersCache.get(leagueId);
+        }
+
+        Optional<League> league = scoresheetService.getLeague(leagueId);
+        if (league.isEmpty()) {
+            log.warn("League not found: {}", leagueId);
+            return Collections.emptySet();
+        }
+
+        Set<Integer> playerIds = scoresheetService.fetchAllPlayerIds(league.get());
+        allPlayersCache.put(leagueId, playerIds);
+        return playerIds;
+    }
+
+    public List<RankedPlayer> getRankedPlayers(String leagueId, String projectionSystem, boolean refresh, boolean showDrafted) {
+        Set<Integer> playerIds = showDrafted
+                ? getAllPlayerIds(leagueId, refresh)
+                : getUndraftedPlayerIds(leagueId, refresh);
 
         List<RankedPlayer> rankedPlayers = new ArrayList<>();
 
-        for (int scoresheetId : undraftedIds) {
+        for (int scoresheetId : playerIds) {
             Optional<Player> playerOpt = playerMappingService.getByScoressheetId(scoresheetId);
             if (playerOpt.isEmpty()) {
                 log.debug("No player mapping found for Scoresheet ID: {}", scoresheetId);
@@ -112,8 +131,8 @@ public class RankingService {
     }
 
     public List<RankedPlayer> getFilteredRankedPlayers(String leagueId, String projectionSystem,
-                                                        String positionFilter, boolean refresh) {
-        List<RankedPlayer> allPlayers = getRankedPlayers(leagueId, projectionSystem, refresh);
+                                                        String positionFilter, boolean refresh, boolean showDrafted) {
+        List<RankedPlayer> allPlayers = getRankedPlayers(leagueId, projectionSystem, refresh, showDrafted);
 
         if (positionFilter == null || positionFilter.isEmpty() || positionFilter.equals("ALL")) {
             return allPlayers;
@@ -155,5 +174,6 @@ public class RankingService {
 
     public void clearCache(String leagueId) {
         undraftedCache.remove(leagueId);
+        allPlayersCache.remove(leagueId);
     }
 }
