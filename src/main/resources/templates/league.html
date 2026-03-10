@@ -309,7 +309,7 @@
     <div class="page-header">
         <div class="container">
             <h1 th:text="${league.name}">League Name</h1>
-            <p class="subtitle" th:text="${selectedProjection == 'savant'} ? 'Undrafted Players - Ranked by Statcast Metrics' : (${selectedProjection == 'adp'} ? 'Undrafted Players - Ranked by NFBC ADP' : 'Undrafted Players - Ranked by Projected WAR')">Undrafted Players - Ranked by Projected WAR</p>
+            <p class="subtitle" th:text="${selectedProjection == 'savant'} ? 'Undrafted Players - Ranked by Statcast Metrics' : (${selectedProjection == 'adp'} ? 'Undrafted Players - Ranked by NFBC ADP' : (${selectedProjection == 'pitcherlist400'} ? 'Undrafted Players - Ranked by Pitcher List 400' : 'Undrafted Players - Ranked by Projected WAR'))">Undrafted Players - Ranked by Projected WAR</p>
         </div>
     </div>
 
@@ -383,12 +383,16 @@
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" style="font-size: 10px;">Elig</th>
                             <th class="sortable" data-col="4" data-type="text" style="width: 40px;">Team</th>
                             <th class="sortable numeric" data-col="5" data-type="num" style="width: 35px;">Age</th>
-                            <th th:if="${selectedProjection != 'savant' and selectedProjection != 'adp'}" class="sortable numeric" data-col="6" data-type="num" style="width: 45px;">WAR</th>
+                            <th th:if="${selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="sortable numeric" data-col="6" data-type="num" style="width: 45px;">WAR</th>
                             <th th:if="${selectedProjection == 'savant'}" class="sortable numeric" data-col="6" data-type="num" style="width: 45px;" title="Barrel% for batters, 100-xERA for pitchers">Rank</th>
                             <!-- ADP columns -->
                             <th th:if="${selectedProjection == 'adp'}" class="sortable numeric" data-col="6" data-type="num" style="width: 50px;" title="Average Draft Position">ADP</th>
                             <th th:if="${selectedProjection == 'adp'}" class="sortable numeric" data-col="7" data-type="num" style="width: 45px;" title="Earliest Pick">Min</th>
                             <th th:if="${selectedProjection == 'adp'}" class="sortable numeric" data-col="8" data-type="num" style="width: 45px;" title="Latest Pick">Max</th>
+                            <!-- Pitcher List 400 columns -->
+                            <th th:if="${selectedProjection == 'pitcherlist400'}" class="sortable numeric" data-col="6" data-type="num" style="width: 50px;" title="Pitcher List 400 Rank">PL400</th>
+                            <th th:if="${selectedProjection == 'pitcherlist400'}" class="sortable" data-col="7" data-type="text" style="width: 180px;" title="Tier Name">Tier</th>
+                            <th th:if="${selectedProjection == 'pitcherlist400'}" class="sortable" data-col="8" data-type="text" style="width: 40px;" title="Throwing Hand">Hand</th>
                             <!-- Batting stats - traditional projections (non-pitchers, non-savant) -->
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="7" data-type="num">BB%</th>
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="8" data-type="num">K%</th>
@@ -446,7 +450,7 @@
                                 th:text="${rp.player.positionsWithRanges}">2B (4.25), SS (4.78)</td>
                             <td class="team" th:text="${rp.projectedTeam}">NYY</td>
                             <td class="age numeric" th:text="${rp.player.age}">25</td>
-                            <td th:if="${selectedProjection != 'savant' and selectedProjection != 'adp'}" class="war numeric"
+                            <td th:if="${selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="war numeric"
                                 th:classappend="${rp.war >= 5} ? 'war-elite' : (${rp.war >= 3} ? 'war-great' : (${rp.war >= 2} ? 'war-good' : (${rp.war >= 1} ? 'war-average' : (${rp.war >= 0} ? 'war-below' : 'war-negative'))))"
                                 th:text="${rp.hasProjection()} ? ${#numbers.formatDecimal(rp.war, 1, 1)} : '-'">2.5</td>
                             <td th:if="${selectedProjection == 'savant'}" class="numeric"
@@ -458,6 +462,13 @@
                                 th:text="${rp.adpData != null} ? ${rp.adpData.minPick} : '-'">10</td>
                             <td th:if="${selectedProjection == 'adp'}" class="numeric"
                                 th:text="${rp.adpData != null} ? ${rp.adpData.maxPick} : '-'">25</td>
+                            <!-- Pitcher List 400 data cells -->
+                            <td th:if="${selectedProjection == 'pitcherlist400'}" class="numeric"
+                                th:text="${rp.pitcherList400Data != null} ? ${rp.pitcherList400Data.rank} : '-'">1</td>
+                            <td th:if="${selectedProjection == 'pitcherlist400'}"
+                                th:text="${rp.pitcherList400Data != null} ? ${rp.pitcherList400Data.tierName} : '-'">STUD</td>
+                            <td th:if="${selectedProjection == 'pitcherlist400'}"
+                                th:text="${rp.pitcherList400Data != null} ? ${rp.pitcherList400Data.hand} : '-'">RHP</td>
 
                             <!-- Batting stats - traditional projections (non-pitchers, non-savant) -->
                             <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"

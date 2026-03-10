@@ -3,6 +3,7 @@ package com.scoutingthestatline.ranker.service;
 import com.scoutingthestatline.ranker.model.ADPData;
 import com.scoutingthestatline.ranker.model.BattingProjection;
 import com.scoutingthestatline.ranker.model.League;
+import com.scoutingthestatline.ranker.model.PitcherList400Data;
 import com.scoutingthestatline.ranker.model.PitchingProjection;
 import com.scoutingthestatline.ranker.model.Player;
 import com.scoutingthestatline.ranker.model.RankedPlayer;
@@ -90,14 +91,16 @@ public class RankingService {
             SavantBattingStats savantBatting = null;
             SavantPitchingStats savantPitching = null;
             ADPData adpData = null;
+            PitcherList400Data pitcherList400Data = null;
 
             if (player.isPitcher()) {
-                if (!"savant".equals(projectionSystem) && !"adp".equals(projectionSystem)) {
+                if (!"savant".equals(projectionSystem) && !"adp".equals(projectionSystem) && !"pitcherlist400".equals(projectionSystem)) {
                     pitchingProjection = projectionService.getPitchingProjection(projectionSystem, mlbamId).orElse(null);
                 }
                 savantPitching = projectionService.getSavantPitchingStats(mlbamId).orElse(null);
+                pitcherList400Data = projectionService.getPitcherList400Data(mlbamId).orElse(null);
             } else {
-                if (!"savant".equals(projectionSystem) && !"adp".equals(projectionSystem)) {
+                if (!"savant".equals(projectionSystem) && !"adp".equals(projectionSystem) && !"pitcherlist400".equals(projectionSystem)) {
                     battingProjection = projectionService.getBattingProjection(projectionSystem, mlbamId).orElse(null);
                 }
                 savantBatting = projectionService.getSavantBattingStats(mlbamId).orElse(null);
@@ -110,7 +113,7 @@ public class RankingService {
             boolean onActiveRoster = projectionService.isOnActiveRoster(mlbamId);
 
             rankedPlayers.add(new RankedPlayer(0, player, battingProjection, pitchingProjection,
-                    savantBatting, savantPitching, adpData, onActiveRoster, projectionSystem));
+                    savantBatting, savantPitching, adpData, pitcherList400Data, onActiveRoster, projectionSystem));
         }
 
         // Sort by appropriate metric
@@ -120,6 +123,13 @@ public class RankingService {
         } else if ("savant".equals(projectionSystem)) {
             // For Savant: sort by barrel% for batters, xERA percentile (inverted) for pitchers
             rankedPlayers.sort((a, b) -> Double.compare(b.getSavantRankValue(), a.getSavantRankValue()));
+        } else if ("pitcherlist400".equals(projectionSystem)) {
+            // For Pitcher List 400: sort by PL400 rank ascending
+            rankedPlayers.sort((a, b) -> {
+                int rankA = a.getPitcherList400Data() != null ? a.getPitcherList400Data().rank() : Integer.MAX_VALUE;
+                int rankB = b.getPitcherList400Data() != null ? b.getPitcherList400Data().rank() : Integer.MAX_VALUE;
+                return Integer.compare(rankA, rankB);
+            });
         } else {
             // Sort by WAR descending
             rankedPlayers.sort((a, b) -> Double.compare(b.getWar(), a.getWar()));

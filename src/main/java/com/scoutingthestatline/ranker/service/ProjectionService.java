@@ -7,6 +7,7 @@ import com.opencsv.CSVReaderBuilder;
 import com.opencsv.exceptions.CsvException;
 import com.scoutingthestatline.ranker.model.ADPData;
 import com.scoutingthestatline.ranker.model.BattingProjection;
+import com.scoutingthestatline.ranker.model.PitcherList400Data;
 import com.scoutingthestatline.ranker.model.PitchingProjection;
 import com.scoutingthestatline.ranker.model.SavantBattingStats;
 import com.scoutingthestatline.ranker.model.SavantPitchingStats;
@@ -28,7 +29,7 @@ public class ProjectionService {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectionService.class);
 
-    private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "oopsy-peak", "steamer", "zips", "savant", "adp");
+    private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "oopsy-peak", "steamer", "zips", "savant", "adp", "pitcherlist400");
 
     // Map: projection system -> mlbamId -> projection
     private final Map<String, Map<Integer, BattingProjection>> battingProjections = new HashMap<>();
@@ -40,6 +41,9 @@ public class ProjectionService {
 
     // ADP data (keyed by mlbamId)
     private final Map<Integer, ADPData> adpData = new HashMap<>();
+
+    // Pitcher List 400 data (keyed by mlbamId)
+    private final Map<Integer, PitcherList400Data> pitcherList400Data = new HashMap<>();
 
     // NFBC ID to MLB ID mapping
     private final Map<Integer, Integer> nfbcToMlbId = new HashMap<>();
@@ -61,6 +65,8 @@ public class ProjectionService {
                 loadSavantPitchingStats();
             } else if ("adp".equals(system)) {
                 loadADPData();
+            } else if ("pitcherlist400".equals(system)) {
+                loadPitcherList400Data();
             } else {
                 loadBattingProjections(system);
                 loadPitchingProjections(system);
@@ -493,6 +499,54 @@ public class ProjectionService {
         log.info("Loaded {} active roster players", activeRosterPlayers.size());
     }
 
+    private void loadPitcherList400Data() throws IOException, CsvException {
+        String filename = "pitcherlist400.csv";
+        Resource resource = new ClassPathResource(filename);
+
+        if (!resource.exists()) {
+            log.warn("Pitcher List 400 file not found: {}", filename);
+            return;
+        }
+
+        log.info("Loading Pitcher List 400 data from classpath: {}", filename);
+
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
+            List<String[]> rows = reader.readAll();
+            if (rows.isEmpty()) return;
+
+            String[] header = rows.get(0);
+            Map<String, Integer> colIndex = new HashMap<>();
+            for (int i = 0; i < header.length; i++) {
+                colIndex.put(header[i].replace("\uFEFF", "").trim(), i);
+            }
+
+            for (int i = 1; i < rows.size(); i++) {
+                String[] row = rows.get(i);
+                try {
+                    int mlbId = parseIntSafe(getColumn(row, colIndex, "mlbid"));
+                    if (mlbId == 0) continue;
+
+                    PitcherList400Data data = new PitcherList400Data(
+                            mlbId,
+                            parseIntSafe(getColumn(row, colIndex, "rank")),
+                            getColumn(row, colIndex, "name"),
+                            parseIntSafe(getColumn(row, colIndex, "tier_num")),
+                            getColumn(row, colIndex, "tier_name"),
+                            getColumn(row, colIndex, "hand"),
+                            getColumn(row, colIndex, "team")
+                    );
+
+                    pitcherList400Data.put(mlbId, data);
+                } catch (Exception e) {
+                    log.warn("Error parsing Pitcher List 400 row {}: {}", i, e.getMessage());
+                }
+            }
+        }
+
+        log.info("Loaded {} Pitcher List 400 entries", pitcherList400Data.size());
+    }
+
     private String getColumn(String[] row, Map<String, Integer> colIndex, String columnName) {
         Integer idx = colIndex.get(columnName);
         if (idx == null || idx >= row.length) return "";
@@ -547,5 +601,9 @@ public class ProjectionService {
 
     public boolean isOnActiveRoster(int mlbamId) {
         return activeRosterPlayers.contains(mlbamId);
+    }
+
+    public Optional<PitcherList400Data> getPitcherList400Data(int mlbamId) {
+        return Optional.ofNullable(pitcherList400Data.get(mlbamId));
     }
 }

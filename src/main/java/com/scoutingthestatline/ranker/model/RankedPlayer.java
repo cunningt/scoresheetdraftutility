@@ -10,30 +10,38 @@ public class RankedPlayer {
     private final SavantBattingStats savantBattingStats;
     private final SavantPitchingStats savantPitchingStats;
     private final ADPData adpData;
+    private final PitcherList400Data pitcherList400Data;
     private final boolean onActiveRoster;
     private final String projectionSystem;
 
     public RankedPlayer(int rank, Player player, BattingProjection battingProjection,
                         PitchingProjection pitchingProjection, String projectionSystem) {
-        this(rank, player, battingProjection, pitchingProjection, null, null, null, false, projectionSystem);
+        this(rank, player, battingProjection, pitchingProjection, null, null, null, null, false, projectionSystem);
     }
 
     public RankedPlayer(int rank, Player player, BattingProjection battingProjection,
                         PitchingProjection pitchingProjection, SavantBattingStats savantBattingStats,
                         SavantPitchingStats savantPitchingStats, String projectionSystem) {
-        this(rank, player, battingProjection, pitchingProjection, savantBattingStats, savantPitchingStats, null, false, projectionSystem);
+        this(rank, player, battingProjection, pitchingProjection, savantBattingStats, savantPitchingStats, null, null, false, projectionSystem);
     }
 
     public RankedPlayer(int rank, Player player, BattingProjection battingProjection,
                         PitchingProjection pitchingProjection, SavantBattingStats savantBattingStats,
                         SavantPitchingStats savantPitchingStats, ADPData adpData, String projectionSystem) {
-        this(rank, player, battingProjection, pitchingProjection, savantBattingStats, savantPitchingStats, adpData, false, projectionSystem);
+        this(rank, player, battingProjection, pitchingProjection, savantBattingStats, savantPitchingStats, adpData, null, false, projectionSystem);
     }
 
     public RankedPlayer(int rank, Player player, BattingProjection battingProjection,
                         PitchingProjection pitchingProjection, SavantBattingStats savantBattingStats,
                         SavantPitchingStats savantPitchingStats, ADPData adpData, boolean onActiveRoster,
                         String projectionSystem) {
+        this(rank, player, battingProjection, pitchingProjection, savantBattingStats, savantPitchingStats, adpData, null, onActiveRoster, projectionSystem);
+    }
+
+    public RankedPlayer(int rank, Player player, BattingProjection battingProjection,
+                        PitchingProjection pitchingProjection, SavantBattingStats savantBattingStats,
+                        SavantPitchingStats savantPitchingStats, ADPData adpData, PitcherList400Data pitcherList400Data,
+                        boolean onActiveRoster, String projectionSystem) {
         this.rank = rank;
         this.player = player;
         this.battingProjection = battingProjection;
@@ -41,6 +49,7 @@ public class RankedPlayer {
         this.savantBattingStats = savantBattingStats;
         this.savantPitchingStats = savantPitchingStats;
         this.adpData = adpData;
+        this.pitcherList400Data = pitcherList400Data;
         this.onActiveRoster = onActiveRoster;
         this.projectionSystem = projectionSystem;
     }
@@ -79,6 +88,10 @@ public class RankedPlayer {
 
     public ADPData getAdpData() {
         return adpData;
+    }
+
+    public PitcherList400Data getPitcherList400Data() {
+        return pitcherList400Data;
     }
 
     public double getAdp() {
@@ -123,6 +136,9 @@ public class RankedPlayer {
         }
         if ("adp".equals(projectionSystem)) {
             return adpData != null;
+        }
+        if ("pitcherlist400".equals(projectionSystem)) {
+            return pitcherList400Data != null;
         }
         return (player.isPitcher() && pitchingProjection != null) ||
                (!player.isPitcher() && battingProjection != null);

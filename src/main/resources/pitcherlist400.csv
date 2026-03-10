@@ -1,0 +1,430 @@
+rank,name,tier_num,tier_name,hand,team,mlbid
+1,Garrett Crochet,1,STUD,LHP,BOS,676979
+2,Paul Skenes,1,STUD,RHP,PIT,694973
+3,Tarik Skubal,1,STUD,LHP,DET,669373
+4,Bryan Woo,2,AGA 1,RHP,SEA,693433
+5,Yoshinobu Yamamoto,2,AGA 1,RHP,LAD,808967
+6,Max Fried,2,AGA 1,LHP,NYY,608331
+7,Cristopher Sánchez,2,AGA 1,LHP,PHI,650911
+8,Logan Gilbert,2,AGA 1,RHP,SEA,669302
+9,Hunter Greene,2,AGA 1,RHP,CIN,668881
+10,Hunter Brown,2,AGA 1,RHP,HOU,686613
+11,Shohei Ohtani,2,AGA 1,RHP,LAD,660271
+12,Logan Webb,3,AGA 2,RHP,SFG,657277
+13,Joe Ryan,3,AGA 2,RHP,MIN,657746
+14,Freddy Peralta,3,AGA 2,RHP,NYM,642547
+15,Jacob deGrom,4,AGA Injury Risk,RHP,TEX,594798
+16,Cole Ragans,4,AGA Injury Risk,LHP,KCR,666142
+17,George Kirby,4,AGA Injury Risk,RHP,SEA,669923
+18,Tyler Glasnow,4,AGA Injury Risk,RHP,LAD,607192
+19,Chris Sale,4,AGA Injury Risk,LHP,ATL,519242
+20,Kyle Bradish,5,AGA Holly,RHP,BAL,680694
+21,Eury Perez,5,AGA Holly,RHP,MIA,516811
+22,Nick Pivetta,5,AGA Holly,RHP,SDP,601713
+23,Ryan Pepiot,5,AGA Holly,RHP,TBR,686752
+24,Drew Rasmussen,5,AGA Holly,RHP,TBR,656876
+25,Cam Schlittler,5,AGA Holly,RHP,NYY,693645
+26,Sandy Alcantara,5,AGA Holly,RHP,MIA,645261
+27,Framber Valdez,5,AGA Holly,LHP,DET,664285
+28,Michael King,6,Cherry Bomb,RHP,SDP,650633
+29,Dylan Cease,6,Cherry Bomb,RHP,TOR,656302
+30,Jesús Luzardo,6,Cherry Bomb,LHP,PHI,666200
+31,Kevin Gausman,7,Holly,RHP,TOR,592332
+32,Trevor Rogers,7,Holly,LHP,BAL,669432
+33,Tatsuya Imai,7,Holly,RHP,HOU,837227
+34,Nolan McLean,7,Holly,RHP,NYM,690997
+35,Bubba Chandler,7,Holly,RHP,PIT,696149
+36,Trey Yesavage,7,Holly,RHP,TOR,702056
+37,Cade Horton,7,Holly,RHP,CHC,690990
+38,Robbie Ray,8,Cherry Bomb But Moreso,LHP,SFG,592662
+39,Nathan Eovaldi,8,Cherry Bomb But Moreso,RHP,TEX,543135
+40,Jacob Misiorowski,8,Cherry Bomb But Moreso,RHP,MIL,694819
+41,Chase Burns,8,Cherry Bomb But Moreso,RHP,CIN,695505
+42,Shane McClanahan,9,Cherry Bomb But Moreso,LHP,TBR,663556
+43,Kris Bubic,9,Cherry Bomb But Moreso,RHP,KCR,663460
+44,Blake Snell,9,Cherry Bomb But Moreso,LHP,LAD,605483
+45,Bryce Miller,10,Holly I Feel A Little Worse About,RHP,SEA,682243
+46,Edward Cabrera,10,Holly I Feel A Little Worse About,RHP,CHC,665795
+47,Andrew Abbott,10,Holly I Feel A Little Worse About,LHP,CIN,671096
+48,Shota Imanaga,10,Holly I Feel A Little Worse About,LHP,CHC,684007
+49,Aaron Nola,10,Holly I Feel A Little Worse About,RHP,PHI,605400
+50,MacKenzie Gore,11,Frizzle,LHP,TEX,669022
+51,Emmet Sheehan,11,Frizzle,RHP,LAD,686218
+52,Ryan Weathers,11,Frizzle,LHP,NYY,677960
+53,Nick Lodolo,12,Toby Upside 1,LHP,CIN,666157
+54,Sonny Gray,12,Toby Upside 1,RHP,BOS,543243
+55,Ranger Suárez,12,Toby Upside 1,LHP,BOS,624133
+56,Noah Cameron,12,Toby Upside 1,LHP,KCR,702070
+57,Gavin Williams,12,Toby Upside 1,RHP,CLE,668909
+58,Shane Baz,12,Toby Upside 1,RHP,BAL,669358
+59,Ryne Nelson,12,Toby Upside 1,RHP,ARI,669194
+60,Joe Musgrove,12,Toby Upside 1,RHP,SDP,605397
+61,Zac Gallen,12,Toby Upside 1,RHP,ARI,668678
+62,Brandon Woodruff,13,Injury Stash 1,RHP,MIL,605540
+63,Gerrit Cole,13,Injury Stash 1,RHP,NYY,543037
+64,Zack Wheeler,13,Injury Stash 1,RHP,PHI,554430
+65,Carlos Rodon,13,Injury Stash 1,LHP,NYY,607074
+66,Jared Jones,13,Injury Stash 1,RHP,PIT,683003
+67,Spencer Schwellenbach,13,Injury Stash 1,RHP,ATL,680885
+68,Shane Bieber,13,Injury Stash 1,RHP,TOR,669456
+69,Matthew Boyd,14,Toby Upside 2,LHP,CHC,571510
+70,Luis Castillo,14,Toby Upside 2,RHP,SEA,622491
+71,Merrill Kelly,14,Toby Upside 2,RHP,ARI,518876
+72,Zach Eflin,14,Toby Upside 2,RHP,BAL,621107
+73,Andrew Painter,15,HIPSTER 1,RHP,PHI,691725
+74,Spencer Strider,15,HIPSTER 1,RHP,ATL,675911
+75,Logan Henderson,15,HIPSTER 1,RHP,MIL,701656
+76,Robby Snelling,15,HIPSTER 1,LHP,MIA,702281
+77,Braxton Ashcraft,15,HIPSTER 1,RHP,PIT,677952
+78,Tanner Bibee,15,HIPSTER 1,RHP,CLE,676440
+79,Jack Flaherty,15,HIPSTER 1,RHP,DET,656427
+80,Kodai Senga,16,Toby Upside 3,RHP,NYM,673540
+81,Joey Cantillo,16,Toby Upside 3,LHP,CLE,676282
+82,Bailey Ober,16,Toby Upside 3,RHP,MIN,641927
+83,Cody Ponce,16,Toby Upside 3,RHP,TOR,664074
+84,Brayan Bello,16,Toby Upside 3,RHP,BOS,678394
+85,Seth Lugo,16,Toby Upside 3,RHP,KCR,607625
+86,Landen Roupp,16,Toby Upside 3,RHP,SFG,694738
+87,Tyler Mahle,16,Toby Upside 3,RHP,SFG,641816
+88,Max Scherzer,16,Toby Upside 3,RHP,FA,453286
+89,Quinn Priester,16,Toby Upside 3,RHP,MIL,682990
+90,Ryan Weiss,16,Toby Upside 3,RHP,HOU,680802
+91,Shane Smith,16,Toby Upside 3,RHP,CHW,681343
+92,Jack Leiter,17,Late Upside,RHP,TEX,683004
+93,Cristian Javier,17,Late Upside,RHP,HOU,664299
+94,Zebby Matthews,17,Late Upside,RHP,MIN,805673
+95,Mike Burrows,17,Late Upside,RHP,HOU,681347
+96,Grant Holmes,17,Late Upside,RHP,ATL,656550
+97,Grayson Rodriguez,17,Late Upside,RHP,LAA,680570
+98,Spencer Arrighetti,17,Late Upside,RHP,HOU,681293
+99,Jacob Lopez,17,Late Upside,LHP,ATH,682052
+100,Will Warren,17,Late Upside,RHP,NYY,701542
+101,Reid Detmers,17,Late Upside,LHP,LAA,672282
+102,Reynaldo López,17,Late Upside,RHP,ATL,625643
+103,Roki Sasaki,18,Possible Job Upside,RHP,LAD,808963
+104,Jacob Latz,18,Possible Job Upside,LHP,TEX,656641
+105,Justin Wrobleski,18,Possible Job Upside,LHP,LAD,680736
+106,Kyle Harrison,18,Possible Job Upside,LHP,MIL,690986
+107,Mick Abel,18,Possible Job Upside,RHP,MIN,690953
+108,Parker Messick,18,Possible Job Upside,LHP,CLE,800048
+109,Ben Casparius,18,Possible Job Upside,RHP,LAD,676508
+110,Lucas Giolito,18,Possible Job Upside,RHP,FA,608337
+111,Troy Melton,19,Dope But No Job,RHP,DET,675512
+112,Connelly Early,19,Dope But No Job,LHP,BOS,813349
+113,Payton Tolle,19,Dope But No Job,LHP,BOS,801139
+114,Carson Whisenhunt,19,Dope But No Job,LHP,SFG,687931
+115,Brandon Sproat,19,Dope But No Job,RHP,MIL,687075
+116,Luis Gil,20,Late Upside 2,RHP,NYY,661563
+117,Simeon Woods Richardson,20,Late Upside 2,RHP,MIN,680573
+118,Sean Manaea,20,Late Upside 2,LHP,NYM,640455
+119,Cade Cavalli,20,Late Upside 2,RHP,WAS,676917
+120,Johan Oviedo,20,Late Upside 2,RHP,BOS,670912
+121,José Soriano,20,Late Upside 2,RHP,LAA,667755
+122,Joey Wentz,20,Late Upside 2,LHP,ATL,666214
+123,Connor Prielipp,21,Potenital 2026 Stud Prospect,LHP,MIN,687570
+124,Thomas White,21,Potenital 2026 Stud Prospect,LHP,MIA,806258
+125,Gage Jump,21,Potenital 2026 Stud Prospect,LHP,ATH,695611
+126,Jaxon Wiggins,21,Potenital 2026 Stud Prospect,RHP,CHC,694393
+127,Hagen Smith,21,Potenital 2026 Stud Prospect,LHP,CHW,696146
+128,Noah Schultz,21,Potenital 2026 Stud Prospect,LHP,CHW,702273
+129,Brody Hopkins,21,Potenital 2026 Stud Prospect,RHP,TBR,811315
+130,Luis Perales,21,Potenital 2026 Stud Prospect,RHP,WAS,691384
+131,Daniel Espino,21,Potenital 2026 Stud Prospect,RHP,CLE,682982
+132,Alex Clemmey,21,Potenital 2026 Stud Prospect,LHP,WAS,806046
+133,Carlos Lagrange,21,Potenital 2026 Stud Prospect,RHP,NYY,801739
+134,Yusei Kikuchi,22,Toby 15-Team,LHP,LAA,579328
+135,Casey Mize,22,Toby 15-Team,RHP,DET,663554
+136,Dustin May,22,Toby 15-Team,RHP,STL,669160
+137,Justin Verlander,22,Toby 15-Team,RHP,DET,434378
+138,Clay Holmes,22,Toby 15-Team,RHP,NYM,605280
+139,David Peterson,22,Toby 15-Team,LHP,NYM,656849
+140,Matthew Liberatore,22,Toby 15-Team,LHP,STL,669461
+141,Slade Cecconi,22,Toby 15-Team,RHP,CLE,677944
+142,Brady Singer,22,Toby 15-Team,RHP,CIN,663903
+143,Brandon Pfaadt,22,Toby 15-Team,RHP,ARI,694297
+144,Mitch Keller,22,Toby 15-Team,RHP,PIT,656605
+145,Jameson Taillon,22,Toby 15-Team,RHP,CHC,592791
+146,Eduardo Rodriguez,22,Toby 15-Team,LHP,ARI,593958
+147,Michael Wacha,22,Toby 15-Team,RHP,KCR,608379
+148,Nick Martinez,22,Toby 15-Team,RHP,TBR,607259
+149,Luis Severino,22,Toby 15-Team,RHP,ATH,622663
+150,Corbin Burnes,23,Injury Stash 2,RHP,ARI,669203
+151,Justin Steele,23,Injury Stash 2,LHP,CHC,657006
+152,Clarke Schmidt,23,Injury Stash 2,RHP,NYY,657376
+153,Jackson Jobe,23,Injury Stash 2,RHP,DET,695549
+154,Hurston Waldrep,23,Injury Stash 2,RHP,ATL,694462
+155,Kyle Leahy,24,Potential Pickups If Things Go Right,RHP,STL,681517
+156,Triston McKenzie,24,Potential Pickups If Things Go Right,RHP,SDP,663474
+157,Ian Seymour,24,Potential Pickups If Things Go Right,LHP,TBR,693855
+158,Rhett Lowder,24,Potential Pickups If Things Go Right,RHP,CIN,695076
+159,Joe Rock,24,Potential Pickups If Things Go Right,LHP,TBR,697812
+160,Tyler Wells,24,Potential Pickups If Things Go Right,RHP,BAL,669330
+161,Jonah Tong,24,Potential Pickups If Things Go Right,RHP,NYM,804636
+162,Cade Povich,24,Potential Pickups If Things Go Right,LHP,BAL,700249
+163,Alan Rangel,24,Potential Pickups If Things Go Right,RHP,PHI,660604
+164,Alek Manoah,24,Potential Pickups If Things Go Right,RHP,LAA,666201
+165,Braxton Garrett,24,Potential Pickups If Things Go Right,LHP,MIA,666129
+166,Max Meyer,24,Potential Pickups If Things Go Right,RHP,MIA,676974
+167,Richard Fitts,24,Potential Pickups If Things Go Right,RHP,STL,690916
+168,Hunter Dobbins,24,Potential Pickups If Things Go Right,RHP,STL,690928
+169,AJ Blubaugh,24,Potential Pickups If Things Go Right,LHP,HOU,805123
+170,Quinn Mathews,25,Spec Add 2026 Prospect,LHP,STL,687273
+171,Elmer Rodri­guez-Cruz,25,Spec Add 2026 Prospect,RHP,NYY,695684
+172,Tanner McDougal,25,Spec Add 2026 Prospect,RHP,CHW,701780
+173,Khal Stephen,25,Spec Add 2026 Prospect,RHP,CLE,701590
+174,Jake Bennett,25,Spec Add 2026 Prospect,LHP,BOS,687562
+175,Didier Fuentes,25,Spec Add 2026 Prospect,RHP,ATL,800311
+176,Bryce Mayer,25,Spec Add 2026 Prospect,RHP,HOU,809343
+177,Ty Johnson,25,Spec Add 2026 Prospect,RHP,TBR,694494
+178,Jurrangelo Cijntje,25,Spec Add 2026 Prospect,RHP,STL,701388
+179,David Davalillo,25,Spec Add 2026 Prospect,RHP,TEX,699314
+180,Miguel Mendez,25,Spec Add 2026 Prospect,RHP,SDP,700280
+181,Jack Wenninger,25,Spec Add 2026 Prospect,RHP,NYM,811307
+182,Marco Raya,25,Spec Add 2026 Prospect,RHP,MIN,694397
+183,Tink Hence,25,Spec Add 2026 Prospect,RHP,STL,693311
+184,Santiago Suarez,25,Spec Add 2026 Prospect,RHP,TBR,800571
+185,Anderson Brito,25,Spec Add 2026 Prospect,RHP,TBR,820901
+186,Miguel Ullola,25,Spec Add 2026 Prospect,RHP,FA,699044
+187,George Klassen,25,Spec Add 2026 Prospect,RHP,LAA,691946
+188,Nick Frasso,25,Spec Add 2026 Prospect,RHP,LAD,693308
+189,Davis Martin,26,Toby 15-Team Again,RHP,CHW,663436
+190,Chris Bassitt,26,Toby 15-Team Again,RHP,FA,605135
+191,Jeffrey Springs,26,Toby 15-Team Again,LHP,ATH,605488
+192,Adrian Houser,26,Toby 15-Team Again,RHP,SFG,605288
+193,Chris Paddack,26,Toby 15-Team Again,RHP,MIA,663978
+194,Foster Griffin,26,Toby 15-Team Again,LHP,WAS,656492
+195,Michael McGreevy,26,Toby 15-Team Again,RHP,STL,700241
+196,José Berrios,26,Toby 15-Team Again,RHP,TOR,621244
+197,JP Sears,27,Toby 15-Team If Job,LHP,SDP,676664
+198,Jason Alexander,27,Toby 15-Team If Job,RHP,HOU,669920
+199,Chad Patrick,27,Toby 15-Team If Job,RHP,MIL,694477
+200,Janson Junk,27,Toby 15-Team If Job,RHP,MIA,676083
+201,Dean Kremer,27,Toby 15-Team If Job,RHP,BAL,665152
+202,Michael Soroka,27,Toby 15-Team If Job,RHP,ARI,647336
+203,Logan Allen,27,Toby 15-Team If Job,LHP,CLE,663531
+204,Luis Morales,27,Toby 15-Team If Job,RHP,ATH,806960
+205,Taj Bradley,27,Toby 15-Team If Job,RHP,MIN,671737
+206,José Urquidy,27,Toby 15-Team If Job,RHP,PIT,664353
+207,Anthony Kay,27,Toby 15-Team If Job,LHP,CHW,641743
+208,Steven Matz,27,Toby 15-Team If Job,LHP,TBR,571927
+209,Blade Tidwell,28,Kinda Cool But No Job,RHP,SFG,694918
+210,Zack Littell,28,Kinda Cool But No Job,RHP,FA,641793
+211,Brandon Williamson,28,Kinda Cool But No Job,LHP,CIN,682227
+212,Ryan Bergert,28,Kinda Cool But No Job,RHP,KCR,686701
+213,Kutter Crawford,28,Kinda Cool But No Job,RHP,BOS,676710
+214,Kumar Rocker,28,Kinda Cool But No Job,RHP,TEX,677958
+215,Yoendrys Gómez,28,Kinda Cool But No Job,RHP,TBR,672782
+216,David Festa,28,Kinda Cool But No Job,RHP,MIN,701581
+217,Trevor McDonald,28,Kinda Cool But No Job,RHP,SFG,686790
+218,Hayden Birdsong,28,Kinda Cool But No Job,RHP,SFG,806185
+219,Ben Brown,28,Kinda Cool But No Job,RHP,CHC,676962
+220,Tobias Myers,28,Kinda Cool But No Job,RHP,NYM,668964
+221,Robert Gasser,28,Kinda Cool But No Job,LHP,MIL,688107
+222,Drey Jameson,28,Kinda Cool But No Job,RHP,ARI,686753
+223,Carmen Mlodzinski,28,Kinda Cool But No Job,RHP,PIT,669387
+224,Colton Gordon,28,Kinda Cool But No Job,LHP,HOU,676467
+225,Joe Boyle,28,Kinda Cool But No Job,RHP,TBR,671212
+226,Jedixson Paez,28,Kinda Cool But No Job,RHP,CHW,699151
+227,Jordan Wicks,28,Kinda Cool But No Job,LHP,CHC,696136
+228,Luis Medina,28,Kinda Cool But No Job,RHP,ATH,665622
+229,Jack Perkins,28,Kinda Cool But No Job,RHP,ATH,678022
+230,Drew Anderson,28,Kinda Cool But No Job,RHP,DET,623454
+231,J.T. Ginn,28,Kinda Cool But No Job,RHP,ATH,669372
+232,Stephen Kolek,28,Kinda Cool But No Job,RHP,KCR,663568
+233,Jake Miller,29,Stud Likely 2027 Prospect,LHP,DET,681313
+234,Winston Santos,29,Stud Likely 2027 Prospect,RHP,TEX,692437
+235,Christian Oppor,29,Stud Likely 2027 Prospect,LHP,CHW,803291
+236,Mason Morris,29,Stud Likely 2027 Prospect,RHP,CIN,
+237,Kelvis Salcedo,29,Stud Likely 2027 Prospect,RHP,DET,808383
+238,Jackson Ferris,29,Stud Likely 2027 Prospect,LHP,LAD,701328
+239,Chase Hampton,29,Stud Likely 2027 Prospect,RHP,NYY,694633
+240,Gage Wood,29,Stud Likely 2027 Prospect,RHP,PHI,805906
+241,Ryan Sloan,29,Stud Likely 2027 Prospect,RHP,SEA,815549
+242,Caden Scarborough,29,Stud Likely 2027 Prospect,RHP,TEX,807291
+243,Ricky Tiedemann,29,Stud Likely 2027 Prospect,LHP,TOR,694357
+244,Gage Stanifer,29,Stud Likely 2027 Prospect,RHP,TOR,804948
+245,Jarlin Susana,29,Stud Likely 2027 Prospect,RHP,WAS,703186
+246,Andre Pallante,30,Has Job But Do You Care?,RHP,STL,669467
+247,Brad Lord,30,Has Job But Do You Care?,RHP,WAS,695418
+248,Aaron Civale,30,Has Job But Do You Care?,RHP,FA,650644
+249,Lance McCullers Jr.,30,Has Job But Do You Care?,RHP,HOU,621121
+250,Taijuan Walker,30,Has Job But Do You Care?,RHP,PHI,592836
+251,Sean Burke,30,Has Job But Do You Care?,RHP,CHW,680732
+252,Bryce Elder,30,Has Job But Do You Care?,RHP,ATL,693821
+253,Josiah Gray,30,Has Job But Do You Care?,RHP,WAS,680686
+254,Miles Mikolas,30,Has Job But Do You Care?,RHP,WAS,571945
+255,Erick Fedde,30,Has Job But Do You Care?,RHP,CHW,607200
+256,Germán Márquez,30,Has Job But Do You Care?,RHP,SDP,608566
+257,Randy Vasquez,30,Has Job But Do You Care?,RHP,SDP,681190
+258,Chase Dollander,31,Has Job But It’s The Rockies,RHP,COL,801403
+259,Kyle Freeland,31,Has Job But It’s The Rockies,LHP,COL,607536
+260,Jose Quintana,31,Has Job But It’s The Rockies,RHP,COL,500779
+261,Michael Lorenzen,31,Has Job But It’s The Rockies,RHP,COL,547179
+262,Tomoyuki Sugano,31,Has Job But It’s The Rockies,RHP,WAS,608372
+263,Daniel Eagen,32,Monitor 2026 Prospect,RHP,ARI,811666
+264,Mitch Bratt,32,Monitor 2026 Prospect,LHP,ARI,683352
+265,Drue Hackenberg,32,Monitor 2026 Prospect,RHP,ATL,802357
+266,JR Ritchie,32,Monitor 2026 Prospect,RHP,ATL,702275
+267,Nestor German,32,Monitor 2026 Prospect,RHP,BAL,815148
+268,Trey Gibson,32,Monitor 2026 Prospect,RHP,BAL,694346
+269,Will Dion,32,Monitor 2026 Prospect,LHP,CLE,702021
+270,Braden Nett,32,Monitor 2026 Prospect,RHP,ATH,804556
+271,Steven Echavarria,32,Monitor 2026 Prospect,RHP,ATH,806064
+272,Felix Arronde,32,Monitor 2026 Prospect,RHP,KCR,702373
+273,Chris Cortez,32,Monitor 2026 Prospect,RHP,LAA,700933
+274,Patrick Copen,32,Monitor 2026 Prospect,RHP,LAD,814527
+275,Peter Heubeck,32,Monitor 2026 Prospect,RHP,LAD,695646
+276,Dax Fulton,32,Monitor 2026 Prospect,LHP,MIA,690978
+277,Karson Milbrandt,32,Monitor 2026 Prospect,RHP,MIA,703596
+278,Noble Meyer,32,Monitor 2026 Prospect,RHP,MIA,800611
+279,Bishop Letson,32,Monitor 2026 Prospect,RHP,MIL,811309
+280,Andrew Morris,32,Monitor 2026 Prospect,RHP,MIN,702193
+281,Jonathan Pintaro,32,Monitor 2026 Prospect,RHP,NYM,702752
+282,Jonathan Santucci,32,Monitor 2026 Prospect,LHP,NYM,695558
+283,Will Watson,32,Monitor 2026 Prospect,RHP,NYM,814492
+284,Henry Lalane,32,Monitor 2026 Prospect,LHP,NYY,700649
+285,Yoniel Curet,32,Monitor 2026 Prospect,RHP,PHI,692414
+286,Hunter Barco,32,Monitor 2026 Prospect,LHP,PIT,682995
+287,Wilber Dotel,32,Monitor 2026 Prospect,RHP,PIT,696062
+288,Hunter Dryden,32,Monitor 2026 Prospect,RHP,SFG,827500
+289,Chen-Wei Lin,32,Monitor 2026 Prospect,RHP,STL,813820
+290,Jackson Baumeister,32,Monitor 2026 Prospect,RHP,TBR,691765
+291,T.J. Nichols,32,Monitor 2026 Prospect,RHP,TBR,694375
+292,Gary Gill Hill,32,Monitor 2026 Prospect,RHP,TBR,804541
+293,Eriq Swan,32,Monitor 2026 Prospect,RHP,WAS,811291
+294,Martín Pérez,33,No Job And It’s Meh,LHP,ATL,527048
+295,Carson Seymour,33,No Job And It’s Meh,RHP,SFG,693313
+296,Bobby Miller,33,No Job And It’s Meh,RHP,LAD,676272
+297,Emerson Hancock,33,No Job And It’s Meh,RHP,SEA,676106
+298,Adam Mazur,33,No Job And It’s Meh,RHP,MIA,800049
+299,Jack Kochanowicz,33,No Job And It’s Meh,RHP,LAA,686799
+300,Caden Dana,33,No Job And It’s Meh,RHP,LAA,702674
+301,Colin Rea,33,No Job And It’s Meh,RHP,CHC,607067
+302,Javier Assad,33,No Job And It’s Meh,RHP,CHC,665871
+303,Jonathan Cannon,33,No Job And It’s Meh,RHP,CHW,686563
+304,Walker Buehler,33,No Job And It’s Meh,RHP,SDP,621111
+305,Bradley Blalock,33,No Job And It’s Meh,RHP,MIA,687134
+306,Eric Lauer,33,No Job And It’s Meh,LHP,TOR,641778
+307,Caleb Kilian,33,No Job And It’s Meh,RHP,SFG,668873
+308,Patrick Sandoval,33,No Job And It’s Meh,LHP,BOS,663776
+309,Shinnosuke Ogasawara,33,No Job And It’s Meh,LHP,WAS,829272
+310,Mitchell Parker,33,No Job And It’s Meh,LHP,WAS,680730
+311,Jake Irvin,33,No Job And It’s Meh,RHP,WAS,663623
+312,Keider Montero,33,No Job And It’s Meh,RHP,DET,672456
+313,Roddery Muñoz,33,No Job And It’s Meh,RHP,HOU,682610
+314,Bailey Falter,33,No Job And It’s Meh,LHP,KCR,663559
+315,Daniel Lynch IV,33,No Job And It’s Meh,LHP,KCR,663738
+316,Cal Quantrill,33,No Job And It’s Meh,LHP,TEX,615698
+317,Dietrich Enns,33,No Job And It’s Meh,LHP,BAL,608650
+318,Kyle Hart,33,No Job And It’s Meh,LHP,SDP,606996
+319,Kyson Witherspoon,34,Stud Likely 2028 Prospect,RHP,BOS,804817
+320,Braylon Doughty,34,Stud Likely 2028 Prospect,RHP,CLE,815785
+321,Argenis Cayama,34,Stud Likely 2028 Prospect,RHP,SFG,821783
+322,Zachary Root,34,Stud Likely 2028 Prospect,LHP,LAD,
+323,Adam Serwinowski,34,Stud Likely 2028 Prospect,LHP,LAD,703445
+324,Christian Zazueta,34,Stud Likely 2028 Prospect,RHP,LAD,800537
+325,J.D. Thompson,34,Stud Likely 2028 Prospect,LHP,MIL,
+326,Dasan Hill,34,Stud Likely 2028 Prospect,LHP,MIN,815598
+327,Charlee Soto,34,Stud Likely 2028 Prospect,RHP,MIN,805792
+328,Bryce Cunningham,34,Stud Likely 2028 Prospect,RHP,NYY,701480
+329,Moises Chace,34,Stud Likely 2028 Prospect,RHP,PHI,691330
+330,Antwone Kelly,34,Stud Likely 2028 Prospect,RHP,PIT,699008
+331,Seth Hernandez,34,Stud Likely 2028 Prospect,RHP,PIT,815825
+332,Bryan Balzer,34,Stud Likely 2028 Prospect,RHP,SDP,808893
+333,Kash Mayfield,34,Stud Likely 2028 Prospect,LHP,SDP,824026
+334,Kruz Schoolcraft,34,Stud Likely 2028 Prospect,LHP,SDP,
+335,Kade Anderson,34,Stud Likely 2028 Prospect,LHP,SEA,807739
+336,Tekoah Roby,34,Stud Likely 2028 Prospect,RHP,STL,694358
+337,Liam Doyle,34,Stud Likely 2028 Prospect,LHP,STL,824604
+338,Alejandro Rosario,34,Stud Likely 2028 Prospect,RHP,WAS,691730
+339,Travis Sykora,34,Stud Likely 2028 Prospect,RHP,WAS,805809
+340,Cam Caminiti,34,Stud Likely 2028 Prospect,LHP,ATL,807284
+341,Jamie Arnold,34,Stud Likely 2028 Prospect,LHP,ATH,701364
+342,McCade Brown,35,If Job Would Be For Rockies,RHP,COL,685326
+343,Tanner Gordon,35,If Job Would Be For Rockies,RHP,COL,685299
+344,Antonio Senzatela,35,If Job Would Be For Rockies,RHP,COL,622608
+345,Ryan Feltner,35,If Job Would Be For Rockies,RHP,COL,663372
+346,Gunnar Hoglund,36,Hurt But You Forgot,RHP,ATH,680684
+347,Cody Bradford,36,Hurt But You Forgot,LHP,TEX,674003
+348,Jordan Montgomery,36,Hurt But You Forgot,LHP,TEX,656756
+349,Christian Scott,36,Hurt But You Forgot,RHP,NYM,681035
+350,DJ Herz,36,Hurt But You Forgot,LHP,WAS,687792
+351,Jake Bloss,36,Hurt But You Forgot,RHP,TOR,814005
+352,AJ Smith-Shawver,36,Hurt But You Forgot,RHP,ATL,700363
+353,Nestor Cortes,36,Hurt But You Forgot,LHP,SDP,641482
+354,Tylor Megill,36,Hurt But You Forgot,RHP,NYM,656731
+355,Hayden Wesneski,36,Hurt But You Forgot,RHP,HOU,669713
+356,Ronel Blanco,36,Hurt But You Forgot,RHP,HOU,669854
+357,Griffin Canning,36,Hurt But You Forgot,RHP,SDP,656288
+358,Trevor Williams,36,Hurt But You Forgot,RHP,WAS,592866
+359,Jon Gray,37,Hammock Or Mound?,RHP,FA,592351
+360,Wade Miley,37,Hammock Or Mound?,LHP,FA,489119
+361,Tyler Anderson,37,Hammock Or Mound?,LHP,FA,542881
+362,Patrick Corbin,37,Hammock Or Mound?,LHP,FA,571578
+363,Charlie Morton,37,Hammock Or Mound?,RHP,FA,450203
+364,Alex Cobb,37,Hammock Or Mound?,RHP,FA,502171
+365,Michael Kopech,37,Hammock Or Mound?,RHP,FA,656629
+366,Marcus Stroman,37,Hammock Or Mound?,RHP,FA,573186
+367,Spencer Turnbull,37,Hammock Or Mound?,RHP,FA,605513
+368,Pablo López,38,Out For 2026 Just So You Know,RHP,MIN,641154
+369,Logan Evans,38,Out For 2026 Just So You Know,RHP,SEA,688138
+370,Reese Olson,38,Out For 2026 Just So You Know,RHP,DET,681857
+371,Bowden Francis,38,Out For 2026 Just So You Know,RHP,TOR,670102
+372,Yu Darvish,38,Out For 2026 Just So You Know,RHP,SDP,506433
+373,John Means,38,Out For 2026 Just So You Know,LHP,FA,607644
+374,Tanner Houck,38,Out For 2026 Just So You Know,RHP,BOS,656557
+375,Frankie Montas,38,Out For 2026 Just So You Know,RHP,FA,593423
+376,Alec Marsh,38,Out For 2026 Just So You Know,RHP,KCR,679525
+377,Nabil Crismatt,38,Out For 2026 Just So You Know,RHP,TEX,622503
+378,Blake Walston,39,The Rest Who Could Find Random Starts,LHP,ARI,686796
+379,Tommy Henry,39,The Rest Who Could Find Random Starts,LHP,ARI,674072
+380,Yu-Min Lin,39,The Rest Who Could Find Random Starts,LHP,ARI,801179
+381,Yilber Díaz,39,The Rest Who Could Find Random Starts,RHP,ARI,700270
+382,Bryce Jarvis,39,The Rest Who Could Find Random Starts,RHP,ARI,686826
+383,Cristian Mena,39,The Rest Who Could Find Random Starts,RHP,ARI,691441
+384,Joe Ross,39,The Rest Who Could Find Random Starts,RHP,FA,605452
+385,Joey Estes,39,The Rest Who Could Find Random Starts,RHP,ATH,683155
+386,Mason Barnett,39,The Rest Who Could Find Random Starts,RHP,ATH,686930
+387,Mitch Spence,39,The Rest Who Could Find Random Starts,RHP,KCR,687765
+388,Carlos Carrasco,39,The Rest Who Could Find Random Starts,RHP,ATL,471911
+389,Brandon Young,39,The Rest Who Could Find Random Starts,RHP,BAL,687064
+390,Kyle Wright,39,The Rest Who Could Find Random Starts,RHP,FA,657140
+391,Vince Velasquez,39,The Rest Who Could Find Random Starts,RHP,FA,592826
+392,Ky Bush,39,The Rest Who Could Find Random Starts,LHP,CHW,681066
+393,Grant Taylor,39,The Rest Who Could Find Random Starts,RHP,CHW,691799
+394,Drew Thorpe,39,The Rest Who Could Find Random Starts,RHP,CHW,689672
+395,Wikelman Gonzalez,39,The Rest Who Could Find Random Starts,RHP,CHW,682790
+396,Carson Spiers,39,The Rest Who Could Find Random Starts,RHP,CIN,686730
+397,Graham Ashcraft,39,The Rest Who Could Find Random Starts,RHP,CIN,668933
+398,Julian Aguiar,39,The Rest Who Could Find Random Starts,RHP,CIN,687924
+399,Doug Nikhazy,39,The Rest Who Could Find Random Starts,LHP,CLE,680951
+400,Emanuel De Jesus,39,The Rest Who Could Find Random Starts,LHP,DET,
+401,Ty Madden,39,The Rest Who Could Find Random Starts,RHP,DET,680744
+402,J.P. France,39,The Rest Who Could Find Random Starts,RHP,HOU,641585
+403,Sam Aldegheri,39,The Rest Who Could Find Random Starts,LHP,LAA,691951
+404,Chase Silseth,39,The Rest Who Could Find Random Starts,RHP,LAA,681217
+405,Victor Mederos,39,The Rest Who Could Find Random Starts,RHP,LAA,682989
+406,Cole Irvin,39,The Rest Who Could Find Random Starts,LHP,LAD,608344
+407,Ryan Gusto,39,The Rest Who Could Find Random Starts,RHP,MIA,687473
+408,Aaron Ashby,39,The Rest Who Could Find Random Starts,LHP,MIL,676879
+409,DL Hall,39,The Rest Who Could Find Random Starts,LHP,MIL,669084
+410,Drew Rom,39,The Rest Who Could Find Random Starts,LHP,MIL,680723
+411,Gerson Garabito,39,The Rest Who Could Find Random Starts,RHP,MIL,642520
+412,Justin Hagenman,39,The Rest Who Could Find Random Starts,RHP,NYM,663795
+413,Ryan Yarbrough,39,The Rest Who Could Find Random Starts,LHP,NYY,642232
+414,Paul Blackburn,39,The Rest Who Could Find Random Starts,RHP,NYY,621112
+415,Mason Montgomery,39,The Rest Who Could Find Random Starts,LHP,PIT,682254
+416,Mike Clevinger,39,The Rest Who Could Find Random Starts,LHP,PIT,605182
+417,Thomas Harrington,39,The Rest Who Could Find Random Starts,RHP,PIT,802419
+418,Marco Gonzales,39,The Rest Who Could Find Random Starts,LHP,SDP,594835
+419,Matt Waldron,39,The Rest Who Could Find Random Starts,RHP,SDP,663362
+420,Cooper Criswell,39,The Rest Who Could Find Random Starts,RHP,SEA,681867
+421,Dane Dunning,39,The Rest Who Could Find Random Starts,RHP,SEA,641540
+422,Randy Dobnak,39,The Rest Who Could Find Random Starts,RHP,SEA,677976
+423,JT Brubaker,39,The Rest Who Could Find Random Starts,RHP,SFG,664141
+424,Kai-Wei Teng,39,The Rest Who Could Find Random Starts,RHP,HOU,678906
+425,Jake Woodford,39,The Rest Who Could Find Random Starts,RHP,TBR,663765
+426,Jesse Scholtens,39,The Rest Who Could Find Random Starts,RHP,TBR,669947
+427,Austin Gomber,39,The Rest Who Could Find Random Starts,LHP,TEX,596295
+428,Jake Eder,39,The Rest Who Could Find Random Starts,LHP,WAS,671109
+429,José Ureña,40,"He’s In Japan, Jeez",RHP,FA,570632
