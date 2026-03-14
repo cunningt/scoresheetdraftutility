@@ -24,6 +24,7 @@ public class LeagueProperties {
     public static class LeagueConfig {
         private String id;
         private String name;
+        private int numTeams = 16; // default to 16 teams
 
         public String getId() {
             return id;
@@ -41,6 +42,14 @@ public class LeagueProperties {
             this.name = name;
         }
 
+        public int getNumTeams() {
+            return numTeams;
+        }
+
+        public void setNumTeams(int numTeams) {
+            this.numTeams = numTeams;
+        }
+
         public League toLeague() {
             // Derive dirLgw from id
             String dirLgw = "/FOR_WWW1/" + id;
@@ -55,7 +64,7 @@ public class LeagueProperties {
                 statsMl = "BL";
             }
 
-            return new League(id, name, dirLgw, statsMl, 1);
+            return new League(id, name, dirLgw, statsMl, numTeams);
         }
     }
 

@@ -1,6 +1,0 @@
-# Scoresheet Login Credentials
-# Copy this file to login.properties and fill in your credentials
-# login.properties is ignored by git
-scoresheet.login.firstname=YourFirstName
-scoresheet.login.lastname=YourLastName
-scoresheet.login.password=YourPassword

@@ -2,13 +2,12 @@ package com.scoutingthestatline.ranker.service;
 
 import com.scoutingthestatline.ranker.config.LeagueProperties;
 import com.scoutingthestatline.ranker.model.League;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.htmlunit.BrowserVersion;
 import org.htmlunit.WebClient;
-import org.htmlunit.html.*;
+import org.htmlunit.html.FrameWindow;
+import org.htmlunit.html.HtmlPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PreDestroy;
@@ -23,21 +22,13 @@ public class ScoresheetService {
     private static final Logger log = LoggerFactory.getLogger(ScoresheetService.class);
 
     private final LeagueProperties leagueProperties;
-
-    @Value("${scoresheet.login.firstname:}")
-    private String firstName;
-
-    @Value("${scoresheet.login.lastname:}")
-    private String lastName;
-
-    @Value("${scoresheet.login.password:}")
-    private String password;
+    private final PlayerMappingService playerMappingService;
 
     private WebClient webClient;
-    private boolean loggedIn = false;
 
-    public ScoresheetService(LeagueProperties leagueProperties) {
+    public ScoresheetService(LeagueProperties leagueProperties, PlayerMappingService playerMappingService) {
         this.leagueProperties = leagueProperties;
+        this.playerMappingService = playerMappingService;
     }
 
     public List<League> getLeagues() {
@@ -65,150 +56,29 @@ public class ScoresheetService {
         return webClient;
     }
 
-    private synchronized void ensureLoggedIn() throws IOException {
-        if (loggedIn) {
-            return;
-        }
-
-        log.info("Logging in to Scoresheet...");
-        WebClient client = getWebClient();
-
-        // Navigate to login page
-        HtmlPage loginPage = client.getPage("https://scoresheet.com/htm-lib/login.htm");
-        client.waitForBackgroundJavaScript(3000);
-
-        // Find the form by ID
-        HtmlForm form = (HtmlForm) loginPage.getElementById("main-form");
-
-        if (form == null) {
-            form = loginPage.getForms().stream().findFirst().orElse(null);
-        }
-
-        if (form == null) {
-            log.error("Could not find login form");
-            return;
-        }
-
-        // Fill in the form fields by name
-        HtmlInput firstNameInput = form.getInputByName("first_name");
-        HtmlInput lastNameInput = form.getInputByName("last_name");
-
-        // Password field is form.elements[2] - it's a password input without a name
-        // We need to find it by type
-        HtmlInput passwordInput = null;
-        for (HtmlElement el : form.getElementsByTagName("input")) {
-            if (el instanceof HtmlPasswordInput) {
-                passwordInput = (HtmlPasswordInput) el;
-                break;
-            }
-        }
-
-        if (passwordInput == null) {
-            log.error("Could not find password input");
-            return;
-        }
-
-        firstNameInput.setValue(firstName);
-        lastNameInput.setValue(lastName);
-        passwordInput.setValue(password);
-
-        // Now we need to manually set the hidden 'p' field with MD5 hash
-        // because HtmlUnit's JS might not execute the form's onsubmit properly
-        HtmlInput hiddenPassword = form.getInputByName("p");
-        String hashedPassword = DigestUtils.md5Hex(password + "M3");
-        hiddenPassword.setValue(hashedPassword);
-
-        // Find and click submit button
-        HtmlInput submitButton = form.getInputByValue("Login");
-        HtmlPage resultPage = submitButton.click();
-        client.waitForBackgroundJavaScript(5000);
-
-        // Check if login was successful by looking at the URL or page content
-        String resultUrl = resultPage.getUrl().toString();
-        log.info("Result URL after login: {}", resultUrl);
-
-        loggedIn = true;
-        log.info("Logged in successfully");
-    }
-
+    /**
+     * Fetch undrafted player IDs by taking all players from the scoresheet player list
+     * and subtracting the drafted players from the dynamic team pages.
+     * This approach uses public pages and doesn't require login.
+     */
     public Set<Integer> fetchUndraftedPlayerIds(League league) {
         try {
-            ensureLoggedIn();
-            WebClient client = getWebClient();
+            // Get all player IDs from the scoresheet player list, filtered by league type
+            Set<Integer> allPlayerIds = filterPlayerIdsByLeague(
+                    playerMappingService.getAllScoressheetIds(), league);
+            log.info("Total players from scoresheet list for {}: {}", league.id(), allPlayerIds.size());
 
-            String url = league.getUndraftedPlayersUrl();
-            log.info("Navigating to: {}", url);
+            // Fetch drafted player IDs from all team pages
+            Set<Integer> draftedIds = fetchDraftedPlayerIds(league);
+            log.info("Drafted players from dynamic team pages: {}", draftedIds.size());
 
-            HtmlPage page = client.getPage(url);
-            client.waitForBackgroundJavaScript(8000);
+            // Undrafted = all players - drafted players
+            Set<Integer> undraftedIds = new HashSet<>(allPlayerIds);
+            undraftedIds.removeAll(draftedIds);
 
-            Set<Integer> playerIds = new HashSet<>();
-            Set<Integer> draftedIds = new HashSet<>();
-            Set<Integer> rankingListIds = new HashSet<>();
-
-            // Get all frames on the page
-            List<FrameWindow> frames = page.getFrames();
-            log.info("Found {} frames on page", frames.size());
-
-            for (FrameWindow frame : frames) {
-                try {
-                    HtmlPage framePage = (HtmlPage) frame.getEnclosedPage();
-                    String frameHtml = framePage.getBody().asXml();
-
-                    // First, find players in the "Ranking list:" section - these should NOT be treated as drafted
-                    extractRankingListPlayerIds(frameHtml, rankingListIds);
-
-                    // Pattern for drafted players (with class="faint") - but exclude ranking list players
-                    extractDraftedPlayerIds(frameHtml, draftedIds, rankingListIds);
-
-                    // Pattern for all player links
-                    Pattern playerPattern = Pattern.compile(
-                            "<a[^>]*href=\"#p(\\d+)\"[^>]*id=\"p\\d+\"[^>]*target=\"Rank\"[^>]*>");
-                    Matcher playerMatcher = playerPattern.matcher(frameHtml);
-                    while (playerMatcher.find()) {
-                        try {
-                            int id = Integer.parseInt(playerMatcher.group(1));
-                            if (!draftedIds.contains(id)) {
-                                playerIds.add(id);
-                            }
-                        } catch (NumberFormatException e) {
-                            // ignore
-                        }
-                    }
-
-                } catch (Exception e) {
-                    log.debug("Error processing frame: {}", e.getMessage());
-                }
-            }
-
-            // Also check the main page body
-            String mainHtml = page.getBody().asXml();
-
-            // First, find players in the "Ranking list:" section
-            extractRankingListPlayerIds(mainHtml, rankingListIds);
-
-            // Then find drafted players, excluding ranking list
-            extractDraftedPlayerIds(mainHtml, draftedIds, rankingListIds);
-
-            Pattern playerPattern = Pattern.compile(
-                    "<a[^>]*href=\"#p(\\d+)\"[^>]*id=\"p\\d+\"[^>]*target=\"Rank\"[^>]*>");
-            Matcher playerMatcher = playerPattern.matcher(mainHtml);
-            while (playerMatcher.find()) {
-                try {
-                    int id = Integer.parseInt(playerMatcher.group(1));
-                    if (!draftedIds.contains(id)) {
-                        playerIds.add(id);
-                    }
-                } catch (NumberFormatException e) {
-                    // ignore
-                }
-            }
-
-            // Add ranking list players to undrafted set
-            playerIds.addAll(rankingListIds);
-            log.info("Found {} undrafted player IDs for league {} (excluded {} drafted, {} from ranking list)",
-                    playerIds.size(), league.id(), draftedIds.size(), rankingListIds.size());
-            return playerIds;
+            log.info("Found {} undrafted player IDs for league {} (total: {}, drafted: {})",
+                    undraftedIds.size(), league.id(), allPlayerIds.size(), draftedIds.size());
+            return undraftedIds;
 
         } catch (Exception e) {
             log.error("Error fetching undrafted players: {}", e.getMessage(), e);
@@ -216,140 +86,124 @@ public class ScoresheetService {
         }
     }
 
-    public Set<Integer> fetchAllPlayerIds(League league) {
+    /**
+     * Fetch drafted player IDs from all team dynamic pages.
+     * These pages are public and don't require login.
+     *
+     * For AL/NL leagues, the dynamic page shows AL IDs but we need to map them
+     * to the league-specific ID ranges:
+     * - AL batters: 0-999, NL batters: 1000-1999 (offset of 1000)
+     * - AL pitchers: 4000-4999, NL pitchers: 5000-5999 (offset of 1000)
+     */
+    public Set<Integer> fetchDraftedPlayerIds(League league) {
+        Set<Integer> draftedIds = new HashSet<>();
+        WebClient client = getWebClient();
+
+        // Only need to fetch one team page since all teams are shown on each page
         try {
-            ensureLoggedIn();
-            WebClient client = getWebClient();
+            Set<Integer> rawDraftedIds = fetchTeamPlayerIds(client, league, 1);
 
-            String url = league.getUndraftedPlayersUrl();
-            log.info("Fetching all players from: {}", url);
+            // For AL/NL leagues, add both the raw ID and the mapped ID
+            // This handles cases where the dynamic page shows AL IDs but we need NL IDs
+            String leagueId = league.id();
+            String leagueName = league.name();
+            boolean isAL = leagueName.startsWith("AL") || leagueId.contains("_AL") || leagueId.startsWith("AL_");
+            boolean isNL = leagueName.startsWith("NL") || leagueId.contains("_NL") || leagueId.startsWith("NL_");
 
-            HtmlPage page = client.getPage(url);
-            client.waitForBackgroundJavaScript(8000);
+            for (int id : rawDraftedIds) {
+                draftedIds.add(id);
 
-            Set<Integer> allPlayerIds = new HashSet<>();
-            Set<Integer> rankingListIds = new HashSet<>();
-
-            // Get all frames on the page
-            List<FrameWindow> frames = page.getFrames();
-
-            for (FrameWindow frame : frames) {
-                try {
-                    HtmlPage framePage = (HtmlPage) frame.getEnclosedPage();
-                    String frameHtml = framePage.getBody().asXml();
-
-                    // Extract ranking list players
-                    extractRankingListPlayerIds(frameHtml, rankingListIds);
-
-                    // Pattern for all player links (both drafted and undrafted)
-                    Pattern playerPattern = Pattern.compile(
-                            "<a[^>]*href=\"#p(\\d+)\"[^>]*id=\"p\\d+\"[^>]*target=\"Rank\"[^>]*>");
-                    Matcher playerMatcher = playerPattern.matcher(frameHtml);
-                    while (playerMatcher.find()) {
-                        try {
-                            int id = Integer.parseInt(playerMatcher.group(1));
-                            allPlayerIds.add(id);
-                        } catch (NumberFormatException e) {
-                            // ignore
-                        }
+                if (isNL) {
+                    // For NL leagues, also add the NL-mapped ID
+                    // AL batter (0-999) -> NL batter (1000-1999)
+                    // AL pitcher (4000-4999) -> NL pitcher (5000-5999)
+                    if (id > 0 && id < 1000) {
+                        draftedIds.add(id + 1000);
+                    } else if (id > 4000 && id < 5000) {
+                        draftedIds.add(id + 1000);
                     }
-
-                } catch (Exception e) {
-                    log.debug("Error processing frame: {}", e.getMessage());
+                } else if (isAL) {
+                    // For AL leagues, also add the AL-mapped ID
+                    // NL batter (1000-1999) -> AL batter (0-999)
+                    // NL pitcher (5000-5999) -> AL pitcher (4000-4999)
+                    if (id > 1000 && id < 2000) {
+                        draftedIds.add(id - 1000);
+                    } else if (id > 5000 && id < 6000) {
+                        draftedIds.add(id - 1000);
+                    }
                 }
             }
-
-            // Also check the main page body
-            String mainHtml = page.getBody().asXml();
-            extractRankingListPlayerIds(mainHtml, rankingListIds);
-
-            Pattern playerPattern = Pattern.compile(
-                    "<a[^>]*href=\"#p(\\d+)\"[^>]*id=\"p\\d+\"[^>]*target=\"Rank\"[^>]*>");
-            Matcher playerMatcher = playerPattern.matcher(mainHtml);
-            while (playerMatcher.find()) {
-                try {
-                    int id = Integer.parseInt(playerMatcher.group(1));
-                    allPlayerIds.add(id);
-                } catch (NumberFormatException e) {
-                    // ignore
-                }
-            }
-
-            // Add ranking list players
-            allPlayerIds.addAll(rankingListIds);
-
-            log.info("Found {} total player IDs for league {}", allPlayerIds.size(), league.id());
-            return allPlayerIds;
-
         } catch (Exception e) {
-            log.error("Error fetching all players: {}", e.getMessage(), e);
-            return Collections.emptySet();
+            log.warn("Error fetching drafted players: {}", e.getMessage());
         }
+
+        return draftedIds;
     }
 
     /**
-     * Extract player IDs from the "Ranking list:" section.
-     * These players may have faint styling but should be treated as undrafted.
+     * Fetch player IDs for a specific team from the dynamic team page.
      */
-    private void extractRankingListPlayerIds(String html, Set<Integer> rankingListIds) {
-        // Find the "Ranking list:" section
-        int rankingListStart = html.toLowerCase().indexOf("ranking list:");
-        if (rankingListStart == -1) {
-            return;
-        }
+    private Set<Integer> fetchTeamPlayerIds(WebClient client, League league, int teamN) throws IOException {
+        String url = league.getDynamicTeamUrl(teamN);
+        log.debug("Fetching from: {}", url);
 
-        // Look for the end of the ranking list section
-        String afterRankingList = html.substring(rankingListStart);
+        HtmlPage page = client.getPage(url);
+        client.waitForBackgroundJavaScript(8000);
 
-        // Find where the ranking list section likely ends
-        int endIndex = afterRankingList.length();
+        Set<Integer> playerIds = new HashSet<>();
 
-        // Check for position group headers (e.g., "C:", "1B:", "P:", etc.)
-        Pattern positionHeaderPattern = Pattern.compile("(?:<br[^>]*>|<p>|<div>|\\n)\\s*(?:C|1B|2B|3B|SS|OF|DH|P|SR)\\s*:", Pattern.CASE_INSENSITIVE);
-        Matcher positionMatcher = positionHeaderPattern.matcher(afterRankingList);
-        if (positionMatcher.find()) {
-            endIndex = Math.min(endIndex, positionMatcher.start());
-        }
-
-        // Also check for other structural breaks
-        String[] sectionBreaks = {"<hr", "<table", "Available players:"};
-        for (String breakPattern : sectionBreaks) {
-            int breakIdx = afterRankingList.toLowerCase().indexOf(breakPattern.toLowerCase());
-            if (breakIdx > 0) {
-                endIndex = Math.min(endIndex, breakIdx);
-            }
-        }
-
-        String rankingSection = afterRankingList.substring(0, endIndex);
-
-        // The ranking list is in a textarea with format: "166  P   Cody Ponce"
-        // Extract the textarea content first
-        Pattern textareaPattern = Pattern.compile("<textarea[^>]*name=\"ranks\"[^>]*>(.*?)</textarea>", Pattern.DOTALL);
-        Matcher textareaMatcher = textareaPattern.matcher(rankingSection);
-
-        if (textareaMatcher.find()) {
-            String textareaContent = textareaMatcher.group(1);
-
-            // Parse lines - format is: ID  POS  Name (e.g., "166  P   Cody Ponce")
-            Pattern linePattern = Pattern.compile("^\\s*(\\d+)\\s+", Pattern.MULTILINE);
-            Matcher lineMatcher = linePattern.matcher(textareaContent);
-            while (lineMatcher.find()) {
-                try {
-                    int id = Integer.parseInt(lineMatcher.group(1));
-                    rankingListIds.add(id);
-                } catch (NumberFormatException e) {
-                    // ignore
-                }
-            }
-        }
-
-        // Also check for anchor link patterns as fallback
-        Pattern playerIdPattern = Pattern.compile("href=\"#p(\\d+)\"");
-        Matcher playerMatcher = playerIdPattern.matcher(rankingSection);
-        while (playerMatcher.find()) {
+        // Get all frames on the page
+        List<FrameWindow> frames = page.getFrames();
+        for (FrameWindow frame : frames) {
             try {
-                int id = Integer.parseInt(playerMatcher.group(1));
-                rankingListIds.add(id);
+                HtmlPage framePage = (HtmlPage) frame.getEnclosedPage();
+                String frameHtml = framePage.getBody().asXml();
+                extractPlayerIdsFromHtml(frameHtml, playerIds);
+            } catch (Exception e) {
+                log.trace("Error processing frame: {}", e.getMessage());
+            }
+        }
+
+        // Also check the main page body
+        String mainHtml = page.getBody().asXml();
+        extractPlayerIdsFromHtml(mainHtml, playerIds);
+
+        return playerIds;
+    }
+
+    /**
+     * Extract player IDs from HTML content using various patterns.
+     */
+    private void extractPlayerIdsFromHtml(String html, Set<Integer> playerIds) {
+        // Pattern for dynamic team page: span id="t{teamNum}p{playerId}"
+        // e.g., id="t8p627" for team 8, player 627 (Aaron Judge)
+        Pattern teamPlayerPattern = Pattern.compile("id=\"t\\d+p(\\d+)\"");
+        Matcher teamPlayerMatcher = teamPlayerPattern.matcher(html);
+        while (teamPlayerMatcher.find()) {
+            try {
+                playerIds.add(Integer.parseInt(teamPlayerMatcher.group(1)));
+            } catch (NumberFormatException e) {
+                // ignore
+            }
+        }
+
+        // Pattern for player links: href="#p123"
+        Pattern hrefPattern = Pattern.compile("href=\"#p(\\d+)\"");
+        Matcher hrefMatcher = hrefPattern.matcher(html);
+        while (hrefMatcher.find()) {
+            try {
+                playerIds.add(Integer.parseInt(hrefMatcher.group(1)));
+            } catch (NumberFormatException e) {
+                // ignore
+            }
+        }
+
+        // Pattern for anchor id: id="p123"
+        Pattern idPattern = Pattern.compile("id=\"p(\\d+)\"");
+        Matcher idMatcher = idPattern.matcher(html);
+        while (idMatcher.find()) {
+            try {
+                playerIds.add(Integer.parseInt(idMatcher.group(1)));
             } catch (NumberFormatException e) {
                 // ignore
             }
@@ -357,23 +211,42 @@ public class ScoresheetService {
     }
 
     /**
-     * Extract drafted player IDs (those with faint class), excluding ranking list players.
+     * Fetch all player IDs from the scoresheet player list, filtered by league type.
      */
-    private void extractDraftedPlayerIds(String html, Set<Integer> draftedIds, Set<Integer> rankingListIds) {
-        Pattern draftedPattern = Pattern.compile(
-                "<a[^>]*href=\"#p(\\d+)\"[^>]*class=\"faint\"[^>]*>");
-        Matcher draftedMatcher = draftedPattern.matcher(html);
-        while (draftedMatcher.find()) {
-            try {
-                int id = Integer.parseInt(draftedMatcher.group(1));
-                // Only mark as drafted if NOT in the ranking list
-                if (!rankingListIds.contains(id)) {
-                    draftedIds.add(id);
-                }
-            } catch (NumberFormatException e) {
-                // ignore
-            }
+    public Set<Integer> fetchAllPlayerIds(League league) {
+        Set<Integer> allPlayerIds = filterPlayerIdsByLeague(
+                playerMappingService.getAllScoressheetIds(), league);
+        log.info("Found {} total player IDs from scoresheet player list for {}", allPlayerIds.size(), league.id());
+        return allPlayerIds;
+    }
+
+    /**
+     * Filter player IDs based on league type (AL/NL).
+     * AL leagues: 0 < id < 1000 or 4000 < id < 5000
+     * NL leagues: 1000 < id < 2000 or 5000 < id < 6000
+     * Other leagues (BL, etc.): no filtering
+     */
+    private Set<Integer> filterPlayerIdsByLeague(Set<Integer> playerIds, League league) {
+        String leagueId = league.id();
+        String leagueName = league.name();
+
+        boolean isAL = leagueName.startsWith("AL") || leagueId.contains("_AL") || leagueId.startsWith("AL_");
+        boolean isNL = leagueName.startsWith("NL") || leagueId.contains("_NL") || leagueId.startsWith("NL_");
+
+        if (isAL) {
+            // AL leagues: 0 < id < 1000 or 4000 < id < 5000
+            return playerIds.stream()
+                    .filter(id -> (id > 0 && id < 1000) || (id > 4000 && id < 5000))
+                    .collect(java.util.stream.Collectors.toSet());
+        } else if (isNL) {
+            // NL leagues: 1000 < id < 2000 or 5000 < id < 6000
+            return playerIds.stream()
+                    .filter(id -> (id > 1000 && id < 2000) || (id > 5000 && id < 6000))
+                    .collect(java.util.stream.Collectors.toSet());
         }
+
+        // No filtering for other league types (BL, etc.)
+        return playerIds;
     }
 
     @PreDestroy
@@ -382,7 +255,6 @@ public class ScoresheetService {
             try {
                 webClient.close();
                 webClient = null;
-                loggedIn = false;
             } catch (Exception e) {
                 log.warn("Error closing browser: {}", e.getMessage());
             }

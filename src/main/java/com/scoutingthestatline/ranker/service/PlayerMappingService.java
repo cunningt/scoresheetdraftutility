@@ -15,8 +15,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class PlayerMappingService {
@@ -136,6 +138,10 @@ public class PlayerMappingService {
     public int getMlbamId(int scoresheetId) {
         Player player = playersByScoresheet.get(scoresheetId);
         return player != null ? player.mlbamId() : 0;
+    }
+
+    public Set<Integer> getAllScoressheetIds() {
+        return new HashSet<>(playersByScoresheet.keySet());
     }
 
     private Double parseDoubleSafe(String value) {

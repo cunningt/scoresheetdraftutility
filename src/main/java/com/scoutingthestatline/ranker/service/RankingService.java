@@ -74,6 +74,11 @@ public class RankingService {
                 ? getAllPlayerIds(leagueId, refresh)
                 : getUndraftedPlayerIds(leagueId, refresh);
 
+        // Get undrafted player IDs to determine drafted status
+        Set<Integer> undraftedIds = showDrafted
+                ? getUndraftedPlayerIds(leagueId, refresh)
+                : playerIds; // If not showing drafted, all displayed players are undrafted
+
         List<RankedPlayer> rankedPlayers = new ArrayList<>();
 
         for (int scoresheetId : playerIds) {
@@ -112,8 +117,11 @@ public class RankingService {
             // Check if player is on active roster
             boolean onActiveRoster = projectionService.isOnActiveRoster(mlbamId);
 
+            // Check if player is drafted (not in the undrafted set)
+            boolean drafted = !undraftedIds.contains(scoresheetId);
+
             rankedPlayers.add(new RankedPlayer(0, player, battingProjection, pitchingProjection,
-                    savantBatting, savantPitching, adpData, pitcherList400Data, onActiveRoster, projectionSystem));
+                    savantBatting, savantPitching, adpData, pitcherList400Data, onActiveRoster, drafted, projectionSystem));
         }
 
         // Sort by appropriate metric
