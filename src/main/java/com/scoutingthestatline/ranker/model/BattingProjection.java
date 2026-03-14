@@ -37,6 +37,8 @@ public record BattingProjection(
     double war,
     double off,        // Offensive runs
     double def,        // Defensive runs (Fld)
+    double ubr,        // Ultimate Base Running
+    double bsr,        // Base Running Runs (total)
     double fpts,
     double spts
 ) {}

@@ -141,6 +141,8 @@ public class ProjectionService {
                             parseDoubleSafe(getColumn(row, colIndex, "WAR")),
                             parseDoubleSafe(getColumn(row, colIndex, "Off")),
                             parseDoubleSafe(getColumn(row, colIndex, "Fld")),
+                            parseDoubleSafe(getColumn(row, colIndex, "UBR")),
+                            parseDoubleSafe(getColumn(row, colIndex, "BsR")),
                             parseDoubleSafe(getColumn(row, colIndex, "FPTS")),
                             parseDoubleSafe(getColumn(row, colIndex, "SPTS"))
                     );

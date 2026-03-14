@@ -178,6 +178,30 @@ public class RankedPlayer {
         return 0.0;
     }
 
+    /**
+     * Returns SS/SIM (Scoresheet Simulation) value for batters.
+     * Formula: SSSIM = -0.34 + 0.94×SS_RAA + 1.31×BRR + 0.83×ERRA + 0.61×RNG + 0.050×PA
+     * Where:
+     * - SS_RAA = Off (offensive runs)
+     * - BRR = UBR (ultimate base running)
+     * - ERRA = Fld (fielding runs as proxy for error runs)
+     * - RNG = Player's scoresheet range at primary position
+     * - PA = Plate appearances
+     */
+    public double getBatterSsSim() {
+        if (player.isPitcher() || battingProjection == null) {
+            return 0.0;
+        }
+
+        double ssRaa = battingProjection.off();
+        double brr = battingProjection.ubr();
+        double erra = battingProjection.def();  // Fld as proxy for ERRA
+        double rng = player.getPrimaryPositionRange();
+        double pa = battingProjection.plateAppearances();
+
+        return -0.34 + (0.94 * ssRaa) + (1.31 * brr) + (0.83 * erra) + (0.61 * rng) + (0.050 * pa);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

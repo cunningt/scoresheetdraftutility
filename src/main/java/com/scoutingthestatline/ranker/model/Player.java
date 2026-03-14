@@ -127,4 +127,23 @@ public record Player(
         if (val > 0) return "+" + val;
         return String.valueOf(val);
     }
+
+    /**
+     * Returns the range for the player's primary position.
+     * Returns 0 for pitchers and catchers (no range applicable).
+     */
+    public double getPrimaryPositionRange() {
+        if (isPitcher() || isCatcher()) {
+            return 0.0;
+        }
+        return switch (position) {
+            case "1B" -> range1B != null ? range1B : 0.0;
+            case "2B" -> range2B != null ? range2B : 0.0;
+            case "3B" -> range3B != null ? range3B : 0.0;
+            case "SS" -> rangeSS != null ? rangeSS : 0.0;
+            case "OF", "LF", "CF", "RF" -> rangeOF != null ? rangeOF : 0.0;
+            case "DH" -> 0.0;
+            default -> 0.0;
+        };
+    }
 }

@@ -428,6 +428,7 @@
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="15" data-type="num">wRC+</th>
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="16" data-type="num">Off</th>
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="17" data-type="num">Def</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="sortable numeric" data-col="18" data-type="num" title="Scoresheet Simulation Value">SS/SIM</th>
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric" title="BA/OBP/SLG adjustment vs RHP" style="font-size: 10px;">vsR</th>
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric" title="BA/OBP/SLG adjustment vs LHP" style="font-size: 10px;">vsL</th>
                             <!-- Savant batting stats (non-pitchers, savant projection) -->
@@ -518,6 +519,8 @@
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.off, 1, 1)} : '-'"></td>
                             <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.def, 1, 1)} : '-'"></td>
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="numeric"
+                                th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.batterSsSim, 1, 1)} : '-'"></td>
                             <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric splits"
                                 th:text="${rp.player.splitsVsR}">-4/-7/-6</td>
                             <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric splits"
