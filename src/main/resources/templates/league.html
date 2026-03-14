@@ -314,6 +314,12 @@
             font-size: 11px;
         }
 
+        /* Roster Resource Category */
+        td.rr-category {
+            font-size: 10px;
+            color: #666;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .controls { flex-direction: column; align-items: stretch; }
@@ -399,7 +405,8 @@
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher'}" style="font-size: 10px;">Elig</th>
                             <th class="sortable" data-col="4" data-type="text" style="width: 40px;">Team</th>
                             <th class="sortable numeric" data-col="5" data-type="num" style="width: 35px;">Age</th>
-                            <th th:if="${selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="sortable numeric" data-col="6" data-type="num" style="width: 45px;">WAR</th>
+                            <th th:if="${activeRosterOnly}" class="sortable" data-col="6" data-type="text" style="width: 80px;" title="Roster Resource Category">RR Cat</th>
+                            <th th:if="${selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="sortable numeric" data-col="7" data-type="num" style="width: 45px;">WAR</th>
                             <th th:if="${selectedProjection == 'savant'}" class="sortable numeric" data-col="6" data-type="num" style="width: 45px;" title="Barrel% for batters, 100-xERA for pitchers">Rank</th>
                             <!-- ADP columns -->
                             <th th:if="${selectedProjection == 'adp'}" class="sortable numeric" data-col="6" data-type="num" style="width: 50px;" title="Average Draft Position">ADP</th>
@@ -466,6 +473,8 @@
                                 th:text="${rp.player.positionsWithRanges}">2B (4.25), SS (4.78)</td>
                             <td class="team" th:text="${rp.projectedTeam}">NYY</td>
                             <td class="age numeric" th:text="${rp.player.age}">25</td>
+                            <td th:if="${activeRosterOnly}" class="rr-category"
+                                th:text="${rp.rosterResourceCategory != null} ? ${#strings.replace(#strings.replace(rp.rosterResourceCategory, 'Projected ', ''), 'Starting ', '')} : '-'">Lineup</td>
                             <td th:if="${selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="war numeric"
                                 th:classappend="${rp.war >= 5} ? 'war-elite' : (${rp.war >= 3} ? 'war-great' : (${rp.war >= 2} ? 'war-good' : (${rp.war >= 1} ? 'war-average' : (${rp.war >= 0} ? 'war-below' : 'war-negative'))))"
                                 th:text="${rp.hasProjection()} ? ${#numbers.formatDecimal(rp.war, 1, 1)} : '-'">2.5</td>

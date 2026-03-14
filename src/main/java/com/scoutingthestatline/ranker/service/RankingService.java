@@ -114,14 +114,15 @@ public class RankingService {
             // Always load ADP data if available
             adpData = projectionService.getADPData(mlbamId).orElse(null);
 
-            // Check if player is on active roster
+            // Check if player is on active roster and get category
             boolean onActiveRoster = projectionService.isOnActiveRoster(mlbamId);
+            String rosterResourceCategory = projectionService.getRosterResourceCategory(mlbamId).orElse(null);
 
             // Check if player is drafted (not in the undrafted set)
             boolean drafted = !undraftedIds.contains(scoresheetId);
 
             rankedPlayers.add(new RankedPlayer(0, player, battingProjection, pitchingProjection,
-                    savantBatting, savantPitching, adpData, pitcherList400Data, onActiveRoster, drafted, projectionSystem));
+                    savantBatting, savantPitching, adpData, pitcherList400Data, onActiveRoster, rosterResourceCategory, drafted, projectionSystem));
         }
 
         // Sort by appropriate metric

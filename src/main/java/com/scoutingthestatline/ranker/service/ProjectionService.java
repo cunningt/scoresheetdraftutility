@@ -48,8 +48,8 @@ public class ProjectionService {
     // NFBC ID to MLB ID mapping
     private final Map<Integer, Integer> nfbcToMlbId = new HashMap<>();
 
-    // Active roster players (MLB IDs)
-    private final Set<Integer> activeRosterPlayers = new HashSet<>();
+    // Active roster players (MLB ID -> section/category)
+    private final Map<Integer, String> activeRosterPlayers = new HashMap<>();
 
     @PostConstruct
     public void loadProjections() throws IOException, CsvException {
@@ -487,8 +487,9 @@ public class ProjectionService {
                 String[] row = rows.get(i);
                 try {
                     int mlbId = parseIntSafe(getColumn(row, colIndex, "mlb_id"));
-                    if (mlbId > 0) {
-                        activeRosterPlayers.add(mlbId);
+                    String section = getColumn(row, colIndex, "section");
+                    if (mlbId > 0 && !section.isEmpty()) {
+                        activeRosterPlayers.put(mlbId, section);
                     }
                 } catch (Exception e) {
                     // ignore
@@ -600,7 +601,11 @@ public class ProjectionService {
     }
 
     public boolean isOnActiveRoster(int mlbamId) {
-        return activeRosterPlayers.contains(mlbamId);
+        return activeRosterPlayers.containsKey(mlbamId);
+    }
+
+    public Optional<String> getRosterResourceCategory(int mlbamId) {
+        return Optional.ofNullable(activeRosterPlayers.get(mlbamId));
     }
 
     public Optional<PitcherList400Data> getPitcherList400Data(int mlbamId) {
