@@ -26,5 +26,5 @@ COPY --from=build /app/target/league-ranker-0.0.1-SNAPSHOT.jar app.jar
 # Expose the port
 EXPOSE 8888
 
-# Run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Run the application - use PORT env var if set (for Render), otherwise default to 8888
+ENTRYPOINT ["sh", "-c", "java -jar app.jar --server.port=${PORT:-8888}"]
