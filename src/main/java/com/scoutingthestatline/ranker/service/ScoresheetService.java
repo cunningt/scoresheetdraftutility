@@ -208,7 +208,7 @@ public class ScoresheetService {
                 idColumnName = "SSID"; // Default
             }
 
-            // Fetch all data from the sheet
+            // Try Sheets API first, fall back to CSV export for Excel files
             String apiUrl = String.format(
                 "https://sheets.googleapis.com/v4/spreadsheets/%s/values/%s",
                 spreadsheetId, URLEncoder.encode(sheetName, StandardCharsets.UTF_8)
@@ -222,12 +222,15 @@ public class ScoresheetService {
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            if (response.statusCode() != 200) {
+            if (response.statusCode() == 200) {
+                draftedIds = parseSheetValues(response.body(), idColumnName);
+            } else if (response.statusCode() == 400 && response.body().contains("not supported for this document")) {
+                // Excel file - try CSV export instead
+                draftedIds = fetchDraftedIdsViaCsvExport(accessToken, spreadsheetId, sheetGid, idColumnName);
+            } else {
                 log.error("Google Sheets API error: {} - {}", response.statusCode(), response.body());
                 return draftedIds;
             }
-
-            draftedIds = parseSheetValues(response.body(), idColumnName);
             log.info("Fetched {} drafted player IDs from Google Sheet for league {}", draftedIds.size(), league.id());
 
         } catch (Exception e) {
@@ -356,6 +359,105 @@ public class ScoresheetService {
     }
 
     /**
+     * Fetch drafted player IDs via CSV export (works for Excel files in Google Drive).
+     */
+    private Set<Integer> fetchDraftedIdsViaCsvExport(String accessToken, String spreadsheetId,
+                                                      String sheetGid, String idColumnName) {
+        Set<Integer> ids = new HashSet<>();
+
+        try {
+            // Build CSV export URL
+            String gid = (sheetGid != null && !sheetGid.isEmpty()) ? sheetGid : "0";
+            String csvUrl = String.format(
+                "https://docs.google.com/spreadsheets/d/%s/export?format=csv&gid=%s",
+                spreadsheetId, gid
+            );
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(csvUrl))
+                    .header("Authorization", "Bearer " + accessToken)
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                log.error("CSV export error: {} - {}", response.statusCode(),
+                          response.body().substring(0, Math.min(500, response.body().length())));
+                return ids;
+            }
+
+            // Parse CSV
+            String[] lines = response.body().split("\n");
+            if (lines.length == 0) {
+                return ids;
+            }
+
+            // Parse header to find SSID column
+            String[] header = parseCsvLine(lines[0]);
+            int ssidColumnIndex = -1;
+            String targetColumn = idColumnName.toUpperCase();
+            for (int i = 0; i < header.length; i++) {
+                String h = header[i].trim().toUpperCase();
+                if (targetColumn.equals(h) || "SSID".equals(h) || "SS_ID".equals(h) ||
+                    "SCORESHEET_ID".equals(h) || "SS ID".equals(h) || "SSBB".equals(h)) {
+                    ssidColumnIndex = i;
+                    break;
+                }
+            }
+
+            if (ssidColumnIndex == -1) {
+                ssidColumnIndex = 0;
+            }
+
+            // Parse data rows
+            for (int i = 1; i < lines.length; i++) {
+                String[] row = parseCsvLine(lines[i]);
+                if (row.length > ssidColumnIndex) {
+                    String cellValue = row[ssidColumnIndex].trim();
+                    try {
+                        int id = Integer.parseInt(cellValue);
+                        if (id > 0) {
+                            ids.add(id);
+                        }
+                    } catch (NumberFormatException e) {
+                        // Skip non-numeric values
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            log.error("Error fetching CSV export: {}", e.getMessage(), e);
+        }
+
+        return ids;
+    }
+
+    /**
+     * Parse a CSV line, handling quoted values.
+     */
+    private String[] parseCsvLine(String line) {
+        List<String> values = new ArrayList<>();
+        StringBuilder current = new StringBuilder();
+        boolean inQuotes = false;
+
+        for (int i = 0; i < line.length(); i++) {
+            char c = line.charAt(i);
+            if (c == '"') {
+                inQuotes = !inQuotes;
+            } else if (c == ',' && !inQuotes) {
+                values.add(current.toString().trim());
+                current = new StringBuilder();
+            } else {
+                current.append(c);
+            }
+        }
+        values.add(current.toString().trim());
+
+        return values.toArray(new String[0]);
+    }
+
+    /**
      * Parse the Google Sheets API values response to extract player ID column.
      */
     private Set<Integer> parseSheetValues(String json, String idColumnName) {
@@ -397,7 +499,6 @@ public class ScoresheetService {
             }
 
             if (ssidColumnIndex == -1) {
-                // Try first column as fallback
                 ssidColumnIndex = 0;
             }
 
