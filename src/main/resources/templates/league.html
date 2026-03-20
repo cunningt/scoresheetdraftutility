@@ -382,8 +382,8 @@
                 </label>
             </div>
 
-            <a th:href="@{/league/{id}/refresh(id=${league.id}, projection=${selectedProjection}, showDrafted=${showDrafted}, activeRosterOnly=${activeRosterOnly})}"
-               class="btn btn-refresh">Refresh Data</a>
+            <a th:href="@{/league/{id}/refresh(id=${league.id}, projection=${selectedProjection}, position=${selectedPosition}, showDrafted=${showDrafted}, activeRosterOnly=${activeRosterOnly})}"
+               class="btn btn-refresh">Refresh Draft</a>
 
             <div class="stats-info">
                 <span><strong th:text="${#lists.size(rankedPlayers)}">0</strong> players</span>

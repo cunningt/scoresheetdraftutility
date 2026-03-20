@@ -8,10 +8,17 @@ import org.htmlunit.html.FrameWindow;
 import org.htmlunit.html.HtmlPage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import jakarta.annotation.PreDestroy;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,12 +30,28 @@ public class ScoresheetService {
 
     private final LeagueProperties leagueProperties;
     private final PlayerMappingService playerMappingService;
+    private final HttpClient httpClient;
+
+    @Value("${google.oauth.client-id:}")
+    private String googleClientId;
+
+    @Value("${google.oauth.client-secret:}")
+    private String googleClientSecret;
+
+    @Value("${google.oauth.refresh-token:}")
+    private String googleRefreshToken;
+
+    private String cachedAccessToken;
+    private long accessTokenExpiry;
 
     private WebClient webClient;
 
     public ScoresheetService(LeagueProperties leagueProperties, PlayerMappingService playerMappingService) {
         this.leagueProperties = leagueProperties;
         this.playerMappingService = playerMappingService;
+        this.httpClient = HttpClient.newBuilder()
+                .followRedirects(HttpClient.Redirect.NORMAL)
+                .build();
     }
 
     public List<League> getLeagues() {
@@ -87,7 +110,7 @@ public class ScoresheetService {
     }
 
     /**
-     * Fetch drafted player IDs from all team dynamic pages.
+     * Fetch drafted player IDs from all team dynamic pages or from a Google Sheet.
      * These pages are public and don't require login.
      *
      * For AL/NL leagues, the dynamic page shows AL IDs but we need to map them
@@ -96,6 +119,11 @@ public class ScoresheetService {
      * - AL pitchers: 4000-4999, NL pitchers: 5000-5999 (offset of 1000)
      */
     public Set<Integer> fetchDraftedPlayerIds(League league) {
+        // If league has a Google Sheet for draft tracking, use that instead
+        if (league.hasDraftSheet()) {
+            return fetchDraftedPlayerIdsFromSheet(league);
+        }
+
         Set<Integer> draftedIds = new HashSet<>();
         WebClient client = getWebClient();
 
@@ -138,6 +166,370 @@ public class ScoresheetService {
         }
 
         return draftedIds;
+    }
+
+    /**
+     * Fetch drafted player IDs from a Google Sheet using OAuth.
+     * Looks for a column named "SSID" in the header row.
+     */
+    private Set<Integer> fetchDraftedPlayerIdsFromSheet(League league) {
+        Set<Integer> draftedIds = new HashSet<>();
+
+        // Check if OAuth is configured
+        if (googleRefreshToken == null || googleRefreshToken.isEmpty()) {
+            log.error("Google OAuth refresh token not configured - cannot fetch from Google Sheet");
+            return draftedIds;
+        }
+
+        try {
+            // Get access token
+            String accessToken = getGoogleAccessToken();
+            if (accessToken == null) {
+                log.error("Failed to get Google access token");
+                return draftedIds;
+            }
+
+            // Fetch sheet data using Google Sheets API
+            String spreadsheetId = league.draftSheetId();
+            String sheetGid = league.draftSheetGid();
+
+            // Use sheet name from config, or look up by gid
+            String sheetName = league.draftSheetName();
+            if (sheetName == null || sheetName.isEmpty()) {
+                sheetName = getSheetNameFromGid(accessToken, spreadsheetId, sheetGid);
+                if (sheetName == null) {
+                    sheetName = "Sheet1"; // Default fallback
+                }
+            }
+
+            // Get column name from config
+            String idColumnName = league.draftSheetIdColumn();
+            if (idColumnName == null || idColumnName.isEmpty()) {
+                idColumnName = "SSID"; // Default
+            }
+
+            // Fetch all data from the sheet
+            String apiUrl = String.format(
+                "https://sheets.googleapis.com/v4/spreadsheets/%s/values/%s",
+                spreadsheetId, URLEncoder.encode(sheetName, StandardCharsets.UTF_8)
+            );
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(apiUrl))
+                    .header("Authorization", "Bearer " + accessToken)
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                log.error("Google Sheets API error: {} - {}", response.statusCode(), response.body());
+                return draftedIds;
+            }
+
+            draftedIds = parseSheetValues(response.body(), idColumnName);
+            log.info("Fetched {} drafted player IDs from Google Sheet for league {}", draftedIds.size(), league.id());
+
+        } catch (Exception e) {
+            log.error("Error fetching drafted players from Google Sheet: {}", e.getMessage(), e);
+        }
+
+        return draftedIds;
+    }
+
+    /**
+     * Get a Google access token using the refresh token.
+     */
+    private String getGoogleAccessToken() {
+        // Check if we have a valid cached token
+        if (cachedAccessToken != null && System.currentTimeMillis() < accessTokenExpiry) {
+            return cachedAccessToken;
+        }
+
+        try {
+            String tokenUrl = "https://oauth2.googleapis.com/token";
+            String body = String.format(
+                "client_id=%s&client_secret=%s&refresh_token=%s&grant_type=refresh_token",
+                URLEncoder.encode(googleClientId, StandardCharsets.UTF_8),
+                URLEncoder.encode(googleClientSecret, StandardCharsets.UTF_8),
+                URLEncoder.encode(googleRefreshToken, StandardCharsets.UTF_8)
+            );
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(tokenUrl))
+                    .header("Content-Type", "application/x-www-form-urlencoded")
+                    .POST(HttpRequest.BodyPublishers.ofString(body))
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                log.error("Failed to refresh access token: {} - {}", response.statusCode(), response.body());
+                return null;
+            }
+
+            // Parse JSON response to get access_token
+            String json = response.body();
+            String accessToken = extractJsonString(json, "access_token");
+            int expiresIn = extractJsonInt(json, "expires_in", 3600);
+
+            // Cache the token with some buffer time
+            cachedAccessToken = accessToken;
+            accessTokenExpiry = System.currentTimeMillis() + (expiresIn - 60) * 1000L;
+
+            return accessToken;
+
+        } catch (Exception e) {
+            log.error("Error refreshing Google access token: {}", e.getMessage(), e);
+            return null;
+        }
+    }
+
+    /**
+     * Get sheet name from gid using the spreadsheets API.
+     */
+    private String getSheetNameFromGid(String accessToken, String spreadsheetId, String gid) {
+        if (gid == null || gid.isEmpty()) {
+            return null;
+        }
+
+        try {
+            String apiUrl = String.format(
+                "https://sheets.googleapis.com/v4/spreadsheets/%s?fields=sheets.properties",
+                spreadsheetId
+            );
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(apiUrl))
+                    .header("Authorization", "Bearer " + accessToken)
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            if (response.statusCode() != 200) {
+                log.warn("Failed to get sheet metadata: {}", response.statusCode());
+                return null;
+            }
+
+            // Parse JSON to find sheet with matching gid
+            String json = response.body();
+            int targetGid = Integer.parseInt(gid);
+
+            // Simple JSON parsing for sheets array
+            int sheetsStart = json.indexOf("\"sheets\"");
+            if (sheetsStart == -1) return null;
+
+            // Find each sheetId and title pair
+            int searchPos = sheetsStart;
+            while (true) {
+                int sheetIdPos = json.indexOf("\"sheetId\"", searchPos);
+                if (sheetIdPos == -1) break;
+
+                int colonPos = json.indexOf(":", sheetIdPos);
+                int commaPos = json.indexOf(",", colonPos);
+                if (commaPos == -1) commaPos = json.indexOf("}", colonPos);
+
+                String sheetIdStr = json.substring(colonPos + 1, commaPos).trim();
+                int sheetId = Integer.parseInt(sheetIdStr);
+
+                if (sheetId == targetGid) {
+                    // Find the title for this sheet
+                    int titlePos = json.lastIndexOf("\"title\"", sheetIdPos);
+                    if (titlePos == -1) titlePos = json.indexOf("\"title\"", sheetIdPos);
+                    if (titlePos != -1) {
+                        int titleColonPos = json.indexOf(":", titlePos);
+                        int titleQuoteStart = json.indexOf("\"", titleColonPos + 1);
+                        int titleQuoteEnd = json.indexOf("\"", titleQuoteStart + 1);
+                        return json.substring(titleQuoteStart + 1, titleQuoteEnd);
+                    }
+                }
+
+                searchPos = commaPos + 1;
+            }
+
+        } catch (Exception e) {
+            log.warn("Error getting sheet name from gid: {}", e.getMessage());
+        }
+
+        return null;
+    }
+
+    /**
+     * Parse the Google Sheets API values response to extract player ID column.
+     */
+    private Set<Integer> parseSheetValues(String json, String idColumnName) {
+        Set<Integer> ids = new HashSet<>();
+
+        try {
+            // Find the values array
+            int valuesStart = json.indexOf("\"values\"");
+            if (valuesStart == -1) {
+                return ids;
+            }
+
+            int arrayStart = json.indexOf("[", valuesStart);
+            int arrayEnd = findMatchingBracket(json, arrayStart);
+            String valuesArray = json.substring(arrayStart, arrayEnd + 1);
+
+            // Parse rows
+            List<List<String>> rows = parseJsonArray(valuesArray);
+            if (rows.isEmpty()) {
+                return ids;
+            }
+
+            // Find ID column in header - check for configured name and common alternatives
+            List<String> header = rows.get(0);
+            int ssidColumnIndex = -1;
+            String targetColumn = idColumnName.toUpperCase();
+            for (int i = 0; i < header.size(); i++) {
+                // Strip quotes and whitespace from header value
+                String h = header.get(i).trim();
+                if (h.startsWith("\"") && h.endsWith("\"")) {
+                    h = h.substring(1, h.length() - 1);
+                }
+                h = h.trim().toUpperCase();
+                if (targetColumn.equals(h) || "SSID".equals(h) || "SS_ID".equals(h) ||
+                    "SCORESHEET_ID".equals(h) || "SS ID".equals(h) || "SSBB".equals(h)) {
+                    ssidColumnIndex = i;
+                    break;
+                }
+            }
+
+            if (ssidColumnIndex == -1) {
+                // Try first column as fallback
+                ssidColumnIndex = 0;
+            }
+
+            // Parse data rows
+            for (int i = 1; i < rows.size(); i++) {
+                List<String> row = rows.get(i);
+                if (row.size() > ssidColumnIndex) {
+                    String cellValue = row.get(ssidColumnIndex).trim();
+                    try {
+                        int id = Integer.parseInt(cellValue);
+                        if (id > 0) {
+                            ids.add(id);
+                        }
+                    } catch (NumberFormatException e) {
+                        // Skip non-numeric values
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            log.error("Error parsing sheet values: {}", e.getMessage(), e);
+        }
+
+        return ids;
+    }
+
+    /**
+     * Simple JSON array parser for Google Sheets values response.
+     */
+    private List<List<String>> parseJsonArray(String json) {
+        List<List<String>> rows = new ArrayList<>();
+
+        int pos = 1; // Skip opening [
+        while (pos < json.length()) {
+            // Find next row array
+            int rowStart = json.indexOf("[", pos);
+            if (rowStart == -1) break;
+
+            int rowEnd = findMatchingBracket(json, rowStart);
+            String rowJson = json.substring(rowStart + 1, rowEnd);
+
+            // Parse row values
+            List<String> row = new ArrayList<>();
+            int valuePos = 0;
+            while (valuePos < rowJson.length()) {
+                // Skip whitespace (including newlines) and commas
+                while (valuePos < rowJson.length()) {
+                    char c = rowJson.charAt(valuePos);
+                    if (c == ',' || c == ' ' || c == '\n' || c == '\r' || c == '\t') {
+                        valuePos++;
+                    } else {
+                        break;
+                    }
+                }
+                if (valuePos >= rowJson.length()) break;
+
+                if (rowJson.charAt(valuePos) == '"') {
+                    // Quoted string
+                    int endQuote = valuePos + 1;
+                    while (endQuote < rowJson.length()) {
+                        if (rowJson.charAt(endQuote) == '"' && rowJson.charAt(endQuote - 1) != '\\') {
+                            break;
+                        }
+                        endQuote++;
+                    }
+                    if (endQuote >= rowJson.length()) break;
+                    row.add(rowJson.substring(valuePos + 1, endQuote));
+                    valuePos = endQuote + 1;
+                } else {
+                    // Unquoted value (number, null, etc.)
+                    int endValue = valuePos;
+                    while (endValue < rowJson.length() && rowJson.charAt(endValue) != ',' && rowJson.charAt(endValue) != ']') {
+                        endValue++;
+                    }
+                    row.add(rowJson.substring(valuePos, endValue).trim());
+                    valuePos = endValue;
+                }
+            }
+
+            rows.add(row);
+            pos = rowEnd + 1;
+        }
+
+        return rows;
+    }
+
+    private int findMatchingBracket(String json, int start) {
+        int depth = 1;
+        int pos = start + 1;
+        boolean inString = false;
+
+        while (pos < json.length() && depth > 0) {
+            char c = json.charAt(pos);
+            if (c == '"' && (pos == 0 || json.charAt(pos - 1) != '\\')) {
+                inString = !inString;
+            } else if (!inString) {
+                if (c == '[') depth++;
+                else if (c == ']') depth--;
+            }
+            pos++;
+        }
+
+        return pos - 1;
+    }
+
+    private String extractJsonString(String json, String key) {
+        String pattern = "\"" + key + "\"";
+        int keyPos = json.indexOf(pattern);
+        if (keyPos == -1) return null;
+
+        int colonPos = json.indexOf(":", keyPos);
+        int quoteStart = json.indexOf("\"", colonPos);
+        int quoteEnd = json.indexOf("\"", quoteStart + 1);
+        return json.substring(quoteStart + 1, quoteEnd);
+    }
+
+    private int extractJsonInt(String json, String key, int defaultValue) {
+        String pattern = "\"" + key + "\"";
+        int keyPos = json.indexOf(pattern);
+        if (keyPos == -1) return defaultValue;
+
+        int colonPos = json.indexOf(":", keyPos);
+        int start = colonPos + 1;
+        while (start < json.length() && !Character.isDigit(json.charAt(start))) start++;
+        int end = start;
+        while (end < json.length() && Character.isDigit(json.charAt(end))) end++;
+
+        try {
+            return Integer.parseInt(json.substring(start, end));
+        } catch (NumberFormatException e) {
+            return defaultValue;
+        }
     }
 
     /**

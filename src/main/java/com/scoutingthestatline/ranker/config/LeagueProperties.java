@@ -25,6 +25,10 @@ public class LeagueProperties {
         private String id;
         private String name;
         private int numTeams = 16; // default to 16 teams
+        private String draftSheetId; // Google Sheet ID for draft tracking (optional)
+        private String draftSheetGid; // Google Sheet tab/gid (optional, defaults to 0)
+        private String draftSheetName; // Google Sheet tab name (optional, alternative to gid)
+        private String draftSheetIdColumn; // Column name for scoresheet ID (optional, defaults to SSID)
 
         public String getId() {
             return id;
@@ -50,6 +54,38 @@ public class LeagueProperties {
             this.numTeams = numTeams;
         }
 
+        public String getDraftSheetId() {
+            return draftSheetId;
+        }
+
+        public void setDraftSheetId(String draftSheetId) {
+            this.draftSheetId = draftSheetId;
+        }
+
+        public String getDraftSheetGid() {
+            return draftSheetGid;
+        }
+
+        public void setDraftSheetGid(String draftSheetGid) {
+            this.draftSheetGid = draftSheetGid;
+        }
+
+        public String getDraftSheetName() {
+            return draftSheetName;
+        }
+
+        public void setDraftSheetName(String draftSheetName) {
+            this.draftSheetName = draftSheetName;
+        }
+
+        public String getDraftSheetIdColumn() {
+            return draftSheetIdColumn;
+        }
+
+        public void setDraftSheetIdColumn(String draftSheetIdColumn) {
+            this.draftSheetIdColumn = draftSheetIdColumn;
+        }
+
         public League toLeague() {
             // Derive dirLgw from id
             String dirLgw = "/FOR_WWW1/" + id;
@@ -64,7 +100,7 @@ public class LeagueProperties {
                 statsMl = "BL";
             }
 
-            return new League(id, name, dirLgw, statsMl, numTeams);
+            return new League(id, name, dirLgw, statsMl, numTeams, draftSheetId, draftSheetGid, draftSheetName, draftSheetIdColumn);
         }
     }
 

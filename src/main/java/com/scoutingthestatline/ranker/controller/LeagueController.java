@@ -69,8 +69,13 @@ public class LeagueController {
 
     @GetMapping("/league/{leagueId}/refresh")
     public String refreshLeague(@PathVariable String leagueId,
-                                @RequestParam(defaultValue = "steamer") String projection) {
+                                @RequestParam(defaultValue = "steamer") String projection,
+                                @RequestParam(defaultValue = "BATTER") String position,
+                                @RequestParam(defaultValue = "false") boolean showDrafted,
+                                @RequestParam(defaultValue = "false") boolean activeRosterOnly) {
         rankingService.clearCache(leagueId);
-        return "redirect:/league/" + leagueId + "?projection=" + projection + "&refresh=true";
+        return "redirect:/league/" + leagueId + "?projection=" + projection +
+               "&position=" + position + "&showDrafted=" + showDrafted +
+               "&activeRosterOnly=" + activeRosterOnly + "&refresh=true";
     }
 }
