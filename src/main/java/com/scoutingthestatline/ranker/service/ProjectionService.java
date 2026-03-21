@@ -29,7 +29,7 @@ public class ProjectionService {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectionService.class);
 
-    private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "oopsy-peak", "steamer", "zips", "savant", "adp", "pitcherlist400");
+    private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "oopsy-peak", "steamer", "zips", "spring", "savant", "adp", "pitcherlist400");
 
     // Map: projection system -> mlbamId -> projection
     private final Map<String, Map<Integer, BattingProjection>> battingProjections = new HashMap<>();
@@ -67,6 +67,9 @@ public class ProjectionService {
                 loadADPData();
             } else if ("pitcherlist400".equals(system)) {
                 loadPitcherList400Data();
+            } else if ("spring".equals(system)) {
+                loadSpringTrainingBatting();
+                loadSpringTrainingPitching();
             } else {
                 loadBattingProjections(system);
                 loadPitchingProjections(system);
@@ -228,6 +231,200 @@ public class ProjectionService {
 
         pitchingProjections.put(system, projections);
         log.info("Loaded {} {} pitching projections", projections.size(), system);
+    }
+
+    private void loadSpringTrainingBatting() throws IOException, CsvException {
+        String filename = "spring-training-batting.csv";
+        Resource resource = new ClassPathResource(filename);
+
+        if (!resource.exists()) {
+            log.warn("Spring training batting file not found: {}", filename);
+            return;
+        }
+
+        log.info("Loading spring training batting stats from classpath: {}", filename);
+        Map<Integer, BattingProjection> projections = new HashMap<>();
+
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
+            List<String[]> rows = reader.readAll();
+            if (rows.isEmpty()) return;
+
+            String[] header = rows.get(0);
+            Map<String, Integer> colIndex = new HashMap<>();
+            for (int i = 0; i < header.length; i++) {
+                colIndex.put(header[i].replace("\uFEFF", "").trim(), i);
+            }
+
+            for (int i = 1; i < rows.size(); i++) {
+                String[] row = rows.get(i);
+                try {
+                    int mlbamId = parseIntSafe(getColumn(row, colIndex, "MLBAMID"));
+                    if (mlbamId == 0) continue;
+
+                    double pa = parseDoubleSafe(getColumn(row, colIndex, "PA"));
+                    double ab = parseDoubleSafe(getColumn(row, colIndex, "AB"));
+                    double h = parseDoubleSafe(getColumn(row, colIndex, "H"));
+                    double bb = parseDoubleSafe(getColumn(row, colIndex, "BB"));
+                    double so = parseDoubleSafe(getColumn(row, colIndex, "SO"));
+                    double avg = parseDoubleSafe(getColumn(row, colIndex, "AVG"));
+
+                    // Calculate OBP: (H + BB + HBP) / (AB + BB + HBP + SF)
+                    double hbp = parseDoubleSafe(getColumn(row, colIndex, "HBP"));
+                    double sf = parseDoubleSafe(getColumn(row, colIndex, "SF"));
+                    double obp = (ab + bb + hbp + sf) > 0 ? (h + bb + hbp) / (ab + bb + hbp + sf) : 0;
+
+                    // Calculate SLG
+                    double singles = parseDoubleSafe(getColumn(row, colIndex, "1B"));
+                    double doubles = parseDoubleSafe(getColumn(row, colIndex, "2B"));
+                    double triples = parseDoubleSafe(getColumn(row, colIndex, "3B"));
+                    double hr = parseDoubleSafe(getColumn(row, colIndex, "HR"));
+                    double slg = ab > 0 ? (singles + 2*doubles + 3*triples + 4*hr) / ab : 0;
+                    double iso = slg - avg;
+
+                    // Calculate rate stats
+                    double bbPct = pa > 0 ? bb / pa : 0;
+                    double kPct = pa > 0 ? so / pa : 0;
+
+                    BattingProjection proj = new BattingProjection(
+                            mlbamId,
+                            getColumn(row, colIndex, "Name"),
+                            getColumn(row, colIndex, "Team"),
+                            "spring",
+                            parseDoubleSafe(getColumn(row, colIndex, "G")),
+                            pa,
+                            ab,
+                            h,
+                            doubles,
+                            triples,
+                            hr,
+                            parseDoubleSafe(getColumn(row, colIndex, "R")),
+                            parseDoubleSafe(getColumn(row, colIndex, "RBI")),
+                            bb,
+                            so,
+                            parseDoubleSafe(getColumn(row, colIndex, "SB")),
+                            parseDoubleSafe(getColumn(row, colIndex, "CS")),
+                            avg,
+                            obp,
+                            slg,
+                            obp + slg, // OPS
+                            0, // wOBA - not available
+                            0, // wRC+ - not available
+                            bbPct,
+                            kPct,
+                            iso,
+                            0, // BABIP - not available
+                            0, // WAR - not available
+                            0, // Off - not available
+                            0, // Fld - not available
+                            0, // UBR - not available
+                            0, // BsR - not available
+                            0, // FPTS
+                            0  // SPTS
+                    );
+
+                    projections.put(mlbamId, proj);
+                } catch (Exception e) {
+                    log.warn("Error parsing spring training batting row {}: {}", i, e.getMessage());
+                }
+            }
+        }
+
+        battingProjections.put("spring", projections);
+        log.info("Loaded {} spring training batting stats", projections.size());
+    }
+
+    private void loadSpringTrainingPitching() throws IOException, CsvException {
+        String filename = "spring-training-pitching.csv";
+        Resource resource = new ClassPathResource(filename);
+
+        if (!resource.exists()) {
+            log.warn("Spring training pitching file not found: {}", filename);
+            return;
+        }
+
+        log.info("Loading spring training pitching stats from classpath: {}", filename);
+        Map<Integer, PitchingProjection> projections = new HashMap<>();
+
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
+            List<String[]> rows = reader.readAll();
+            if (rows.isEmpty()) return;
+
+            String[] header = rows.get(0);
+            Map<String, Integer> colIndex = new HashMap<>();
+            for (int i = 0; i < header.length; i++) {
+                colIndex.put(header[i].replace("\uFEFF", "").trim(), i);
+            }
+
+            for (int i = 1; i < rows.size(); i++) {
+                String[] row = rows.get(i);
+                try {
+                    int mlbamId = parseIntSafe(getColumn(row, colIndex, "MLBAMID"));
+                    if (mlbamId == 0) continue;
+
+                    double ip = parseDoubleSafe(getColumn(row, colIndex, "IP"));
+                    double bb = parseDoubleSafe(getColumn(row, colIndex, "BB"));
+                    double so = parseDoubleSafe(getColumn(row, colIndex, "SO"));
+                    double h = parseDoubleSafe(getColumn(row, colIndex, "H"));
+                    double er = parseDoubleSafe(getColumn(row, colIndex, "ER"));
+                    double hr = parseDoubleSafe(getColumn(row, colIndex, "HR"));
+
+                    // Calculate rate stats
+                    double era = parseDoubleSafe(getColumn(row, colIndex, "ERA"));
+                    double whip = ip > 0 ? (bb + h) / ip : 0;
+                    double k9 = ip > 0 ? (so * 9) / ip : 0;
+                    double bb9 = ip > 0 ? (bb * 9) / ip : 0;
+                    double kbb = bb > 0 ? so / bb : so;
+
+                    // Calculate K-BB% (using TBF if available)
+                    double tbf = parseDoubleSafe(getColumn(row, colIndex, "TBF"));
+                    double kbbPct = tbf > 0 ? (so - bb) / tbf : 0;
+
+                    // Calculate FIP: ((13*HR + 3*BB - 2*K) / IP) + constant (use 3.2)
+                    double fip = ip > 0 ? ((13*hr + 3*bb - 2*so) / ip) + 3.2 : 0;
+
+                    PitchingProjection proj = new PitchingProjection(
+                            mlbamId,
+                            getColumn(row, colIndex, "Name"),
+                            getColumn(row, colIndex, "Team"),
+                            "spring",
+                            parseDoubleSafe(getColumn(row, colIndex, "W")),
+                            parseDoubleSafe(getColumn(row, colIndex, "L")),
+                            0, // QS - not available
+                            parseDoubleSafe(getColumn(row, colIndex, "G")),
+                            parseDoubleSafe(getColumn(row, colIndex, "GS")),
+                            parseDoubleSafe(getColumn(row, colIndex, "SV")),
+                            parseDoubleSafe(getColumn(row, colIndex, "HLD")),
+                            ip,
+                            h,
+                            parseDoubleSafe(getColumn(row, colIndex, "R")),
+                            er,
+                            hr,
+                            bb,
+                            so,
+                            era,
+                            whip,
+                            k9,
+                            bb9,
+                            kbb,
+                            kbbPct,
+                            fip,
+                            0, // WAR - not available
+                            0, // FPTS
+                            0, // SPTS
+                            0  // ADP
+                    );
+
+                    projections.put(mlbamId, proj);
+                } catch (Exception e) {
+                    log.warn("Error parsing spring training pitching row {}: {}", i, e.getMessage());
+                }
+            }
+        }
+
+        pitchingProjections.put("spring", projections);
+        log.info("Loaded {} spring training pitching stats", projections.size());
     }
 
     private void loadSavantBattingStats() throws IOException, CsvException {
