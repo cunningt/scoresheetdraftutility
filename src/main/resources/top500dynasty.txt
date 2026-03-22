@@ -1,0 +1,500 @@
+1	Shohei Ohtani	31.7	UT/P	LAD	
+2	Juan Soto	27.4	OF	NYM	
+3	Bobby Witt Jr.	25.8	SS	KCR	
+4	Tarik Skubal	29.3	SP	DET	
+5	Paul Skenes	23.8	SP	PIT	
+6	Elly De La Cruz	24.2	SS	CIN	
+7	Gunnar Henderson	24.7	SS	BAL	
+8	Corbin Carroll	25.6	OF	ARI	
+9	Julio Rodriguez	25.2	OF	SEA	
+10	Aaron Judge	33.9	OF	NYY	
+11	Junior Caminero	22.7	3B	TBR	
+12	Jackson Chourio	22	OF	MIL	
+13	Fernando Tatis Jr.	27.2	OF	SDP	
+14	Garrett Crochet	26.8	SP	BOS	
+15	Nick Kurtz	23	1B	ATH	
+16	Vladimir Guerrero Jr.	27	1B	TOR	
+17	Jose Ramirez	18	3B	CLE	
+18	Ronald Acuna Jr.	28.3	OF	ATL	
+19	Jazz Chisholm Jr.	28.1	2B	NYY	
+20	Kyle Tucker	29.2	OF	LAD	
+21	Konnor Griffin	19.9	SS	PIT	1
+22	Wyatt Langford	24.3	OF	TEX	
+23	James Wood	23.5	OF	WAS	
+24	Roman Anthony	21.8	OF	BOS	
+25	Yordan Alvarez	28.7	OF	HOU	
+26	Yoshinobu Yamamoto	27.6	SP	LAD	
+27	Zach Neto	25.1	SS	LAA	
+28	Logan Gilbert	28.8	SP	SEA	
+29	Hunter Brown	27.5	SP	HOU	
+30	Francisco Lindor	32.3	SS	NYM	
+31	Kevin McGonigle	21.6	2B	DET	2
+32	Pete Crow-Armstrong	24	OF	CHC	
+33	Jackson Merrill	22.9	OF	SDP	
+34	Manny Machado	33.7	3B	SDP	
+35	Cal Raleigh	29.3	C	SEA	
+36	Bryce Harper	33.4	1B	PHI	
+37	CJ Abrams	25.4	SS	WAS	
+38	Hunter Greene	26.6	SP	CIN	
+39	JJ Wetherholt	23.5	SS	STL	3
+40	Pete Alonso	31.3	1B	BAL	
+41	Ketel Marte	32.4	2B	ARI	
+42	Rafael Devers	29.4	1B	SFG	
+43	Trea Turner	32.7	SS	PHI	
+44	Mookie Betts	33.4	SS	LAD	
+45	Trey Yesavage	22.6	SP	TOR	4
+46	Cristopher Sanchez	29.3	SP	PHI	
+47	Joe Ryan	29.8	SP	MIN	
+48	Eury Perez	22.9	SP	MIA	
+49	Nolan McLean	24.7	SP	NYM	5
+50	Kyle Schwarber	33	UT	PHI	
+51	Jesus Made	18.8	SS	MIL	6
+52	Corey Seager	31.8	SS	TEX	
+53	Colt Emerson	20.7	SS	SEA	7
+54	Matt Olson	31.9	1B	ATL	
+55	Riley Greene	25.4	OF	DET	
+56	Oneil Cruz	27.4	OF	PIT	
+57	Walker Jenkins	21.1	OF	MIN	8
+58	Chris Sale	36.9	SP	ATL	
+59	Jacob deGrom	37.8	SP	TEX	
+60	George Kirby	28.1	SP	SEA	
+61	Logan Webb	29.3	SP	SFG	
+62	Samuel Basallo	21.6	C	BAL	9
+63	Bryan Woo	26.1	SP	SEA	
+64	Chase Burns	23.2	SP	CIN	
+65	Spencer Strider	27.3	SP	ATL	
+66	Jacob Misiorowski	23.9	SP	MIL	
+67	Max Clark	21.3	OF	DET	10
+68	Freddie Freeman	36.5	1B	LAD	
+69	William Contreras	28.3	C	MIL	
+70	Cody Bellinger	30.7	OF	NYY	
+71	Geraldo Perdomo	26.4	SS	ARI	
+72	Jackson Holliday	22.3	2B	BAL	
+73	Jeremy Pena	28.5	SS	HOU	
+74	Austin Riley	28.9	3B	ATL	
+75	Mason Miller	27.6	RP	SDP	
+76	Freddy Peralta	29.8	SP	MIL	
+77	Luke Keaschall	23.6	2B	MIN	
+78	Brice Turang	26.3	2B	MIL	
+79	Edward Florentino	19.3	OF	PIT	11
+80	Randy Arozarena	31	OF	SEA	
+81	Brent Rooker	31.3	OF	ATH	
+82	Tyler Soderstrom	24.3	1B	ATH	
+83	Jordan Westburg	27.1	3B	BAL	
+84	Josh Naylor	28.8	1B	SEA	
+85	Vinnie Pasquantino	28.4	1B	KCR	
+86	Ben Rice	27.1	C	NYY	
+87	Aidan Miller	21.8	SS	PHI	12
+88	Shea Langeliers	28.3	C	ATH	
+89	Agustin Ramirez	24.5	C	MIA	
+90	Jose Altuve	35.8	2B	HOU	
+91	Leo De Vries	19.4	SS	ATH	13
+92	Jarren Duran	29.5	OF	BOS	
+93	Carson Benge	23.2	OF	NYM	14
+94	Andy Pages	25.3	OF	LAD	
+95	Drake Baldwin	24.9	C	ATL	
+96	Cole Ragans	28.3	SP	KCR	
+97	Caleb Bonemer	20.4	SS	CWS	15
+98	Blake Snell	33.3	SP	LAD	
+99	Bryce Rainer	20.7	SS	DET	16
+100	Lawrence Butler	25.7	OF	ATH	
+101	Max Fried	32.2	SP	NYY	
+102	Christian Yelich	34.3	OF	MIL	
+103	Michael Harris II	25	OF	ATL	
+104	Bo Bichette	28	SS	NYM	
+105	Michael Busch	28.3	1B	CHC	
+106	Seiya Suzuki	31.6	OF	CHC	
+107	Bryce Eldridge	21.4	1B	SFG	17
+108	Matt Shaw	24.3	3B	CHC	
+109	Sal Stewart	22.3	1B	CIN	18
+110	Cam Schlittler	25.1	SP	NYY	
+111	Kyle Bradish	29.5	SP	BAL	
+112	Jesus Luzardo	28.4	SP	PHI	
+113	Dylan Cease	30.2	SP	TOR	
+114	Andres Munoz	27.2	RP	SEA	
+115	Tyler Glasnow	32.6	SP	LAD	
+116	Emmet Sheehan	26.3	SP	LAD	
+117	Gerrit Cole	35.5	SP	NYY	
+118	MacKenzie Gore	27.1	SP	TEX	
+119	Nick Pivetta	33.1	SP	SDP	
+120	Michael King	30.8	SP	SD	
+121	Nick Lodolo	28.1	SP	CIN	
+122	Rainiel Rodriguez	19.2	C	STL	19
+123	Framber Valdez	32.3	SP	DET	
+124	Kevin Gausman	35.2	SP	TOR	
+125	Jhoan Duran	28.2	RP	PHI	
+126	Edwin Diaz	30.6	RP	LAD	
+127	Ozzie Albies	29.2	2B	ATL	
+128	Maikel Garcia	26	3B	KCR	
+129	Willy Adames	30.5	SS	SFG	
+130	Alex Bregman	31.9	3B	CHC	
+131	Byron Buxton	32.3	OF	MIN	
+132	Josue De Paula	20.8	OF	LAD	20
+133	Royce Lewis	26.8	3B	MIN	
+134	Cam Smith	23.1	OF	HOU	
+135	Jacob Wilson	23.9	SS	ATH	
+136	Eduardo Quintero	20.5	OF	LAD	21
+137	Isaac Paredes	27.1	3B	HOU	
+138	Dylan Crews	24.1	OF	WAS	
+139	Will Smith	30.9	C	LAD	
+140	Kyle Manzardo	25.7	1B	CLE	
+141	Jo Adell	26.9	OF	LAA	
+142	Ivan Herrera	25.8	C	STL	
+143	Cade Smith	23.9	RP	CLE	
+144	Steven Kwan	28.5	OF	CLE	
+145	Addison Barger	26.3	3B	TOR	
+146	Luis Robert Jr.	28.6	OF	CWS	
+147	Luis Pena	19.3	SS	MIL	22
+148	Teoscar Hernandez	33.4	OF	LAD	
+149	Mike Trout	34.6	OF	LAA	
+150	Sebastian Walcott	20	SS	TEX	23
+151	Thomas White	21.4	SP	MIA	24
+152	Spencer Schwellenbach	25.8	SP	ATL	
+153	Jac Caglianone	23.1	OF	KCR	
+154	Zack Wheeler	35.8	SP	PHI	
+155	George Springer	36.5	OF	TOR	
+156	Kyle Stowers	28.2	OF	MIA	
+157	Yandy Diaz	34.6	1B	TBR	
+158	Francisco Alvarez	24.3	C	NYM	
+159	Bubba Chandler	23.5	SP	PIT	25
+160	Carlos Rodon	33.3	SP	NYY	
+161	Carter Jensen	22.7	C	KCR	26
+162	Payton Tolle	23.3	SP	BOS	27
+163	Nathan Eovaldi	36.1	SP	TEX	
+164	Jack Flaherty	30.4	SP	DET	
+165	Sonny Gray	36.3	SP	BOS	
+166	Travis Bazzana	23.5	2B	CLE	28
+167	Joshua Baez	22.7	OF	STL	29
+168	Ranger Suarez	30.6	SP	BOS	
+169	Tanner Bibee	27	SP	CLE	
+170	Ryan Waldschmidt	23.4	OF	ARI	30
+171	Ian Happ	31.6	OF	CHC	
+172	Anthony Volpe	24.8	SS	NYY	
+173	Brandon Nimmo	32.9	OF	TEX	
+174	Mark Vientos	26.3	3B	NYM	
+175	Zyhir Hope	21.2	OF	LAD	31
+176	Eugenio Suarez	34.7	3B	CIN	
+177	Gavin Williams	26.7	SP	CLE	
+178	Jonah Tong	22.8	SP	NYM	32
+179	Shane McClanahan	28.8	SP	TBR	
+180	Zebby Matthews	25.8	SP	MIN	
+181	Shane Baz	26.8	SP	BAL	
+182	Luis Castillo	33.3	SP	SEA	
+183	Shane Bieber	30.8	SP	TOR	
+184	Edward Cabrera	27.9	SP	CHC	
+185	Mike Sirota	22.8	OF	LAD	33
+186	Noelvi Marte	24.4	3B	CIN	
+187	Matt Chapman	32.8	3B	SFG	
+188	Gleyber Torres	29.3	2B	DET	
+189	Brett Baty	26.3	3B	NYM	
+190	Jordan Lawlar	23.7	SS	ARI	
+191	Jonathan Aranda	27.8	1B	TBR	
+192	Robbie Ray	34.4	SP	SFG	
+193	Shota Imanaga	32.5	SP	CHC	
+194	Bryce Miller	27.6	SP	SEA	
+195	Josuar Gonzalez	18.4	SS	SFG	34
+196	Grayson Rodriguez	26.3	SP	LAA	
+197	Sandy Alcantara	30.5	SP	MIA	
+198	Chase DeLauter	24.4	OF	CLE	35
+199	Ryan Pepiot	28.6	SP	TBR	
+200	Tatsuya Imai	27.8	SP	HOU	36
+201	Brandon Woodruff	33.1	SP	MIL	
+202	Jasson Dominguez	23.1	OF	NYY	
+203	Spencer Torkelson	26.6	1B	DET	
+204	Liam Doyle	21.8	SP	STL	37
+205	Nico Hoerner	28.8	2B	CHC	
+206	Jared Jones	22.6	SP	PIT	
+207	Corbin Burnes	31.4	SP	ARI	
+208	Cade Horton	24.6	SP	CHC	
+209	Josh Hader	31.9	RP	HOU	
+210	Justin Steele	30.7	SP	CHC	
+211	Brody Hopkins	24.2	SP	TBR	38
+212	Kade Anderson	21.7	SP	SEA	39
+213	Kazuma Okamoto	29.7	3B	TOR	40
+214	Alejandro Kirk	27.3	C	TOR	
+215	Brandon Lowe	31.7	2B	PIT	
+216	Masyn Winn	24	SS	STL	
+217	Adley Rutschman	28.1	C	BAL	
+218	Gabriel Moreno	26.1	C	ARI	
+219	Hunter Goodman	26.4	C	COL	
+220	Kyle Teel	24.1	C	CWS	
+221	Owen Caissie	23.7	OF	MIA	41
+222	Ceddanne Rafaela	25.5	OF	BOS	
+223	Drew Rasmussen	30.6	SP	TBR	
+224	Munetaka Murakami	26.1	3B	CWS	42
+225	Jeff Hoffman	33.2	RP	TOR	
+226	Aaron Nola	32.8	SP	PHI	
+227	Kris Bubic	28.6	SP	KCR	
+228	Joe Musgrove	33.3	SP	SDP	
+229	Zac Gallen	30.6	SP	ARI	
+230	Alec Burleson	27.3	1B	STL	
+231	Willson Contreras	33.8	1B	BOS	
+232	Braden Montgomery	22.9	OF	CWS	43
+233	Xavier Edwards	26.6	2B	MIA	
+234	Triston Casas	26.2	1B	BOS	
+235	Kerry Carpenter	28.5	OF	DET	
+236	Heliot Ramos	26.5	OF	SFG	
+237	Colton Cowser	26	OF	BAL	
+238	Robby Snelling	22.3	SP	MIA	44
+239	Brenton Doyle	27.8	OF	COL	
+240	Daylen Lile	23.3	OF	WAS	
+241	Otto Lopez	27.4	SS	MIA	
+242	Bryson Stott	28.4	2B	PHI	
+243	Trevor Story	33.3	SS	BOS	
+244	Brendan Donovan	29.2	2B	SEA	
+245	Austin Wells	26.7	C	NYY	
+246	Yainer Diaz	27.5	C	HOU	
+247	Dylan Beavers	24.6	OF	BAL	45
+248	Ezequiel Tovar	24.6	SS	COL	
+249	Taj Bradley	25	SP	MIN	
+250	Alec Bohm	29.6	3B	PHI	
+251	Wilyer Abreu	26.8	OF	BOS	
+252	Bryan Reynolds	31.1	OF	PIT	
+253	Xander Bogaerts	33.4	2B	SDP	
+254	Dansby Swanson	32.1	SS	CHC	
+255	Marcelo Mayer	23.3	3B	BOS	
+256	Jarlin Susana	22	SP	WAS	46
+257	Roki Sasaki	24.3	SP	LAD	
+258	Trevor Rogers	28.3	SP	BAL	
+259	Ryne Nelson	28.1	SP	ARI	
+260	Andrew Abbott	26.8	SP	CIN	
+261	Taylor Ward	32.3	OF	BAL	
+262	Quinn Priester	25.5	SP	MIL	
+263	Andrew Painter	22.9	SP	PHI	47
+264	Connelly Early	23.9	SP	BOS	48
+265	Casey Mize	28.8	SP	DET	
+266	Carlos Correa	31.5	SS	HOU	
+267	Sal Frelick	25.9	OF	MIL	
+268	Caleb Durbin	26.1	2B	BOS	
+269	Matt McLain	26.6	2B	CIN	
+270	Jaxon Wiggins	24.4	SP	CHC	49
+271	Colt Keith	24.6	2B	DET	
+272	Luis Garcia Jr.	25.8	2B	WAS	
+273	Coby Mayo	24.3	3B	BAL	
+274	Kaelen Culpepper	23.2	SS	MIN	50
+275	Chandler Simpson	25.3	OF	TBR	
+276	Matt Wallner	28.3	OF	MIN	
+277	Emmanuel Rodriguez	23	OF	MIN	51
+278	Dax Kilby	19.3	SS	NYY	52
+279	Daulton Varsho	29.7	OF	TOR	
+280	Lazaro Montes	21.4	OF	SEA	53
+281	JoJo Parker	19.6	SS	TOR	54
+282	Carlos Lagrange	22.8	SP	NYY	55
+283	Grant Taylor	23.8	RP	CWS	
+284	Kodai Senga	33.1	SP	NYM	
+285	Gage Jump	22.9	SP	ATH	56
+286	Eli Willits	18.3	SS	WAS	57
+287	Dalton Rushing	25.1	C	LAD	
+288	Seth Hernandez	19.7	SP	PIT	58
+289	AJ Smith-Shawver	23.3	SP	ATL	
+290	David Bednar	31.4	RP	NYY	
+291	Merrill Kelly	37.4	SP	ARI	
+292	Will Warren	26.8	SP	NYY	
+293	Brayan Bello	26.8	SP	BOS	
+294	Jack Leiter	25.9	SP	TEX	
+295	Josue Briceño	21.5	C	DET	59
+296	Troy Melton	25.3	SP	DET	
+297	Ryan Helsley	31.7	SP	BAL	
+298	Ryan Clifford	22.7	1B	NYM	60
+299	Pete Fairbanks	32.3	RP	MIA	
+300	Jacob Reimer	22.1	3B	NYM	61
+301	Trevor Megill	32.3	RP	MIL	
+302	Ralphy Velazquez	20.8	1B	CLE	62
+303	Daniel Palencia	26.1	RP	CHC	
+304	Devin Williams	31.5	RP	NYM	
+305	A.J. Ewing	21.6	OF	NYM	63
+306	Colson Montgomery	24	SS	CWS	
+307	Jett Williams	22.3	SS	MIL	64
+308	Ryan Sloan	20.1	SP	SEA	65
+309	Josh Lowe	28.1	OF	TBR	
+310	Logan O’Hoppe	26.1	C	LAA	
+311	Trent Grisham	29.3	OF	NYY	
+312	Moises Ballesteros	22.3	C	CHC	66
+313	Jackson Jobe	23.6	SP	DET	
+314	Mike Burrows	26.3	SP	HOU	
+315	Emil Morales	19.5	SS	LAD	67
+316	TJ Friedl	30.6	OF	CIN	
+317	Salvador Perez	35.8	C	KCR	
+318	Theo Gillen	20.5	OF	TBR	68
+319	Jorge Polanco	32.7	2B	NYM	
+320	Arjun Nimmala	20.4	SS	TOR	69
+321	Max Muncy	23.6	3B	LAD	
+322	Charlie Condon	22.9	OF	COL	70
+323	Nolan Schanuel	24.1	1B	LAA	
+324	Andrew Vaughn	27.9	1B	MIL	
+325	Alfredo Duno	20.2	C	CIN	71
+326	Kumar Rocker	26.3	SP	TEX	
+327	Lars Nootbaar	28.5	OF	STL	
+328	Trey Gibson	23.8	SP	BAL	72
+329	Kristian Campbell	23.7	OF	BOS	
+330	Jacob Melton	25.5	OF	TBR	73
+331	Jurickson Profar	33.1	OF	ATL	
+332	Josh Jung	28.1	3B	TEX	
+333	Christian Walker	34.9	1B	HOU	
+334	Justin Gonzales	19.2	OF	BOS	74
+335	Pablo Lopez	30	SP	MIN	
+336	Luis Arraez	28.9	1B	SFG	
+337	Jakob Marsee	24.7	OF	MIA	
+338	Michael Arroyo	21.3	OF	SEA	75
+339	Dillon Dingler	27.5	C	DET	
+340	Jung Hoo Lee	27.6	OF	SFG	
+341	Justin Crawford	22.2	OF	PHI	76
+342	Brandon Sproat	25.5	SP	MIL	77
+343	Edgar Quero	22.9	C	CWS	
+344	George Lombard Jr.	20.8	SS	NYY	78
+345	Cooper Pratt	21.6	SS	MIL	79
+346	Evan Carter	23.5	OF	TEX	
+347	Adolis Garcia	33	OF	PHI	
+348	Luis Perales	22.9	SP	WAS	80
+349	Jesus Sanchez	28.4	OF	TOR	
+350	Tanner McDougal	22.9	SP	CWS	81
+351	Giancarlo Stanton	36.3	OF	NYY	
+352	Steele Hall	18.7	SS	CIN	82
+353	Marcell Ozuna	35.3	UT	PIT	
+354	Franklin Arias	20.3	SS	BOS	83
+355	Tyler O’Neill	30.8	OF	BAL	
+356	Ha-Seong Kim	30.4	SS	ATL	
+357	Carson Williams	22.8	SS	TBR	84
+358	Jordan Beck	24.9	OF	COL	
+359	Caden Scarborough	20.9	SP	TEX	85
+360	Marcus Semien	35.5	2B	NYM	
+361	Brock Wilken	23.8	3B	MIL	86
+362	Brandon Pfaadt	27.4	SP	ARI	
+363	Jose Soriano	27.4	SP	LAA	
+364	Robert Suarez	35	RP	ATL	
+365	Cam Caminiti	19.6	SP	ATL	87
+366	Aroldis Chapman	38	RP	BOS	
+367	Tanner Scott	31.7	RP	LAD	
+368	Jhonny Level	18.9	SS		88
+369	Devin Fitz-Gerald	20.6	2B	WAS	89
+370	Lenyn Sosa	26.2	2B	CWS	
+371	Ramon Laureano	31.7	OF	SDP	
+372	Luis Hernandez		SS	SFG	90
+373	Raisel Iglesias	36.2	RP	ATL	
+374	Shane Smith	25.9	SP	CWS	
+375	Miguel Vargas	26.3	3B	CWS	
+376	Spencer Steer	28.3	1B	CIN	
+377	Max Meyer	27	SP	MIA	
+378	Johenssy Colome		SS	ATH	91
+379	Mickey Moniak	27.8	OF	COL	
+380	Cade Cavalli	27.6	SP	WAS	
+381	Bailey Ober	30.7	SP	MIN	
+382	Demetrio Crisantes	21.5	2B	ARI	92
+383	Noah Cameron	26.7	SP	KCR	
+384	Ryan Weathers	26.3	SP	NYY	
+385	Joe Boyle	26.6	SP	TBR	
+386	Luis Gil	27.8	SP	NYY	
+387	Matthew Boyd	35.1	SP	CHC	
+388	Tyson Lewis	20.2	SS	CIN	93
+389	Mitch Keller	29.9	SP	PIT	
+390	Clay Holmes	32.9	SP	NYM	
+391	Trevor Larnach	29.1	OF	MIN	
+392	Spencer Horwitz	28.3	1B	PIT	
+393	Joey Ortiz	27.7	SS	MIL	
+394	Rhett Lowder		RHP	CIN	94
+395	Brady House	22.8	3B	WAS	
+396	Brady Singer	29.6	SP	CIN	
+397	Brandon Marsh	28.3	OF	PHI	
+398	Jonny Farmelo	21.5	OF	SEA	95
+399	Tommy Edman	30.8	2B	LAD	
+400	Chase Meidroth	24.7	SS	CWS	
+401	Khal Stephen	23.3	SP	CLE	96
+402	Brooks Lee	25.1	SS	MIN	
+403	Luis Morales	23.5	SP	ATH	
+404	Gavin Fien	19	SS	WAS	97
+405	Parker Meadows	26.3	OF	DET	
+406	Ryan O’Hearn	32.7	1B	PIT	
+407	Anthony Santander	31.4	OF	TOR	
+408	Jose Caballero	29.5	2B	NYY	
+409	Bo Naylor	26.1	C	CLE	
+410	Noah Schultz	22.6	SP	CWS	98
+411	Andres Gimenez	27.5	2B	TOR	
+412	Ronny Mauricio	24.9	2B	NYM	
+413	Braxton Garrett	28.6	SP	MIA	
+414	Chad Patrick	27.6	SP	MIL	
+415	Angel Genoa		SS	CLE	99
+416	J.T. Realmuto	35	C	PHI	
+417	Justin Wrobleski	25.7	SP	LAD	
+418	Cole Young	22.6	2B	SEA	
+419	Aiva Arquette	22.4	SS	MIA	100
+420	Alejandro Osuna	23.4	OF	TEX	
+421	Bo Davidson	23.7	OF	SFG	101
+422	Ethan Conrad	21.7	OF	CHC	102
+423	David Hagaman	22.9	SP	ARI	103
+424	Reynaldo Lopez	32.2	SP	ATL	
+425	Travis Sykora	21.8	SP	WAS	104
+426	Josh Smith	28.6	3B	TEX	
+427	Juneiker Caceres	18.6	OF	CLE	105
+428	Hurston Waldrep	24	SP	ATL	
+429	Ben Brown	26.5	SP	CHC	
+430	Jake Burger	29.9	1B	TEX	
+431	Ethan Holliday	19.1	SS	COL	106
+432	JR Ritchie	22.8	SP	ATL	107
+433	Jamie Arnold	22	SP	ATH	108
+434	Braylon Doughty	20.3	SP	CLE	109
+435	Cedric Mullins	31.4	OF	TBR	
+436	Josh Hammond	19.5	SS	KCR	110
+437	Jhostynxon Garcia	23.3	OF	PIT	111
+438	Zach McKinstry	30.8	OF	DET	
+439	Victor Robles	28.8	OF	SEA	
+440	Dominic Canzone	28.6	OF	SEA	
+441	Kevin Alcantara		OF	CHC	112
+442	Hagen Smith	22.6	SP	CWS	113
+443	Harrison Bader	31.8	OF	SFG	
+444	Austin Hays	30.7	OF	CWS	
+445	Xavier Neyens		SS	HOU	114
+446	Aroon Escobar	21.2	2B	PHI	115
+447	Tyler Freeman	26.8	OF	COL	
+448	Bryan Abreu	28.9	RP	HOU	
+449	Ryan Jeffers	28.8	C	MIN	
+450	Angeibel Gomez		SS	KCR	116
+451	Christian Oppor	21.7	SP	CWS	117
+452	Nate George	19.8	OF	BAL	118
+453	Carlos Narvaez	27.3	C	BOS	
+454	Seth Lugo	36.3	SP	KCR	
+455	Sean Manaea	34.1	SP	NYM	
+456	Ethan Frey		OF	HOU	119
+457	Kyson Witherspoon	21.6	SP	BOS	120
+458	Quinn Mathews		SP	STL	121
+459	Braxton Ashcraft	26.4	SP	PIT	
+460	Slade Cecconi	26.8	SP	CLE	
+461	Lucas Giolito	31.7	SP	FA	
+462	Braylon Payne		OF	MIL	122
+463	Carlos Estevez	33.2	RP	KCR	
+464	Ian Seymour	27.3	SP	TBR	
+465	Paul Goldschmidt	38.5	1B	NYY	
+466	Kendry Chourio	18.4	SP	KCR	123
+467	J.P. Crawford	31.2	SS	SEA	
+468	Curtis Mead	25.4	1B	CWS	
+469	Brayan Rocchio	25.2	SS	CLE	
+470	Sean Murphy	31.4	C	ATL	
+471	Juan Sanchez	23	SS	TOR	124
+472	Heston Kjerstad	27.1	OF	BAL	
+473	Gavin Stone	27.4	SP	LAD	
+474	Nolan Gorman	25.8	2B	STL	
+475	Felix Bautista	30.8	RP	BAL	
+476	Rhys Hoskins	33	1B	FA	
+477	Jace LaViolette		OF	CLE	125
+478	Tyler Bremner		RHP	LAA	126
+479	Gage Wood	22.3	SP	PHI	127
+480	Slade Caldwell	19.8	OF	ARI	128
+481	Joey Cantillo	26.3	SP	CLE	
+482	Drew Gilbert	25.4	OF	SFG	
+483	Enrique Bradfield Jr.		OF	BAL	129
+484	Jake Cronenworth	32.2	2B	SDP	
+485	Johnny King	19.7	SP	TOR	130
+486	Jeff McNeil	33.9	2B	ATH	
+487	Esteban Mejia	21.3	SP	BAL	131
+488	Jorge Soler	34.1	OF	LAA	
+489	Tyler Stephenson	29.6	C	CIN	
+490	Hayden Birdsong	24.5	SP	SFG	
+491	Isaac Collins	28.7	OF	KCR	
+492	Ryan Mountcastle	29.1	1B	BAL	
+493	C.J. Kayfus	24.3	1B	CLE	
+494	Owen Murphy	22.4	SP	ATL	132
+495	Jack Perkins	26.3	SP	ATH	
+496	Jurrangelo Cijntje	22.8	SP	STL	
+497	Spencer Jones	24.8	OF	NYY	133
+498	Jake Bennett		SP	BOS	134
+499	Parker Messick	25.4	SP	CLE	135
+500	Cristian Javier	29	SP	HOU	

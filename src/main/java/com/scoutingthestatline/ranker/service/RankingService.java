@@ -9,6 +9,7 @@ import com.scoutingthestatline.ranker.model.Player;
 import com.scoutingthestatline.ranker.model.RankedPlayer;
 import com.scoutingthestatline.ranker.model.SavantBattingStats;
 import com.scoutingthestatline.ranker.model.SavantPitchingStats;
+import com.scoutingthestatline.ranker.model.Top500DynastyData;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class RankingService {
     private final PlayerMappingService playerMappingService;
     private final ProjectionService projectionService;
     private final ScoresheetService scoresheetService;
+    private final Top500DynastyService dynastyService;
 
     // Cache of player IDs per league
     private final Map<String, Set<Integer>> undraftedCache = new HashMap<>();
@@ -31,10 +33,12 @@ public class RankingService {
 
     public RankingService(PlayerMappingService playerMappingService,
                           ProjectionService projectionService,
-                          ScoresheetService scoresheetService) {
+                          ScoresheetService scoresheetService,
+                          Top500DynastyService dynastyService) {
         this.playerMappingService = playerMappingService;
         this.projectionService = projectionService;
         this.scoresheetService = scoresheetService;
+        this.dynastyService = dynastyService;
     }
 
     public Set<Integer> getUndraftedPlayerIds(String leagueId, boolean refresh) {
@@ -114,6 +118,9 @@ public class RankingService {
             // Always load ADP data if available
             adpData = projectionService.getADPData(mlbamId).orElse(null);
 
+            // Load dynasty ranking if available
+            Top500DynastyData dynastyData = dynastyService.getByScoressheetId(scoresheetId).orElse(null);
+
             // Check if player is on active roster and get category
             boolean onActiveRoster = projectionService.isOnActiveRoster(mlbamId);
             String rosterResourceCategory = projectionService.getRosterResourceCategory(mlbamId).orElse(null);
@@ -122,7 +129,7 @@ public class RankingService {
             boolean drafted = !undraftedIds.contains(scoresheetId);
 
             rankedPlayers.add(new RankedPlayer(0, player, battingProjection, pitchingProjection,
-                    savantBatting, savantPitching, adpData, pitcherList400Data, onActiveRoster, rosterResourceCategory, drafted, projectionSystem));
+                    savantBatting, savantPitching, adpData, pitcherList400Data, dynastyData, onActiveRoster, rosterResourceCategory, drafted, projectionSystem));
         }
 
         // Sort by appropriate metric
@@ -137,6 +144,13 @@ public class RankingService {
             rankedPlayers.sort((a, b) -> {
                 int rankA = a.getPitcherList400Data() != null ? a.getPitcherList400Data().rank() : Integer.MAX_VALUE;
                 int rankB = b.getPitcherList400Data() != null ? b.getPitcherList400Data().rank() : Integer.MAX_VALUE;
+                return Integer.compare(rankA, rankB);
+            });
+        } else if ("dynasty".equals(projectionSystem)) {
+            // For Dynasty: sort by dynasty rank ascending (lower is better)
+            rankedPlayers.sort((a, b) -> {
+                int rankA = a.getDynastyData() != null ? a.getDynastyData().rank() : Integer.MAX_VALUE;
+                int rankB = b.getDynastyData() != null ? b.getDynastyData().rank() : Integer.MAX_VALUE;
                 return Integer.compare(rankA, rankB);
             });
         } else {

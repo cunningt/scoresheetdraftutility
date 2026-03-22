@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scoresheet League Ranker</title>
+    <title>Scoresheet Drafty McAwesome</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
@@ -26,20 +26,33 @@
             margin-bottom: 32px;
         }
 
-        .header h1 {
-            font-size: 24px;
-            font-weight: 700;
+        .header-content {
             max-width: 800px;
             margin: 0 auto;
             padding: 0 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            font-weight: 700;
         }
 
         .header p {
-            max-width: 800px;
-            margin: 8px auto 0;
-            padding: 0 16px;
+            margin-top: 8px;
             opacity: 0.9;
             font-size: 14px;
+        }
+
+        .header-logo {
+            flex-shrink: 0;
+        }
+
+        .header-logo img {
+            height: 60px;
+            width: auto;
         }
 
         .container {
@@ -138,8 +151,15 @@
 </head>
 <body>
     <div class="header">
-        <h1>Scoresheet League Ranker</h1>
-        <p>View undrafted players ranked by projection systems</p>
+        <div class="header-content">
+            <div class="header-text">
+                <h1>Scoresheet Drafty McAwesome</h1>
+                <p>View undrafted players ranked by projection systems</p>
+            </div>
+            <div class="header-logo">
+                <img src="/drafty-mcawesome-logo.svg" alt="Scoresheet Drafty McAwesome">
+            </div>
+        </div>
     </div>
 
     <div class="container">

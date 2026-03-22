@@ -29,7 +29,7 @@ public class ProjectionService {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectionService.class);
 
-    private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "oopsy-peak", "steamer", "zips", "spring", "savant", "adp", "pitcherlist400");
+    private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "oopsy-peak", "steamer", "zips", "spring", "savant", "adp", "pitcherlist400", "dynasty");
 
     // Map: projection system -> mlbamId -> projection
     private final Map<String, Map<Integer, BattingProjection>> battingProjections = new HashMap<>();

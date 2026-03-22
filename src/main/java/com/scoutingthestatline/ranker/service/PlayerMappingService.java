@@ -30,6 +30,27 @@ public class PlayerMappingService {
 
     private final Map<Integer, Player> playersByScoresheet = new HashMap<>();
     private final Map<Integer, Player> playersByMlbam = new HashMap<>();
+    private final Map<String, Player> playersByName = new HashMap<>();
+
+    // Known name aliases and MLBAM IDs for ambiguous or hard-to-match names
+    private static final Map<String, Integer> NAME_TO_MLBAM = Map.ofEntries(
+        // Will Smith the Dodgers catcher, not the pitcher
+        Map.entry("will smith", 669257),
+        // Luis Castillo the Mariners pitcher
+        Map.entry("luis castillo", 622491),
+        // Jared Jones the Pirates pitcher
+        Map.entry("jared jones", 686753),
+        // Luis Garcia the Nationals 2B
+        Map.entry("luis garcia", 671277),
+        // Josh Smith the Rangers utility
+        Map.entry("josh smith", 669701),
+        // O' names that don't match due to apostrophe handling
+        Map.entry("logan ohoppe", 681351),
+        Map.entry("tyler oneill", 641933),
+        Map.entry("ryan ohearn", 656811),
+        // JR Ritchie - might be J.R.
+        Map.entry("ritchie", 701537)
+    );
 
     @PostConstruct
     public void loadPlayers() throws IOException {
@@ -114,6 +135,7 @@ public class PlayerMappingService {
 
                     playersByScoresheet.put(scoresheetId, player);
                     playersByMlbam.put(mlbamId, player);
+                    playersByName.put(normalizePlayerName(firstName, lastName), player);
                 } catch (NumberFormatException e) {
                     log.warn("Skipping invalid line: {}", line);
                 }
@@ -142,6 +164,79 @@ public class PlayerMappingService {
 
     public Set<Integer> getAllScoressheetIds() {
         return new HashSet<>(playersByScoresheet.keySet());
+    }
+
+    public Optional<Player> getByName(String fullName) {
+        String normalized = normalizeFullName(fullName);
+
+        // Try known MLBAM ID for ambiguous names first
+        Integer mlbamId = NAME_TO_MLBAM.get(normalized);
+        if (mlbamId != null) {
+            Player player = playersByMlbam.get(mlbamId);
+            if (player != null) {
+                return Optional.of(player);
+            }
+        }
+
+        // Try exact match
+        Player player = playersByName.get(normalized);
+        if (player != null) {
+            return Optional.of(player);
+        }
+
+        // Try collapsing spaces for multi-word names like "De La Cruz" -> "delacruz"
+        String collapsed = normalized.replace(" ", "");
+        for (Map.Entry<String, Player> entry : playersByName.entrySet()) {
+            if (entry.getKey().replace(" ", "").equals(collapsed)) {
+                return Optional.of(entry.getValue());
+            }
+        }
+
+        // Try partial last name match (for "Julio Rodriguez" matching "Julio E Rodriguez")
+        String[] parts = normalized.split(" ");
+        if (parts.length >= 2) {
+            String firstName = parts[0];
+            String lastName = parts[parts.length - 1];
+            for (Map.Entry<String, Player> entry : playersByName.entrySet()) {
+                String key = entry.getKey();
+                if (key.startsWith(firstName + " ") && key.endsWith(" " + lastName)) {
+                    return Optional.of(entry.getValue());
+                }
+            }
+        }
+
+        return Optional.empty();
+    }
+
+    private String normalizePlayerName(String firstName, String lastName) {
+        return normalizeName(firstName + " " + lastName);
+    }
+
+    private String normalizeFullName(String fullName) {
+        return normalizeName(fullName);
+    }
+
+    private String normalizeName(String name) {
+        return name.toLowerCase()
+                // Remove parenthetical markers like (Cle), (hurt), (Sea)
+                .replaceAll("\\([^)]*\\)", "")
+                // Remove hyphen suffixes like -P, -H for Ohtani
+                .replaceAll("-[ph]$", "")
+                // Remove Jr/Sr embedded in name or at end (VladimirJr. -> Vladimir)
+                .replaceAll("(jr|sr)\\.?\\s*", "")
+                // Remove suffixes at end
+                .replaceAll("\\s+(ii|iii|iv)$", "")
+                // Normalize accented characters
+                .replace("á", "a").replace("é", "e").replace("í", "i")
+                .replace("ó", "o").replace("ú", "u").replace("ñ", "n")
+                .replace("ü", "u").replace("ö", "o")
+                // Remove punctuation
+                .replace(".", "")
+                .replace("'", "")
+                .replace("-", " ")
+                // Normalize whitespace
+                .replaceAll("\\s+", " ")
+                .trim();
     }
 
     private Double parseDoubleSafe(String value) {
