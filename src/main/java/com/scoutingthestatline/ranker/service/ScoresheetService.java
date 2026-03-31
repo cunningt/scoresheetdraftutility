@@ -634,6 +634,69 @@ public class ScoresheetService {
     }
 
     /**
+     * Fetch all team rosters from the dynamic page.
+     * Returns a map of team number -> set of player IDs.
+     */
+    public Map<Integer, Set<Integer>> fetchAllTeamRosters(League league) {
+        Map<Integer, Set<Integer>> teamRosters = new LinkedHashMap<>();
+        WebClient client = getWebClient();
+
+        try {
+            // Fetch page for team 1 - it shows all teams
+            String url = league.getDynamicTeamUrl(1);
+            log.info("Fetching team rosters from: {}", url);
+
+            HtmlPage page = client.getPage(url);
+            client.waitForBackgroundJavaScript(10000);
+
+            // Get all frames on the page
+            List<FrameWindow> frames = page.getFrames();
+            for (FrameWindow frame : frames) {
+                try {
+                    HtmlPage framePage = (HtmlPage) frame.getEnclosedPage();
+                    String frameHtml = framePage.getBody().asXml();
+                    extractTeamRostersFromHtml(frameHtml, teamRosters);
+                } catch (Exception e) {
+                    log.trace("Error processing frame: {}", e.getMessage());
+                }
+            }
+
+            // Also check the main page body
+            String mainHtml = page.getBody().asXml();
+            extractTeamRostersFromHtml(mainHtml, teamRosters);
+
+            log.info("Fetched rosters for {} teams", teamRosters.size());
+            for (Map.Entry<Integer, Set<Integer>> entry : teamRosters.entrySet()) {
+                log.debug("Team {}: {} players", entry.getKey(), entry.getValue().size());
+            }
+
+        } catch (Exception e) {
+            log.error("Error fetching team rosters: {}", e.getMessage(), e);
+        }
+
+        return teamRosters;
+    }
+
+    /**
+     * Extract team rosters from HTML content.
+     * Pattern: id="t{teamNum}p{playerId}"
+     */
+    private void extractTeamRostersFromHtml(String html, Map<Integer, Set<Integer>> teamRosters) {
+        // Pattern for dynamic team page: span id="t{teamNum}p{playerId}"
+        Pattern teamPlayerPattern = Pattern.compile("id=\"t(\\d+)p(\\d+)\"");
+        Matcher matcher = teamPlayerPattern.matcher(html);
+        while (matcher.find()) {
+            try {
+                int teamNum = Integer.parseInt(matcher.group(1));
+                int playerId = Integer.parseInt(matcher.group(2));
+                teamRosters.computeIfAbsent(teamNum, k -> new HashSet<>()).add(playerId);
+            } catch (NumberFormatException e) {
+                // ignore
+            }
+        }
+    }
+
+    /**
      * Fetch player IDs for a specific team from the dynamic team page.
      */
     private Set<Integer> fetchTeamPlayerIds(WebClient client, League league, int teamN) throws IOException {

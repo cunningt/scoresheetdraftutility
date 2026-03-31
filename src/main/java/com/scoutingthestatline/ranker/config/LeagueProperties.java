@@ -29,6 +29,7 @@ public class LeagueProperties {
         private String draftSheetGid; // Google Sheet tab/gid (optional, defaults to 0)
         private String draftSheetName; // Google Sheet tab name (optional, alternative to gid)
         private String draftSheetIdColumn; // Column name for scoresheet ID (optional, defaults to SSID)
+        private boolean useDynamicRoster = false; // Force using dynamic roster page even if sheet is configured
 
         public String getId() {
             return id;
@@ -86,6 +87,14 @@ public class LeagueProperties {
             this.draftSheetIdColumn = draftSheetIdColumn;
         }
 
+        public boolean isUseDynamicRoster() {
+            return useDynamicRoster;
+        }
+
+        public void setUseDynamicRoster(boolean useDynamicRoster) {
+            this.useDynamicRoster = useDynamicRoster;
+        }
+
         public League toLeague() {
             // Derive dirLgw from id
             String dirLgw = "/FOR_WWW1/" + id;
@@ -100,7 +109,7 @@ public class LeagueProperties {
                 statsMl = "BL";
             }
 
-            return new League(id, name, dirLgw, statsMl, numTeams, draftSheetId, draftSheetGid, draftSheetName, draftSheetIdColumn);
+            return new League(id, name, dirLgw, statsMl, numTeams, draftSheetId, draftSheetGid, draftSheetName, draftSheetIdColumn, useDynamicRoster);
         }
     }
 

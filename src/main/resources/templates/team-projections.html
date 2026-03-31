@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Win Projections - OOPSY</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .header h1 { font-size: 24px; }
+        .header p { opacity: 0.9; margin-top: 4px; }
+        .header-logo img { height: 60px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        th {
+            background: #f8f9fa;
+            font-weight: 600;
+            color: #333;
+        }
+        tr:hover { background: #f8f9fa; }
+        .numeric { text-align: right; font-variant-numeric: tabular-nums; }
+        .wins {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        .wins-elite { color: #2e7d32; }
+        .wins-good { color: #1565c0; }
+        .wins-average { color: #666; }
+        .wins-poor { color: #c62828; }
+        .war { font-weight: 600; }
+        .war-positive { color: #2e7d32; }
+        .war-negative { color: #c62828; }
+        .rank {
+            font-weight: 700;
+            color: #1565c0;
+            width: 40px;
+        }
+        .owner { font-weight: 500; }
+        .match-info {
+            font-size: 12px;
+            color: #999;
+        }
+        .unmatched {
+            font-size: 11px;
+            color: #c62828;
+            max-width: 300px;
+        }
+        .summary {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .summary h3 { margin-bottom: 8px; color: #333; }
+        .summary p { color: #666; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>Team Win Projections</h1>
+                <p th:text="${leagueName} + ' - Using OOPSY Projections'">League - Using OOPSY Projections</p>
+            </div>
+            <div class="header-logo">
+                <img src="/drafty-mcawesome-logo.svg" alt="Scoresheet Drafty McAwesome">
+            </div>
+        </div>
+
+        <div class="summary">
+            <h3>Methodology</h3>
+            <p>Projected wins = 48 (replacement level) + Team WAR. WAR values from OOPSY projection system. Players matched by last name to Scoresheet database.</p>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th class="rank">#</th>
+                    <th>Owner</th>
+                    <th class="numeric">Proj Wins</th>
+                    <th class="numeric">Total WAR</th>
+                    <th class="numeric">Bat WAR</th>
+                    <th class="numeric">Pitch WAR</th>
+                    <th class="numeric">Matched</th>
+                    <th>Unmatched Players</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="proj, iter : ${projections}">
+                    <td class="rank" th:text="${iter.index + 1}">1</td>
+                    <td class="owner" th:text="${proj.owner}">Owner Name</td>
+                    <td class="numeric wins"
+                        th:classappend="${proj.projectedWins >= 95} ? 'wins-elite' : (${proj.projectedWins >= 85} ? 'wins-good' : (${proj.projectedWins >= 75} ? 'wins-average' : 'wins-poor'))"
+                        th:text="${proj.projectedWins}">85</td>
+                    <td class="numeric war"
+                        th:classappend="${proj.totalWar >= 0} ? 'war-positive' : 'war-negative'"
+                        th:text="${#numbers.formatDecimal(proj.totalWar, 1, 1)}">35.2</td>
+                    <td class="numeric" th:text="${#numbers.formatDecimal(proj.battingWar, 1, 1)}">20.5</td>
+                    <td class="numeric" th:text="${#numbers.formatDecimal(proj.pitchingWar, 1, 1)}">14.7</td>
+                    <td class="numeric match-info" th:text="${proj.matchedPlayers} + '/' + (${proj.matchedPlayers} + ${proj.unmatchedPlayers})">25/30</td>
+                    <td class="unmatched" th:if="${!proj.unmatchedNames.isEmpty()}"
+                        th:text="${#strings.listJoin(proj.unmatchedNames, ', ')}">Player1, Player2</td>
+                    <td th:if="${proj.unmatchedNames.isEmpty()}">-</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

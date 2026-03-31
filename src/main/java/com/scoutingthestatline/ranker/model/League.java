@@ -9,7 +9,8 @@ public record League(
     String draftSheetId,  // Google Sheet ID for draft tracking (null to use dynamic page)
     String draftSheetGid,  // Google Sheet tab/gid (null defaults to 0)
     String draftSheetName,  // Google Sheet tab name (alternative to gid)
-    String draftSheetIdColumn  // Column name for scoresheet ID (null defaults to SSID)
+    String draftSheetIdColumn,  // Column name for scoresheet ID (null defaults to SSID)
+    boolean useDynamicRoster  // Force using dynamic roster page even if draftSheet is configured
 ) {
     public String getUndraftedPlayersUrl() {
         return String.format(
@@ -26,6 +27,10 @@ public record League(
     }
 
     public boolean hasDraftSheet() {
+        // Use dynamic roster page if flag is set, even if sheet is configured
+        if (useDynamicRoster) {
+            return false;
+        }
         return draftSheetId != null && !draftSheetId.isEmpty();
     }
 

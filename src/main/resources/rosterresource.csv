@@ -1,38 +1,12 @@
 team,player_name,section,fg_id,mlb_id
-blue-jays,George Springer,Starting Lineup,12856,543807
-blue-jays,Daulton Varsho,Starting Lineup,19918,662139
-blue-jays,Vladimir Guerrero Jr.,Starting Lineup,19611,665489
-blue-jays,Addison Barger,Starting Lineup,24598,680718
-blue-jays,Alejandro Kirk,Starting Lineup,22581,672386
-blue-jays,Jesús Sánchez,Starting Lineup,19913,660821
-blue-jays,Kazuma Okamoto,Starting Lineup,sa3063134,672960
-blue-jays,Ernie Clement,Starting Lineup,20352,676391
-blue-jays,Andrés Giménez,Starting Lineup,19950,665926
-blue-jays,Tyler Heineman,Projected Bench,13897,623168
-blue-jays,Davis Schneider,Projected Bench,23565,676914
-blue-jays,Nathan Lukes,Projected Bench,18123,664770
-blue-jays,Myles Straw,Projected Bench,17620,664702
-blue-jays,Kevin Gausman,Projected Starting Rotation,14107,592332
-blue-jays,Dylan Cease,Projected Starting Rotation,18525,656302
-blue-jays,Eric Lauer,Projected Starting Rotation,19316,641778
-blue-jays,Cody Ponce,Projected Starting Rotation,17920,664074
-blue-jays,Max Scherzer,Projected Starting Rotation,3137,453286
-blue-jays,Jeff Hoffman,Projected Bullpen,17432,656546
-blue-jays,Tyler Rogers,Projected Bullpen,15541,643511
-blue-jays,Louis Varland,Projected Bullpen,27691,686973
-blue-jays,Brendon Little,Projected Bullpen,21574,663893
-blue-jays,Braydon Fisher,Projected Bullpen,24609,680755
-blue-jays,Tommy Nance,Projected Bullpen,19178,667297
-blue-jays,Mason Fluharty,Projected Bullpen,31553,
-blue-jays,Angel Bastardo,Projected Bullpen,sa3009716,
-orioles,Gunnar Henderson,Starting Lineup,26289,683002
 orioles,Taylor Ward,Starting Lineup,17548,621493
+orioles,Gunnar Henderson,Starting Lineup,26289,683002
 orioles,Pete Alonso,Starting Lineup,19251,624413
 orioles,Adley Rutschman,Starting Lineup,26288,668939
-orioles,Tyler O'Neill,Starting Lineup,15711,641933
 orioles,Samuel Basallo,Starting Lineup,28824,694212
-orioles,Coby Mayo,Starting Lineup,28312,691723
+orioles,Tyler O'Neill,Starting Lineup,15711,641933
 orioles,Colton Cowser,Starting Lineup,29591,681297
+orioles,Coby Mayo,Starting Lineup,28312,691723
 orioles,Blaze Alexander,Starting Lineup,23789,677942
 orioles,Ryan Mountcastle,Projected Bench,18373,663624
 orioles,Jeremiah Jackson,Projected Bench,22239,669236
@@ -40,42 +14,42 @@ orioles,Dylan Beavers,Projected Bench,31695,687637
 orioles,Leody Taveras,Projected Bench,18900,665750
 orioles,Trevor Rogers,Projected Starting Rotation,22286,669432
 orioles,Kyle Bradish,Projected Starting Rotation,24586,680694
-orioles,Chris Bassitt,Projected Starting Rotation,12304,605135
 orioles,Shane Baz,Projected Starting Rotation,22264,669358
+orioles,Chris Bassitt,Projected Starting Rotation,12304,605135
 orioles,Zach Eflin,Projected Starting Rotation,13774,621107
-orioles,Dean Kremer,Projected Starting Rotation,19350,665152
 orioles,Ryan Helsley,Projected Bullpen,18138,664854
-orioles,Keegan Akin,Projected Bullpen,19362,669211
 orioles,Yennier Cano,Projected Bullpen,25911,666974
 orioles,Dietrich Enns,Projected Bullpen,13932,608650
 orioles,Rico Garcia,Projected Bullpen,20023,
-orioles,Grant Wolfram,Projected Bullpen,21623,
 orioles,Tyler Wells,Projected Bullpen,20000,669330
+orioles,Grant Wolfram,Projected Bullpen,21623,
+orioles,Anthony Nunez,Projected Bullpen,25796,
+orioles,Yaramil Hiraldo,Projected Bullpen,25215,682274
 rays,Yandy Díaz,Starting Lineup,16578,650490
 rays,Jonathan Aranda,Starting Lineup,21837,666018
+rays,Jake Fraley,Starting Lineup,19260,641584
 rays,Junior Caminero,Starting Lineup,28163,691406
 rays,Cedric Mullins,Starting Lineup,17929,656775
-rays,Jake Fraley,Starting Lineup,19260,641584
-rays,Gavin Lux,Starting Lineup,19955,666158
-rays,Carson Williams,Starting Lineup,30038,700246
 rays,Chandler Simpson,Starting Lineup,31912,802415
-rays,Nick Fortes,Starting Lineup,21538,663743
-rays,Hunter Feduccia,Projected Bench,23372,676439
+rays,Carson Williams,Starting Lineup,30038,700246
+rays,Richie Palacios,Starting Lineup,24589,680700
+rays,Hunter Feduccia,Starting Lineup,23372,676439
+rays,Nick Fortes,Projected Bench,21538,663743
 rays,Ben Williamson,Projected Bench,33197,810938
 rays,Jonny DeLuca,Projected Bench,26365,676356
 rays,Ryan Vilade,Projected Bench,22165,668723
 rays,Drew Rasmussen,Projected Starting Rotation,25385,656876
-rays,Ryan Pepiot,Projected Starting Rotation,26221,686752
-rays,Shane McClanahan,Projected Starting Rotation,21483,663556
-rays,Nick Martinez,Projected Starting Rotation,12730,607259
+rays,Joe Boyle,Projected Starting Rotation,29608,671212
 rays,Steven Matz,Projected Starting Rotation,13361,571927
+rays,Nick Martinez,Projected Starting Rotation,12730,607259
+rays,Shane McClanahan,Projected Starting Rotation,21483,663556
+rays,Bryan Baker,Projected Bullpen,19804,641329
 rays,Griffin Jax,Projected Bullpen,20253,643377
 rays,Garrett Cleavinger,Projected Bullpen,17897,664076
-rays,Bryan Baker,Projected Bullpen,19804,641329
 rays,Mason Englert,Projected Bullpen,22288,669438
-rays,Hunter Bigge,Projected Bullpen,26259,685801
-rays,Ian Seymour,Projected Bullpen,27932,693855
 rays,Cole Sulser,Projected Bullpen,15256,642121
+rays,Ian Seymour,Projected Bullpen,27932,693855
+rays,Kevin Kelly,Projected Bullpen,25679,687330
 rays,Yoendrys Gómez,Projected Bullpen,22872,672782
 red-sox,Roman Anthony,Starting Lineup,31812,701350
 red-sox,Trevor Story,Starting Lineup,12564,596115
@@ -83,16 +57,16 @@ red-sox,Jarren Duran,Starting Lineup,24617,680776
 red-sox,Willson Contreras,Starting Lineup,11609,575929
 red-sox,Wilyer Abreu,Starting Lineup,23772,677800
 red-sox,Caleb Durbin,Starting Lineup,29646,702332
-red-sox,Ceddanne Rafaela,Starting Lineup,24262,678882
 red-sox,Marcelo Mayer,Starting Lineup,29668,691785
 red-sox,Carlos Narváez,Starting Lineup,19722,665966
+red-sox,Ceddanne Rafaela,Starting Lineup,24262,678882
 red-sox,Connor Wong,Projected Bench,19896,657136
 red-sox,Isiah Kiner-Falefa,Projected Bench,16512,643396
 red-sox,Andruw Monasterio,Projected Bench,19455,655316
 red-sox,Masataka Yoshida,Projected Bench,31837,807799
 red-sox,Garrett Crochet,Projected Starting Rotation,27463,676979
 red-sox,Sonny Gray,Projected Starting Rotation,12768,543243
-red-sox,Johan Oviedo,Projected Starting Rotation,22487,670912
+red-sox,Connelly Early,Projected Starting Rotation,33666,813349
 red-sox,Ranger Suarez,Projected Starting Rotation,17277,624133
 red-sox,Brayan Bello,Projected Starting Rotation,23920,678394
 red-sox,Aroldis Chapman,Projected Bullpen,10233,547973
@@ -100,18 +74,18 @@ red-sox,Garrett Whitlock,Projected Bullpen,20191,676477
 red-sox,Justin Slaten,Projected Bullpen,25648,686580
 red-sox,Greg Weissert,Projected Bullpen,20375,669711
 red-sox,Danny Coulombe,Projected Bullpen,13293,543056
-red-sox,Zack Kelly,Projected Bullpen,20349,677161
 red-sox,Jovani Morán,Projected Bullpen,20422,663558
-red-sox,Ryan Watson,Projected Bullpen,sa3015070,
+red-sox,Ryan Watson,Projected Bullpen,27853,
+red-sox,Johan Oviedo,Projected Bullpen,22487,670912
 yankees,Trent Grisham,Starting Lineup,18564,663757
 yankees,Aaron Judge,Starting Lineup,15640,592450
 yankees,Cody Bellinger,Starting Lineup,15998,641355
 yankees,Ben Rice,Starting Lineup,29576,700250
 yankees,Giancarlo Stanton,Starting Lineup,4949,519317
 yankees,Jazz Chisholm Jr.,Starting Lineup,20454,665862
+yankees,Ryan McMahon,Starting Lineup,15112,641857
 yankees,Austin Wells,Starting Lineup,27562,669224
 yankees,José Caballero,Starting Lineup,23401,676609
-yankees,Ryan McMahon,Starting Lineup,15112,641857
 yankees,J.C. Escarra,Projected Bench,20084,641555
 yankees,Paul Goldschmidt,Projected Bench,9218,502671
 yankees,Amed Rosario,Projected Bench,15518,642708
@@ -120,52 +94,52 @@ yankees,Max Fried,Projected Starting Rotation,13743,608331
 yankees,Cam Schlittler,Projected Starting Rotation,32095,693645
 yankees,Will Warren,Projected Starting Rotation,30182,701542
 yankees,Ryan Weathers,Projected Starting Rotation,23796,677960
-yankees,Luis Gil,Projected Starting Rotation,21052,661563
 yankees,David Bednar,Projected Bullpen,19569,670280
 yankees,Camilo Doval,Projected Bullpen,21992,666808
 yankees,Fernando Cruz,Projected Bullpen,7048,518585
 yankees,Tim Hill,Projected Bullpen,16814,657612
 yankees,Jake Bird,Projected Bullpen,21267,656234
-yankees,Paul Blackburn,Projected Bullpen,14739,621112
+yankees,Brent Headrick,Projected Bullpen,27702,687396
 yankees,Ryan Yarbrough,Projected Bullpen,16502,642232
 yankees,Cade Winquest,Projected Bullpen,sa3020805,
+yankees,Paul Blackburn,Projected Bullpen,14739,621112
 guardians,Steven Kwan,Starting Lineup,24610,680757
-guardians,Angel Martínez,Starting Lineup,26540,682657
+guardians,Chase DeLauter,Starting Lineup,32127,800050
 guardians,José Ramírez,Starting Lineup,13510,608070
 guardians,Kyle Manzardo,Starting Lineup,29794,700932
-guardians,Rhys Hoskins,Starting Lineup,16472,656555
-guardians,Chase DeLauter,Starting Lineup,32127,800050
-guardians,Gabriel Arias,Starting Lineup,22563,672356
 guardians,Bo Naylor,Starting Lineup,21865,666310
+guardians,Daniel Schneemann,Starting Lineup,25180,682177
+guardians,Gabriel Arias,Starting Lineup,22563,672356
+guardians,CJ Kayfus,Starting Lineup,33704,692216
 guardians,Brayan Rocchio,Starting Lineup,23690,677587
 guardians,Austin Hedges,Projected Bench,12976,595978
 guardians,David Fry,Projected Bench,24934,681807
-guardians,CJ Kayfus,Projected Bench,33704,692216
-guardians,Daniel Schneemann,Projected Bench,25180,682177
+guardians,Rhys Hoskins,Projected Bench,16472,656555
+guardians,Angel Martínez,Projected Bench,26540,682657
 guardians,Tanner Bibee,Projected Starting Rotation,30134,676440
 guardians,Gavin Williams,Projected Starting Rotation,30122,668909
-guardians,Slade Cecconi,Projected Starting Rotation,27500,677944
-guardians,Logan Allen,Projected Starting Rotation,27589,671106
 guardians,Joey Cantillo,Projected Starting Rotation,23335,676282
+guardians,Slade Cecconi,Projected Starting Rotation,27500,677944
+guardians,Parker Messick,Projected Starting Rotation,31986,800048
 guardians,Cade Smith,Projected Bullpen,27867,671922
 guardians,Shawn Armstrong,Projected Bullpen,12857,542888
 guardians,Erik Sabrowski,Projected Bullpen,24978,681870
 guardians,Matt Festa,Projected Bullpen,19330,670036
 guardians,Tim Herrin,Projected Bullpen,25139,682120
 guardians,Connor Brogdon,Projected Bullpen,21205,641401
-guardians,Colin Holderman,Projected Bullpen,22361,670059
-guardians,Peyton Pallette,Projected Bullpen,sa3020742,
+guardians,Kolby Allard,Projected Bullpen,18694,663465
+guardians,Peyton Pallette,Projected Bullpen,31865,
 royals,Maikel Garcia,Starting Lineup,22715,672580
 royals,Bobby Witt Jr.,Starting Lineup,25764,677951
 royals,Vinnie Pasquantino,Starting Lineup,27676,686469
 royals,Salvador Perez,Starting Lineup,7304,521692
-royals,Jac Caglianone,Starting Lineup,35041,695506
-royals,Jonathan India,Starting Lineup,21523,663697
 royals,Carter Jensen,Starting Lineup,29478,695600
+royals,Jonathan India,Starting Lineup,21523,663697
+royals,Jac Caglianone,Starting Lineup,35041,695506
 royals,Isaac Collins,Starting Lineup,25477,686555
 royals,Kyle Isbel,Starting Lineup,21614,664728
 royals,Nick Loftin,Projected Bench,27630,679845
-royals,Michael Massey,Projected Bench,27684,686681
+royals,Tyler Tolbert,Projected Bench,25779,686475
 royals,Starling Marte,Projected Bench,9241,516782
 royals,Lane Thomas,Projected Bench,16939,657041
 royals,Cole Ragans,Projected Starting Rotation,21846,666142
@@ -181,17 +155,17 @@ royals,Nick Mears,Projected Bullpen,25376,683232
 royals,Daniel Lynch IV,Projected Bullpen,21537,663738
 royals,Alex Lange,Projected Bullpen,19883,656638
 royals,Bailey Falter,Projected Bullpen,20070,663559
-tigers,Kevin McGonigle,Starting Lineup,sa3022895,805808
-tigers,Gleyber Torres,Starting Lineup,16997,650402
 tigers,Kerry Carpenter,Starting Lineup,25961,681481
+tigers,Gleyber Torres,Starting Lineup,16997,650402
+tigers,Colt Keith,Starting Lineup,27899,690993
 tigers,Riley Greene,Starting Lineup,25976,682985
 tigers,Spencer Torkelson,Starting Lineup,27465,679529
-tigers,Colt Keith,Starting Lineup,27899,690993
+tigers,Kevin McGonigle,Starting Lineup,33572,
 tigers,Dillon Dingler,Starting Lineup,27464,693307
-tigers,Zach McKinstry,Starting Lineup,19392,656716
 tigers,Parker Meadows,Starting Lineup,23800,678009
+tigers,Javier Báez,Starting Lineup,12979,595879
 tigers,Jake Rogers,Projected Bench,19452,668670
-tigers,Javier Báez,Projected Bench,12979,595879
+tigers,Zach McKinstry,Projected Bench,19392,656716
 tigers,Jahmai Jones,Projected Bench,18872,663330
 tigers,Matt Vierling,Projected Bench,21558,663837
 tigers,Tarik Skubal,Projected Starting Rotation,22267,669373
@@ -204,138 +178,112 @@ tigers,Will Vest,Projected Bullpen,19769,676684
 tigers,Kyle Finnegan,Projected Bullpen,15009,640448
 tigers,Tyler Holton,Projected Bullpen,26231,663947
 tigers,Drew Anderson,Projected Bullpen,15130,623454
-tigers,Brenan Hanifee,Projected Bullpen,22304,669724
 tigers,Brant Hurter,Projected Bullpen,30133,676428
+tigers,Connor Seabold,Projected Bullpen,19695,657756
 tigers,Enmanuel De Jesus,Projected Bullpen,18554,
-twins,Byron Buxton,Starting Lineup,14161,621439
-twins,Josh Bell,Starting Lineup,13145,605137
-twins,Luke Keaschall,Starting Lineup,33321,807712
-twins,Matt Wallner,Starting Lineup,26466,670242
-twins,Victor Caratini,Starting Lineup,14968,605170
-twins,Trevor Larnach,Starting Lineup,21501,663616
-twins,Royce Lewis,Starting Lineup,20437,668904
-twins,Ryan Jeffers,Starting Lineup,24618,680777
-twins,Brooks Lee,Starting Lineup,31595,686797
-twins,Kody Clemens,Projected Bench,20572,665019
-twins,Ryan Kreidler,Projected Bench,25867,668952
-twins,Austin Martin,Projected Bench,27462,668885
-twins,James Outman,Projected Bench,24770,681546
-twins,Joe Ryan,Projected Starting Rotation,21390,657746
-twins,Bailey Ober,Projected Starting Rotation,21224,641927
-twins,Simeon Woods Richardson,Projected Starting Rotation,24494,680573
-twins,Taj Bradley,Projected Starting Rotation,22543,671737
-twins,Mick Abel,Projected Starting Rotation,27756,690953
-twins,Taylor Rogers,Projected Bullpen,13449,573124
-twins,Kody Funderburk,Projected Bullpen,24993,681892
-twins,Cole Sands,Projected Bullpen,21461,663485
-twins,Justin Topa,Projected Bullpen,15145,623437
-twins,Anthony Banda,Projected Bullpen,14706,607455
-twins,Eric Orze,Projected Bullpen,27626,679358
-twins,Cody Laweryson,Projected Bullpen,26429,
-twins,Zak Kent,Projected Bullpen,25703,
 white-sox,Chase Meidroth,Starting Lineup,31580,805367
-white-sox,Colson Montgomery,Starting Lineup,29712,695657
+white-sox,Munetaka Murakami,Starting Lineup,37120,
 white-sox,Miguel Vargas,Starting Lineup,20178,678246
-white-sox,Munetaka Murakami,Starting Lineup,sa3063258,808959
+white-sox,Colson Montgomery,Starting Lineup,29712,695657
 white-sox,Austin Hays,Starting Lineup,19363,669720
 white-sox,Andrew Benintendi,Starting Lineup,17901,643217
-white-sox,Lenyn Sosa,Starting Lineup,22896,672820
+white-sox,Everson Pereira,Starting Lineup,23695,677592
 white-sox,Edgar Quero,Starting Lineup,28022,700337
 white-sox,Luisangel Acuña,Starting Lineup,26548,682668
-white-sox,Korey Lee,Projected Bench,25543,686676
-white-sox,Curtis Mead,Projected Bench,23986,678554
+white-sox,Reese McGuire,Projected Bench,15674,624512
+white-sox,Lenyn Sosa,Projected Bench,22896,672820
 white-sox,Derek Hill,Projected Bench,16947,656537
-white-sox,Everson Pereira,Projected Bench,23695,677592
+white-sox,Tristan Peters,Projected Bench,30063,
 white-sox,Shane Smith,Projected Starting Rotation,31687,681343
+white-sox,Sean Burke,Projected Starting Rotation,29878,680732
 white-sox,Anthony Kay,Projected Starting Rotation,20387,641743
 white-sox,Davis Martin,Projected Starting Rotation,21448,663436
-white-sox,Sean Burke,Projected Starting Rotation,29878,680732
 white-sox,Erick Fedde,Projected Starting Rotation,17425,607200
 white-sox,Seranthony Domínguez,Projected Bullpen,19249,622554
 white-sox,Jordan Leasure,Projected Bullpen,29950,673929
 white-sox,Grant Taylor,Projected Bullpen,33927,691799
 white-sox,Sean Newcomb,Projected Bullpen,16943,656794
-white-sox,Brandon Eisert,Projected Bullpen,27668,
-white-sox,Jordan Hicks,Projected Bullpen,19618,663855
 white-sox,Chris Murphy,Projected Bullpen,26214,669684
-white-sox,Jedixson Paez,Projected Bullpen,sa3016264,
+white-sox,Jordan Hicks,Projected Bullpen,19618,663855
+white-sox,Bryan Hudson,Projected Bullpen,19924,663542
+white-sox,Jedixson Paez,Projected Bullpen,29114,
 angels,Zach Neto,Starting Lineup,31347,687263
 angels,Mike Trout,Starting Lineup,10155,545361
 angels,Nolan Schanuel,Starting Lineup,33189,694384
-angels,Yoán Moncada,Starting Lineup,17232,660162
 angels,Jorge Soler,Starting Lineup,14221,624585
+angels,Yoán Moncada,Starting Lineup,17232,660162
 angels,Jo Adell,Starting Lineup,20220,666176
 angels,Josh Lowe,Starting Lineup,19953,666139
 angels,Logan O'Hoppe,Starting Lineup,24729,681351
-angels,Adam Frazier,Starting Lineup,15223,624428
+angels,Oswald Peraza,Starting Lineup,22823,672724
 angels,Travis d'Arnaud,Projected Bench,7739,518595
 angels,Jeimer Candelario,Projected Bench,13621,600869
-angels,Oswald Peraza,Projected Bench,22823,672724
+angels,Adam Frazier,Projected Bench,15223,624428
 angels,Bryce Teodosio,Projected Bench,29524,669326
 angels,José Soriano,Projected Starting Rotation,22100,667755
 angels,Yusei Kikuchi,Projected Starting Rotation,20633,579328
 angels,Reid Detmers,Projected Starting Rotation,27468,672282
 angels,Jack Kochanowicz,Projected Starting Rotation,27688,686799
 angels,Ryan Johnson,Projected Starting Rotation,35325,696270
-angels,Kirby Yates,Projected Bullpen,9073,489446
-angels,Drew Pomeranz,Projected Bullpen,11426,519141
 angels,Jordan Romano,Projected Bullpen,16122,605447
-angels,Ryan Zeferjahn,Projected Bullpen,25420,666171
-angels,Brent Suter,Projected Bullpen,13942,608718
 angels,Sam Bachman,Projected Bullpen,29754,696147
-angels,Hunter Strickland,Projected Bullpen,7836,519326
+angels,Drew Pomeranz,Projected Bullpen,11426,519141
 angels,Chase Silseth,Projected Bullpen,30074,681217
+angels,Brent Suter,Projected Bullpen,13942,608718
+angels,Ryan Zeferjahn,Projected Bullpen,25420,666171
+angels,Joey Lucchesi,Projected Bullpen,19320,664192
+angels,Shaun Anderson,Projected Bullpen,19453,641312
+astros,Jeremy Peña,Starting Lineup,21636,665161
 astros,Jose Altuve,Starting Lineup,5417,514888
-astros,Isaac Paredes,Starting Lineup,20036,670623
 astros,Yordan Alvarez,Starting Lineup,19556,670541
 astros,Carlos Correa,Starting Lineup,14162,621043
 astros,Joey Loperfido,Starting Lineup,29630,694388
-astros,Cam Smith,Starting Lineup,35108,701358
 astros,Christian Walker,Starting Lineup,13419,572233
+astros,Cam Smith,Starting Lineup,35108,701358
 astros,Yainer Diaz,Starting Lineup,23003,673237
 astros,Jake Meyers,Starting Lineup,20308,676694
-astros,César Salazar,Projected Bench,21587,
+astros,Christian Vázquez,Projected Bench,9774,543877
 astros,Nick Allen,Projected Bench,22277,669397
+astros,Isaac Paredes,Projected Bench,20036,670623
 astros,Brice Matthews,Projected Bench,33280,694728
-astros,Zach Cole,Projected Bench,31583,805904
 astros,Hunter Brown,Projected Starting Rotation,25880,686613
-astros,Cristian Javier,Projected Starting Rotation,17606,664299
-astros,Tatsuya Imai,Projected Starting Rotation,sa3062955,837227
 astros,Mike Burrows,Projected Starting Rotation,24728,681347
+astros,Cristian Javier,Projected Starting Rotation,17606,664299
+astros,Tatsuya Imai,Projected Starting Rotation,37124,
 astros,Lance McCullers Jr.,Projected Starting Rotation,14120,621121
-astros,Ryan Weiss,Projected Starting Rotation,sa3007778,680802
 astros,Bryan Abreu,Projected Bullpen,16609,650556
 astros,Bryan King,Projected Bullpen,25890,687911
-astros,Roddery Muñoz,Projected Bullpen,25311,682610
-astros,Steven Okert,Projected Bullpen,13580,595345
-astros,Christian Roa,Projected Bullpen,27662,
-astros,Kai-Wei Teng,Projected Bullpen,24282,678906
 astros,AJ Blubaugh,Projected Bullpen,31764,805123
+astros,Steven Okert,Projected Bullpen,13580,595345
+astros,Kai-Wei Teng,Projected Bullpen,24282,678906
+astros,Cody Bolton,Projected Bullpen,23265,
+astros,Roddery Muñoz,Projected Bullpen,25311,682610
+astros,Ryan Weiss,Projected Bullpen,24621,
 athletics,Nick Kurtz,Starting Lineup,35110,701762
 athletics,Shea Langeliers,Starting Lineup,25816,669127
 athletics,Tyler Soderstrom,Starting Lineup,27467,691016
 athletics,Brent Rooker,Starting Lineup,19627,667670
-athletics,Jeff McNeil,Starting Lineup,15362,643446
 athletics,Jacob Wilson,Starting Lineup,33266,805779
 athletics,Lawrence Butler,Starting Lineup,22542,671732
 athletics,Max Muncy,Starting Lineup,29779,691777
+athletics,Jeff McNeil,Starting Lineup,15362,643446
 athletics,Denzel Clarke,Starting Lineup,29858,672016
 athletics,Austin Wynns,Projected Bench,15271,642851
+athletics,Darell Hernaiz,Projected Bench,26224,687231
 athletics,Andy Ibáñez,Projected Bench,18819,628451
 athletics,Carlos Cortes,Projected Bench,21842,666126
-athletics,Colby Thomas,Projected Bench,31855,687515
 athletics,Luis Severino,Projected Starting Rotation,15890,622663
 athletics,Jeffrey Springs,Projected Starting Rotation,17677,605488
-athletics,Aaron Civale,Projected Starting Rotation,19479,650644
-athletics,Jacob Lopez,Projected Starting Rotation,25098,682052
 athletics,Luis Morales,Projected Starting Rotation,32227,806960
+athletics,Jacob Lopez,Projected Starting Rotation,25098,682052
+athletics,Aaron Civale,Projected Starting Rotation,19479,650644
 athletics,Hogan Harris,Projected Bullpen,21520,663687
-athletics,Justin Sterner,Projected Bullpen,27694,686993
 athletics,Mark Leiter Jr.,Projected Bullpen,15551,643410
 athletics,Scott Barlow,Projected Bullpen,14993,605130
+athletics,Justin Sterner,Projected Bullpen,27694,686993
 athletics,Michael Kelly,Projected Bullpen,12791,547184
 athletics,Elvis Alvarado,Projected Bullpen,21662,665660
-athletics,Nick Anderson,Projected Bullpen,18337,623433
+athletics,J.T. Ginn,Projected Bullpen,27889,669372
 athletics,Luis Medina,Projected Bullpen,21649,665622
 mariners,Brendan Donovan,Starting Lineup,24679,680977
 mariners,Cal Raleigh,Starting Lineup,21534,663728
@@ -344,51 +292,51 @@ mariners,Josh Naylor,Starting Lineup,18839,647304
 mariners,Randy Arozarena,Starting Lineup,19290,668227
 mariners,Luke Raley,Starting Lineup,19354,670042
 mariners,Dominic Canzone,Starting Lineup,26438,686527
-mariners,J.P. Crawford,Starting Lineup,15491,641487
 mariners,Cole Young,Starting Lineup,31680,702284
-mariners,Andrew Knizner,Projected Bench,19514,668800
-mariners,Leo Rivas,Projected Bench,21009,660844
+mariners,Leo Rivas,Starting Lineup,21009,660844
+mariners,Mitch Garver,Projected Bench,15161,641598
+mariners,Ryan Bliss,Projected Bench,29547,669208
 mariners,Rob Refsnyder,Projected Bench,13770,608701
 mariners,Victor Robles,Projected Bench,18363,645302
 mariners,Logan Gilbert,Projected Starting Rotation,22250,669302
-mariners,Bryan Woo,Projected Starting Rotation,30279,693433
-mariners,Luis Castillo,Projected Starting Rotation,15689,622491
 mariners,George Kirby,Projected Starting Rotation,25436,669923
+mariners,Bryan Woo,Projected Starting Rotation,30279,693433
 mariners,Emerson Hancock,Projected Starting Rotation,27470,676106
+mariners,Luis Castillo,Projected Starting Rotation,15689,622491
 mariners,Andrés Muñoz,Projected Bullpen,20373,662253
 mariners,Matt Brash,Projected Bullpen,25756,666374
 mariners,Jose A. Ferrer,Projected Bullpen,24017,678606
 mariners,Eduard Bazardo,Projected Bullpen,20997,660825
 mariners,Gabe Speier,Projected Bullpen,17170,642100
-mariners,Carlos Vargas,Projected Bullpen,22915,
 mariners,Casey Legumina,Projected Bullpen,25921,
+mariners,Cole Wilcox,Projected Bullpen,27481,
 mariners,Cooper Criswell,Projected Bullpen,24975,681867
 rangers,Brandon Nimmo,Starting Lineup,12927,607043
 rangers,Wyatt Langford,Starting Lineup,33333,694671
 rangers,Corey Seager,Starting Lineup,13624,608369
 rangers,Jake Burger,Starting Lineup,22275,669394
 rangers,Joc Pederson,Starting Lineup,11899,592626
-rangers,Evan Carter,Starting Lineup,27790,694497
-rangers,Josh Jung,Starting Lineup,26299,673962
 rangers,Josh Smith,Starting Lineup,26396,669701
+rangers,Josh Jung,Starting Lineup,26299,673962
+rangers,Evan Carter,Starting Lineup,27790,694497
 rangers,Danny Jansen,Starting Lineup,16535,643376
 rangers,Kyle Higashioka,Projected Bench,5517,543309
 rangers,Ezequiel Duran,Projected Bench,23733,677649
 rangers,Sam Haggerty,Projected Bench,18054,664059
 rangers,Andrew McCutchen,Projected Bench,9847,457705
 rangers,Nathan Eovaldi,Projected Starting Rotation,9132,543135
-rangers,Jacob deGrom,Projected Starting Rotation,10954,594798
 rangers,MacKenzie Gore,Projected Starting Rotation,22201,669022
 rangers,Jack Leiter,Projected Starting Rotation,30146,683004
-rangers,Jacob Latz,Projected Starting Rotation,21306,656641
+rangers,Jacob deGrom,Projected Starting Rotation,10954,594798
+rangers,Kumar Rocker,Projected Starting Rotation,31843,677958
 rangers,Robert Garcia,Projected Bullpen,23363,676395
 rangers,Chris Martin,Projected Bullpen,11847,455119
 rangers,Cole Winn,Projected Bullpen,22113,668390
-rangers,Josh Sborz,Projected Bullpen,18323,622250
-rangers,Jakob Junis,Projected Bullpen,13619,596001
-rangers,Jalen Beeks,Projected Bullpen,17192,656222
-rangers,Carter Baumler,Projected Bullpen,sa3014480,
 rangers,Tyler Alexander,Projected Bullpen,17735,641302
+rangers,Jakob Junis,Projected Bullpen,13619,596001
+rangers,Carter Baumler,Projected Bullpen,30231,
+rangers,Jalen Beeks,Projected Bullpen,17192,656222
+rangers,Jacob Latz,Projected Bullpen,21306,656641
 braves,Ronald Acuña Jr.,Starting Lineup,18401,660670
 braves,Drake Baldwin,Starting Lineup,31539,686948
 braves,Matt Olson,Starting Lineup,14344,621566
@@ -399,35 +347,35 @@ braves,Michael Harris II,Starting Lineup,25931,671739
 braves,Dominic Smith,Starting Lineup,15653,642086
 braves,Mauricio Dubón,Starting Lineup,16530,643289
 braves,Jonah Heim,Projected Bench,16930,641680
+braves,Kyle Farmer,Projected Bench,14813,571657
 braves,Jorge Mateo,Projected Bench,17273,622761
-braves,Brett Wisely,Projected Bench,27735,689172
 braves,Eli White,Projected Bench,19346,642201
 braves,Chris Sale,Projected Starting Rotation,10603,519242
-braves,Spencer Strider,Projected Starting Rotation,27498,675911
 braves,Reynaldo López,Projected Starting Rotation,16400,625643
 braves,Grant Holmes,Projected Starting Rotation,16944,656550
 braves,Bryce Elder,Projected Starting Rotation,27779,693821
+braves,José Suarez,Projected Starting Rotation,19911,660761
 braves,Raisel Iglesias,Projected Bullpen,17130,628452
 braves,Robert Suarez,Projected Bullpen,30115,663158
 braves,Dylan Lee,Projected Bullpen,19996,669276
 braves,Tyler Kinley,Projected Bullpen,18297,641755
 braves,Aaron Bummer,Projected Bullpen,16258,607481
 braves,Joel Payamps,Projected Bullpen,14332,606303
-braves,José Suarez,Projected Bullpen,19911,660761
+braves,Osvaldo Bido,Projected Bullpen,23150,674370
 braves,Martín Pérez,Projected Bullpen,6902,527048
 marlins,Jakob Marsee,Starting Lineup,31370,805300
 marlins,Xavier Edwards,Starting Lineup,22266,669364
-marlins,Kyle Stowers,Starting Lineup,26151,669065
 marlins,Agustín Ramírez,Starting Lineup,26546,682663
-marlins,Griffin Conine,Starting Lineup,21626,665052
+marlins,Liam Hicks,Starting Lineup,29844,689414
 marlins,Otto Lopez,Starting Lineup,19608,672640
-marlins,Christopher Morel,Starting Lineup,21897,666624
-marlins,Connor Norby,Starting Lineup,29592,681393
 marlins,Owen Caissie,Starting Lineup,27496,683357
-marlins,Liam Hicks,Projected Bench,29844,689414
-marlins,Graham Pauley,Projected Bench,31363,688363
+marlins,Connor Norby,Starting Lineup,29592,681393
+marlins,Griffin Conine,Starting Lineup,21626,665052
+marlins,Graham Pauley,Starting Lineup,31363,688363
+marlins,Leo Jiménez,Projected Bench,23782,677870
 marlins,Javier Sanoja,Projected Bench,28253,691594
 marlins,Heriberto Hernández,Projected Bench,24878,681715
+marlins,Austin Slater,Projected Bench,16153,596103
 marlins,Sandy Alcantara,Projected Starting Rotation,18684,645261
 marlins,Eury Pérez,Projected Starting Rotation,27768,691587
 marlins,Max Meyer,Projected Starting Rotation,27474,676974
@@ -437,10 +385,10 @@ marlins,Pete Fairbanks,Projected Bullpen,17998,664126
 marlins,Calvin Faucher,Projected Bullpen,20116,676534
 marlins,Tyler Phillips,Projected Bullpen,20629,663969
 marlins,Anthony Bender,Projected Bullpen,19742,669622
-marlins,Cade Gibson,Projected Bullpen,31815,806188
 marlins,Andrew Nardi,Projected Bullpen,25942,677053
 marlins,John King,Projected Bullpen,22051,667463
 marlins,Lake Bachar,Projected Bullpen,19222,
+marlins,Michael Petersen,Projected Bullpen,20827,
 mets,Francisco Lindor,Starting Lineup,12916,596019
 mets,Juan Soto,Starting Lineup,20123,665742
 mets,Bo Bichette,Starting Lineup,19612,666182
@@ -448,60 +396,60 @@ mets,Jorge Polanco,Starting Lineup,13152,593871
 mets,Luis Robert Jr.,Starting Lineup,20043,673357
 mets,Brett Baty,Starting Lineup,26123,683146
 mets,Marcus Semien,Starting Lineup,12533,543760
-mets,Carson Benge,Starting Lineup,sa3025452,701807
+mets,Carson Benge,Starting Lineup,35177,
 mets,Francisco Alvarez,Starting Lineup,26121,682626
 mets,Luis Torrens,Projected Bench,15905,620443
 mets,Mark Vientos,Projected Bench,22184,668901
-mets,Mike Tauchman,Projected Bench,15274,643565
+mets,Jared Young,Projected Bench,20404,676724
 mets,Tyrone Taylor,Projected Bench,13675,621438
 mets,Freddy Peralta,Projected Starting Rotation,18679,642547
-mets,Nolan McLean,Projected Starting Rotation,33703,690997
 mets,David Peterson,Projected Starting Rotation,20302,656849
+mets,Nolan McLean,Projected Starting Rotation,33703,690997
 mets,Clay Holmes,Projected Starting Rotation,13649,605280
-mets,Sean Manaea,Projected Starting Rotation,15873,640455
 mets,Kodai Senga,Projected Starting Rotation,31838,673540
 mets,Devin Williams,Projected Bullpen,15816,642207
 mets,Luke Weaver,Projected Bullpen,16918,596133
 mets,Brooks Raley,Projected Bullpen,10061,548384
 mets,Luis García,Projected Bullpen,6984,472610
 mets,Huascar Brazobán,Projected Bullpen,6107,623211
-mets,Richard Lovelady,Projected Bullpen,19337,663992
 mets,Tobias Myers,Projected Bullpen,22191,668964
-nationals,CJ Abrams,Starting Lineup,25768,682928
+mets,Richard Lovelady,Projected Bullpen,19337,663992
+mets,Sean Manaea,Projected Bullpen,15873,640455
 nationals,James Wood,Starting Lineup,29518,695578
-nationals,Keibert Ruiz,Starting Lineup,19610,660688
 nationals,Luis García Jr.,Starting Lineup,20391,671277
 nationals,Brady House,Starting Lineup,29993,691781
 nationals,Daylen Lile,Starting Lineup,29995,695734
-nationals,Andrés Chaparro,Starting Lineup,21797,665953
+nationals,CJ Abrams,Starting Lineup,25768,682928
+nationals,Keibert Ruiz,Starting Lineup,19610,660688
+nationals,Jorbit Vivas,Starting Lineup,23917,678391
 nationals,Nasim Nuñez,Starting Lineup,25979,683083
 nationals,Jacob Young,Starting Lineup,29931,696285
 nationals,Drew Millas,Projected Bench,25643,686452
+nationals,Curtis Mead,Projected Bench,23986,678554
 nationals,José Tena,Projected Bench,23691,677588
-nationals,Christian Franklin,Projected Bench,sa3017510,681047
 nationals,Joey Wiemer,Projected Bench,27690,686894
 nationals,Cade Cavalli,Projected Starting Rotation,27473,676917
 nationals,Miles Mikolas,Projected Starting Rotation,9803,571945
-nationals,Foster Griffin,Projected Starting Rotation,16432,656492
 nationals,Jake Irvin,Projected Starting Rotation,21504,663623
+nationals,Foster Griffin,Projected Starting Rotation,16432,656492
 nationals,Zack Littell,Projected Starting Rotation,15823,641793
 nationals,Clayton Beeter,Projected Bullpen,27494,690925
 nationals,Cole Henry,Projected Bullpen,27570,669371
 nationals,Brad Lord,Projected Bullpen,31972,695418
 nationals,PJ Poulin,Projected Bullpen,23394,676571
 nationals,Cionel Pérez,Projected Bullpen,19614,672335
-nationals,Orlando Ribalta,Projected Bullpen,26247,687377
+nationals,Andre Granillo,Projected Bullpen,29542,701552
+nationals,Gus Varland,Projected Bullpen,24737,681402
 nationals,Ken Waldichuk,Projected Bullpen,27681,686610
-nationals,Griff McGarry,Projected Bullpen,sa3017130,676046
 phillies,Trea Turner,Starting Lineup,16252,607208
 phillies,Kyle Schwarber,Starting Lineup,16478,656941
 phillies,Bryce Harper,Starting Lineup,11579,547180
 phillies,Alec Bohm,Starting Lineup,21618,664761
-phillies,Brandon Marsh,Starting Lineup,20202,669016
-phillies,Adolis García,Starting Lineup,19287,666969
 phillies,Bryson Stott,Starting Lineup,26294,681082
+phillies,Adolis García,Starting Lineup,19287,666969
+phillies,Brandon Marsh,Starting Lineup,20202,669016
 phillies,J.T. Realmuto,Starting Lineup,11739,592663
-phillies,Justin Crawford,Starting Lineup,sa3020240,702222
+phillies,Justin Crawford,Starting Lineup,31791,
 phillies,Rafael Marchán,Projected Bench,21646,665561
 phillies,Edmundo Sosa,Projected Bench,17022,624641
 phillies,Otto Kemp,Projected Bench,31792,805249
@@ -514,29 +462,29 @@ phillies,Andrew Painter,Projected Starting Rotation,sa3017880,691725
 phillies,Jhoan Duran,Projected Bullpen,21029,661395
 phillies,José Alvarado,Projected Bullpen,17780,621237
 phillies,Brad Keller,Projected Bullpen,15734,641745
-phillies,Orion Kerkering,Projected Bullpen,31776,689147
 phillies,Tanner Banks,Projected Bullpen,16990,621383
 phillies,Jonathan Bowlan,Projected Bullpen,24607,680742
 phillies,Kyle Backhus,Projected Bullpen,29615,679775
-phillies,Zach McCambley,Projected Bullpen,sa3014478,
-brewers,Jackson Chourio,Starting Lineup,28806,694192
+phillies,Tim Mayza,Projected Bullpen,15042,641835
+phillies,Zach Pop,Projected Bullpen,20185,
 brewers,Brice Turang,Starting Lineup,22186,668930
 brewers,William Contreras,Starting Lineup,20503,661388
 brewers,Christian Yelich,Starting Lineup,11477,592885
+brewers,Jake Bauers,Starting Lineup,15194,641343
 brewers,Sal Frelick,Starting Lineup,29622,686217
-brewers,Andrew Vaughn,Starting Lineup,26197,683734
-brewers,Luis Rengifo,Starting Lineup,19858,650859
 brewers,Garrett Mitchell,Starting Lineup,27555,669003
 brewers,Joey Ortiz,Starting Lineup,25493,687401
+brewers,David Hamilton,Starting Lineup,27531,666152
+brewers,Brandon Lockridge,Starting Lineup,21496,663604
 brewers,Gary Sánchez,Projected Bench,11442,596142
-brewers,Jake Bauers,Projected Bench,15194,641343
-brewers,David Hamilton,Projected Bench,27531,666152
-brewers,Brandon Lockridge,Projected Bench,21496,663604
+brewers,Jeferson Quero,Projected Bench,28272,
+brewers,Luis Rengifo,Projected Bench,19858,650859
+brewers,Blake Perkins,Projected Bench,19921,663368
 brewers,Jacob Misiorowski,Projected Starting Rotation,31623,694819
 brewers,Chad Patrick,Projected Starting Rotation,30113,694477
-brewers,Brandon Woodruff,Projected Starting Rotation,16162,605540
-brewers,Kyle Harrison,Projected Starting Rotation,27758,690986
 brewers,Brandon Sproat,Projected Starting Rotation,33850,687075
+brewers,Kyle Harrison,Projected Starting Rotation,27758,690986
+brewers,Brandon Woodruff,Projected Starting Rotation,16162,605540
 brewers,Abner Uribe,Projected Bullpen,25327,682842
 brewers,Trevor Megill,Projected Bullpen,17722,656730
 brewers,Jared Koenig,Projected Bullpen,27517,657649
@@ -544,20 +492,20 @@ brewers,Aaron Ashby,Projected Bullpen,23550,676879
 brewers,Angel Zerpa,Projected Bullpen,22717,672582
 brewers,Grant Anderson,Projected Bullpen,20546,681982
 brewers,DL Hall,Projected Bullpen,22207,669084
-brewers,Easton McGee,Projected Bullpen,22176,668834
-cardinals,JJ Wetherholt,Starting Lineup,sa3025154,802139
-cardinals,Masyn Winn,Starting Lineup,27479,691026
-cardinals,Alec Burleson,Starting Lineup,27615,676475
+brewers,Jake Woodford,Projected Bullpen,18674,663765
+cardinals,JJ Wetherholt,Starting Lineup,34985,
 cardinals,Iván Herrera,Starting Lineup,20599,671056
+cardinals,Alec Burleson,Starting Lineup,27615,676475
+cardinals,Masyn Winn,Starting Lineup,27479,691026
 cardinals,Nolan Gorman,Starting Lineup,22263,669357
 cardinals,Jordan Walker,Starting Lineup,27475,691023
-cardinals,Nelson Velázquez,Starting Lineup,23359,676369
+cardinals,Nathan Church,Starting Lineup,31357,701675
 cardinals,Pedro Pagés,Starting Lineup,25782,686780
 cardinals,Victor Scott II,Starting Lineup,31349,687363
 cardinals,Yohel Pozo,Projected Bench,18848,650968
 cardinals,Ramón Urías,Projected Bench,18795,602104
 cardinals,José Fermín,Projected Bench,21746,665877
-cardinals,Nathan Church,Projected Bench,31357,701675
+cardinals,Thomas Saggese,Projected Bench,27883,695336
 cardinals,Matthew Liberatore,Projected Starting Rotation,22294,669461
 cardinals,Michael McGreevy,Projected Starting Rotation,29869,700241
 cardinals,Dustin May,Projected Starting Rotation,19716,669160
@@ -565,25 +513,25 @@ cardinals,Kyle Leahy,Projected Starting Rotation,24763,681517
 cardinals,Andre Pallante,Projected Starting Rotation,26108,669467
 cardinals,Riley O'Brien,Projected Bullpen,20348,676617
 cardinals,JoJo Romero,Projected Bullpen,19574,668941
-cardinals,Matt Svanson,Projected Bullpen,29629,694335
 cardinals,Ryne Stanek,Projected Bullpen,15947,592773
+cardinals,Matt Svanson,Projected Bullpen,29629,694335
 cardinals,Justin Bruihl,Projected Bullpen,23779,
-cardinals,Matt Pushard,Projected Bullpen,sa3019955,
 cardinals,George Soriano,Projected Bullpen,21863,666277
-cardinals,Gordon Graceffo,Projected Bullpen,29519,700669
+cardinals,Chris Roycroft,Projected Bullpen,31261,
+cardinals,Matt Pushard,Projected Bullpen,31870,
 cubs,Michael Busch,Starting Lineup,26319,683737
 cubs,Alex Bregman,Starting Lineup,17678,608324
 cubs,Ian Happ,Starting Lineup,17919,664023
-cubs,Seiya Suzuki,Starting Lineup,30116,673548
 cubs,Pete Crow-Armstrong,Starting Lineup,27769,691718
 cubs,Nico Hoerner,Starting Lineup,21479,663538
-cubs,Dansby Swanson,Starting Lineup,18314,621020
-cubs,Moisés Ballesteros,Starting Lineup,28820,694208
 cubs,Carson Kelly,Starting Lineup,13620,608348
+cubs,Moisés Ballesteros,Starting Lineup,28820,694208
+cubs,Dansby Swanson,Starting Lineup,18314,621020
+cubs,Michael Conforto,Starting Lineup,16376,624424
 cubs,Miguel Amaya,Projected Bench,21693,665804
+cubs,Scott Kingery,Projected Bench,17975,664068
 cubs,Matt Shaw,Projected Bench,33322,807713
 cubs,Dylan Carlson,Projected Bench,20126,666185
-cubs,Michael Conforto,Projected Bench,16376,624424
 cubs,Matthew Boyd,Projected Starting Rotation,15440,571510
 cubs,Cade Horton,Projected Starting Rotation,31872,690990
 cubs,Shota Imanaga,Projected Starting Rotation,33829,684007
@@ -593,54 +541,54 @@ cubs,Daniel Palencia,Projected Bullpen,27914,694037
 cubs,Phil Maton,Projected Bullpen,18064,664208
 cubs,Hunter Harvey,Projected Bullpen,15507,640451
 cubs,Caleb Thielbar,Projected Bullpen,10078,573204
+cubs,Ben Brown,Projected Bullpen,23590,676962
 cubs,Jacob Webb,Projected Bullpen,19274,657097
 cubs,Hoby Milner,Projected Bullpen,13346,571948
-cubs,Javier Assad,Projected Bullpen,21741,665871
 cubs,Colin Rea,Projected Bullpen,12317,607067
 pirates,Oneil Cruz,Starting Lineup,21711,665833
-pirates,Ryan O'Hearn,Starting Lineup,16442,656811
+pirates,Brandon Lowe,Starting Lineup,18882,664040
 pirates,Bryan Reynolds,Starting Lineup,19326,668804
 pirates,Marcell Ozuna,Starting Lineup,10324,542303
-pirates,Brandon Lowe,Starting Lineup,18882,664040
-pirates,Nick Gonzales,Starting Lineup,27490,693304
-pirates,Spencer Horwitz,Starting Lineup,26477,687462
+pirates,Ryan O'Hearn,Starting Lineup,16442,656811
 pirates,Jared Triolo,Starting Lineup,25807,669707
-pirates,Joey Bart,Starting Lineup,21524,663698
-pirates,Henry Davis,Projected Bench,29617,680779
+pirates,Spencer Horwitz,Starting Lineup,26477,687462
+pirates,Nick Gonzales,Starting Lineup,27490,693304
+pirates,Henry Davis,Starting Lineup,29617,680779
+pirates,Joey Bart,Projected Bench,21524,663698
 pirates,Nick Yorke,Projected Bench,27504,694377
-pirates,Jhostynxon Garcia,Projected Bench,28142,691373
+pirates,Billy Cook,Projected Bench,29573,695257
 pirates,Jake Mangum,Projected Bench,26202,663968
 pirates,Paul Skenes,Projected Starting Rotation,33677,694973
 pirates,Mitch Keller,Projected Starting Rotation,17594,656605
+pirates,Carmen Mlodzinski,Projected Starting Rotation,27572,669387
 pirates,Braxton Ashcraft,Projected Starting Rotation,23793,677952
 pirates,Bubba Chandler,Projected Starting Rotation,29868,696149
-pirates,José Urquidy,Projected Starting Rotation,18413,664353
 pirates,Dennis Santana,Projected Bullpen,17878,642701
 pirates,Gregory Soto,Projected Bullpen,19677,642397
 pirates,Isaac Mattson,Projected Bullpen,20385,676755
 pirates,Justin Lawrence,Projected Bullpen,17639,664875
 pirates,Mason Montgomery,Projected Bullpen,29770,682254
 pirates,Yohan Ramírez,Projected Bullpen,19444,670990
-pirates,Cam Sanders,Projected Bullpen,23479,
-pirates,Carmen Mlodzinski,Projected Bullpen,27572,669387
+pirates,Hunter Barco,Projected Bullpen,33174,682995
+pirates,José Urquidy,Projected Bullpen,18413,664353
 reds,TJ Friedl,Starting Lineup,19522,670770
 reds,Matt McLain,Starting Lineup,29695,680574
 reds,Elly De La Cruz,Starting Lineup,26668,682829
-reds,Eugenio Suárez,Starting Lineup,12552,553993
 reds,Sal Stewart,Starting Lineup,31505,701398
+reds,Eugenio Suárez,Starting Lineup,12552,553993
+reds,Spencer Steer,Starting Lineup,26323,668715
+reds,Will Benson,Starting Lineup,21853,666181
 reds,Tyler Stephenson,Starting Lineup,17988,663886
-reds,JJ Bleday,Starting Lineup,26368,668709
-reds,Noelvi Marte,Starting Lineup,26517,682622
 reds,Ke'Bryan Hayes,Starting Lineup,18577,663647
 reds,Jose Trevino,Projected Bench,16725,624431
-reds,Spencer Steer,Projected Bench,26323,668715
-reds,Will Benson,Projected Bench,21853,666181
+reds,Nathaniel Lowe,Projected Bench,19566,663993
+reds,Noelvi Marte,Projected Bench,26517,682622
 reds,Dane Myers,Projected Bench,22054,667472
 reds,Andrew Abbott,Projected Starting Rotation,29911,671096
-reds,Nick Lodolo,Projected Starting Rotation,26378,666157
 reds,Brady Singer,Projected Starting Rotation,25377,663903
 reds,Rhett Lowder,Projected Starting Rotation,33876,695076
 reds,Chase Burns,Projected Starting Rotation,35333,695505
+reds,Brandon Williamson,Projected Starting Rotation,25463,682227
 reds,Emilio Pagán,Projected Bullpen,14771,641941
 reds,Tony Santillan,Projected Bullpen,19926,663574
 reds,Graham Ashcraft,Projected Bullpen,27552,668933
@@ -648,33 +596,33 @@ reds,Pierce Johnson,Projected Bullpen,13435,572955
 reds,Brock Burke,Projected Bullpen,17968,656271
 reds,Connor Phillips,Projected Bullpen,27649,683175
 reds,Sam Moll,Projected Bullpen,14874,594580
-reds,Brandon Williamson,Projected Bullpen,25463,682227
-diamondbacks,Geraldo Perdomo,Starting Lineup,22799,672695
+reds,Jose Franco,Projected Bullpen,sa3008714,
 diamondbacks,Ketel Marte,Starting Lineup,13613,606466
 diamondbacks,Corbin Carroll,Starting Lineup,25878,682998
+diamondbacks,Geraldo Perdomo,Starting Lineup,22799,672695
 diamondbacks,Gabriel Moreno,Starting Lineup,22664,672515
-diamondbacks,Pavin Smith,Starting Lineup,19892,656976
 diamondbacks,Nolan Arenado,Starting Lineup,9777,571448
-diamondbacks,Carlos Santana,Starting Lineup,2396,467793
-diamondbacks,Jordan Lawlar,Starting Lineup,29976,691783
 diamondbacks,Alek Thomas,Starting Lineup,23792,677950
+diamondbacks,Carlos Santana,Starting Lineup,2396,467793
+diamondbacks,Ildemaro Vargas,Starting Lineup,13324,545121
+diamondbacks,Jordan Lawlar,Starting Lineup,29976,691783
 diamondbacks,James McCann,Projected Bench,12859,543510
+diamondbacks,Jose Fernandez,Projected Bench,sa3015204,
 diamondbacks,Tim Tawa,Projected Bench,29571,694374
-diamondbacks,Ildemaro Vargas,Projected Bench,13324,545121
 diamondbacks,Jorge Barrosa,Projected Bench,23968,
 diamondbacks,Zac Gallen,Projected Starting Rotation,19291,668678
 diamondbacks,Ryne Nelson,Projected Starting Rotation,26253,669194
 diamondbacks,Eduardo Rodriguez,Projected Starting Rotation,13164,593958
-diamondbacks,Brandon Pfaadt,Projected Starting Rotation,27782,694297
 diamondbacks,Michael Soroka,Projected Starting Rotation,18383,647336
+diamondbacks,Brandon Pfaadt,Projected Starting Rotation,27782,694297
 diamondbacks,Paul Sewald,Projected Bullpen,13892,623149
-diamondbacks,Taylor Clarke,Projected Bullpen,17611,664199
 diamondbacks,Jonathan Loáisiga,Projected Bullpen,19753,642528
 diamondbacks,Ryan Thompson,Projected Bullpen,16647,657044
+diamondbacks,Taylor Clarke,Projected Bullpen,17611,664199
 diamondbacks,Kevin Ginkel,Projected Bullpen,19876,656464
-diamondbacks,Philip Abner,Projected Bullpen,33821,
-diamondbacks,Juan Morillo,Projected Bullpen,21924,666661
 diamondbacks,Andrew Hoffmann,Projected Bullpen,29633,694851
+diamondbacks,Juan Morillo,Projected Bullpen,21924,666661
+diamondbacks,Joe Ross,Projected Bullpen,12972,605452
 dodgers,Shohei Ohtani,Starting Lineup,19755,660271
 dodgers,Kyle Tucker,Starting Lineup,18345,663656
 dodgers,Mookie Betts,Starting Lineup,13611,605141
@@ -683,16 +631,16 @@ dodgers,Will Smith,Starting Lineup,19197,669257
 dodgers,Max Muncy,Starting Lineup,13301,571970
 dodgers,Teoscar Hernández,Starting Lineup,13066,606192
 dodgers,Andy Pages,Starting Lineup,24816,681624
-dodgers,Hyeseong Kim,Starting Lineup,35322,808975
+dodgers,Alex Freeland,Starting Lineup,31665,690976
 dodgers,Dalton Rushing,Projected Bench,31382,687221
 dodgers,Miguel Rojas,Projected Bench,7802,500743
 dodgers,Santiago Espinal,Projected Bench,19997,669289
 dodgers,Alex Call,Projected Bench,19296,669743
 dodgers,Yoshinobu Yamamoto,Projected Starting Rotation,33825,808967
-dodgers,Tyler Glasnow,Projected Starting Rotation,14374,607192
-dodgers,Shohei Ohtani,Projected Starting Rotation,19755,660271
 dodgers,Emmet Sheehan,Projected Starting Rotation,29839,686218
+dodgers,Tyler Glasnow,Projected Starting Rotation,14374,607192
 dodgers,Roki Sasaki,Projected Starting Rotation,35323,808963
+dodgers,Shohei Ohtani,Projected Starting Rotation,19755,660271
 dodgers,Edwin Díaz,Projected Bullpen,14710,621242
 dodgers,Tanner Scott,Projected Bullpen,17586,656945
 dodgers,Alex Vesia,Projected Bullpen,25007,681911
@@ -700,83 +648,83 @@ dodgers,Will Klein,Projected Bullpen,27787,
 dodgers,Blake Treinen,Projected Bullpen,12572,595014
 dodgers,Jack Dreyer,Projected Bullpen,30249,676263
 dodgers,Edgardo Henriquez,Projected Bullpen,26944,683618
-dodgers,Justin Wrobleski,Projected Bullpen,31204,680736
 dodgers,Ben Casparius,Projected Bullpen,30085,676508
-giants,Luis Arraez,Starting Lineup,18568,650333
-giants,Rafael Devers,Starting Lineup,17350,646240
+dodgers,Justin Wrobleski,Projected Bullpen,31204,680736
 giants,Willy Adames,Starting Lineup,15986,642715
+giants,Rafael Devers,Starting Lineup,17350,646240
+giants,Heliot Ramos,Starting Lineup,22515,671218
+giants,Luis Arraez,Starting Lineup,18568,650333
 giants,Matt Chapman,Starting Lineup,16505,656305
 giants,Jung Hoo Lee,Starting Lineup,33824,808982
-giants,Heliot Ramos,Starting Lineup,22515,671218
 giants,Harrison Bader,Starting Lineup,18030,664056
-giants,Will Brennan,Starting Lineup,25660,686823
 giants,Patrick Bailey,Starting Lineup,27478,672275
+giants,Casey Schmitt,Starting Lineup,27577,669477
 giants,Daniel Susac,Projected Bench,sa3019997,691740
+giants,Christian Koss,Projected Bench,27653,683766
 giants,Jerar Encarnacion,Projected Bench,21871,666464
-giants,Casey Schmitt,Projected Bench,27577,669477
-giants,Luis Matos,Projected Bench,26467,682641
+giants,Jared Oliva,Projected Bench,19968,666931
 giants,Logan Webb,Projected Starting Rotation,17995,657277
+giants,Adrian Houser,Projected Starting Rotation,12718,605288
 giants,Robbie Ray,Projected Starting Rotation,11486,592662
 giants,Tyler Mahle,Projected Starting Rotation,16358,641816
-giants,Adrian Houser,Projected Starting Rotation,12718,605288
 giants,Landen Roupp,Projected Starting Rotation,30076,694738
 giants,Ryan Walker,Projected Bullpen,20423,676254
-giants,Erik Miller,Projected Bullpen,26252,669062
-giants,José Buttó,Projected Bullpen,23313,676130
-giants,Spencer Bivens,Projected Bullpen,30226,702352
-giants,Matt Gage,Projected Bullpen,17381,657424
-giants,Trevor McDonald,Projected Bullpen,26448,686790
 giants,Keaton Winn,Projected Bullpen,23499,676775
+giants,Erik Miller,Projected Bullpen,26252,669062
+giants,Caleb Kilian,Projected Bullpen,26213,668873
+giants,Matt Gage,Projected Bullpen,17381,657424
+giants,José Buttó,Projected Bullpen,23313,676130
+giants,Ryan Borucki,Projected Bullpen,16350,621366
 giants,JT Brubaker,Projected Bullpen,17578,664141
 padres,Jake Cronenworth,Starting Lineup,18036,630105
 padres,Fernando Tatis Jr.,Starting Lineup,19709,665487
-padres,Jackson Merrill,Starting Lineup,29490,701538
 padres,Manny Machado,Starting Lineup,11493,592518
+padres,Jackson Merrill,Starting Lineup,29490,701538
 padres,Xander Bogaerts,Starting Lineup,12161,593428
 padres,Gavin Sheets,Starting Lineup,19901,657757
 padres,Ramón Laureano,Starting Lineup,17128,657656
-padres,Miguel Andujar,Starting Lineup,15878,609280
+padres,Nick Castellanos,Starting Lineup,11737,592206
 padres,Freddy Fermin,Starting Lineup,21840,666023
 padres,Luis Campusano,Projected Bench,22217,669134
-padres,Nick Castellanos,Projected Bench,11737,592206
 padres,Ty France,Projected Bench,17982,664034
+padres,Miguel Andujar,Projected Bench,15878,609280
 padres,Bryce Johnson,Projected Bench,20002,669369
-padres,Michael King,Projected Starting Rotation,19853,650633
 padres,Nick Pivetta,Projected Starting Rotation,15454,601713
+padres,Michael King,Projected Starting Rotation,19853,650633
 padres,Randy Vásquez,Projected Starting Rotation,24719,681190
-padres,Germán Márquez,Projected Starting Rotation,15038,608566
 padres,Walker Buehler,Projected Starting Rotation,19374,621111
+padres,Germán Márquez,Projected Starting Rotation,15038,608566
 padres,Mason Miller,Projected Bullpen,31757,695243
 padres,Adrian Morejon,Projected Bullpen,20039,670970
-padres,Jeremiah Estrada,Projected Bullpen,22210,669093
-padres,David Morgan,Projected Bullpen,31616,688158
-padres,Wandy Peralta,Projected Bullpen,14295,593974
 padres,Bradgley Rodriguez,Projected Bullpen,29107,699134
+padres,David Morgan,Projected Bullpen,31616,688158
+padres,Jeremiah Estrada,Projected Bullpen,22210,669093
+padres,Wandy Peralta,Projected Bullpen,14295,593974
 padres,Kyle Hart,Projected Bullpen,19646,606996
 padres,Ron Marinaccio,Projected Bullpen,23488,676760
 rockies,Jake McCarthy,Starting Lineup,21622,664983
-rockies,Ezequiel Tovar,Starting Lineup,24064,678662
 rockies,Hunter Goodman,Starting Lineup,29715,696100
-rockies,Mickey Moniak,Starting Lineup,19956,666160
-rockies,Jordan Beck,Starting Lineup,31431,687597
 rockies,Willi Castro,Starting Lineup,17338,650489
+rockies,Ezequiel Tovar,Starting Lineup,24064,678662
+rockies,TJ Rumfield,Starting Lineup,29805,
+rockies,Jordan Beck,Starting Lineup,31431,687597
 rockies,Brenton Doyle,Starting Lineup,25479,686668
-rockies,Troy Johnston,Starting Lineup,26143,687859
+rockies,Kyle Karros,Starting Lineup,33252,691720
 rockies,Edouard Julien,Starting Lineup,27534,666397
+rockies,Brett Sullivan,Projected Bench,18217,664954
 rockies,Braxton Fulford,Projected Bench,29704,690924
-rockies,Kyle Karros,Projected Bench,33252,691720
+rockies,Troy Johnston,Projected Bench,26143,687859
 rockies,Ryan Ritter,Projected Bench,31500,690022
-rockies,Tyler Freeman,Projected Bench,22532,671289
 rockies,Kyle Freeland,Projected Starting Rotation,16256,607536
 rockies,Michael Lorenzen,Projected Starting Rotation,14843,547179
 rockies,Jose Quintana,Projected Starting Rotation,11423,500779
-rockies,Chase Dollander,Projected Starting Rotation,33482,801403
 rockies,Tomoyuki Sugano,Projected Starting Rotation,35321,608372
+rockies,Ryan Feltner,Projected Starting Rotation,21446,663372
 rockies,Victor Vodnik,Projected Bullpen,24614,680767
 rockies,Jimmy Herget,Projected Bullpen,17556,623474
 rockies,Juan Mejia,Projected Bullpen,23237,675848
 rockies,Zach Agnos,Projected Bullpen,31552,688642
 rockies,Brennan Bernardino,Projected Bullpen,16835,657514
-rockies,John Brebbia,Projected Bullpen,12777,605154
-rockies,Keegan Thompson,Projected Bullpen,19795,624522
+rockies,Jaden Hill,Projected Bullpen,30250,677955
+rockies,Chase Dollander,Projected Bullpen,33482,801403
 rockies,Antonio Senzatela,Projected Bullpen,15488,622608
