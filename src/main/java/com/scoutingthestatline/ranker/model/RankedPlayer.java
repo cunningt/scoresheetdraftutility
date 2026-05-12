@@ -12,6 +12,7 @@ public class RankedPlayer {
     private final ADPData adpData;
     private final PitcherList400Data pitcherList400Data;
     private final Top500DynastyData dynastyData;
+    private final RengifoData rengifoData;
     private final boolean onActiveRoster;
     private final String rosterResourceCategory;
     private final boolean drafted;
@@ -20,7 +21,7 @@ public class RankedPlayer {
     public RankedPlayer(int rank, Player player, BattingProjection battingProjection,
                         PitchingProjection pitchingProjection, SavantBattingStats savantBattingStats,
                         SavantPitchingStats savantPitchingStats, ADPData adpData, PitcherList400Data pitcherList400Data,
-                        Top500DynastyData dynastyData, boolean onActiveRoster, String rosterResourceCategory,
+                        Top500DynastyData dynastyData, RengifoData rengifoData, boolean onActiveRoster, String rosterResourceCategory,
                         boolean drafted, String projectionSystem) {
         this.rank = rank;
         this.player = player;
@@ -31,6 +32,7 @@ public class RankedPlayer {
         this.adpData = adpData;
         this.pitcherList400Data = pitcherList400Data;
         this.dynastyData = dynastyData;
+        this.rengifoData = rengifoData;
         this.onActiveRoster = onActiveRoster;
         this.rosterResourceCategory = rosterResourceCategory;
         this.drafted = drafted;
@@ -79,6 +81,14 @@ public class RankedPlayer {
 
     public Top500DynastyData getDynastyData() {
         return dynastyData;
+    }
+
+    public RengifoData getRengifoData() {
+        return rengifoData;
+    }
+
+    public double getRengifoValue() {
+        return rengifoData != null ? rengifoData.value() : 0.0;
     }
 
     public double getAdp() {
@@ -137,6 +147,9 @@ public class RankedPlayer {
         }
         if ("dynasty".equals(projectionSystem)) {
             return dynastyData != null;
+        }
+        if ("rengifo".equals(projectionSystem)) {
+            return rengifoData != null;
         }
         return (player.isPitcher() && pitchingProjection != null) ||
                (!player.isPitcher() && battingProjection != null);

@@ -347,7 +347,7 @@
         <div class="container">
             <div class="header-text">
                 <h1 th:text="${league.name}">League Name</h1>
-                <p class="subtitle" th:text="${selectedProjection == 'savant'} ? 'Undrafted Players - Ranked by Statcast Metrics' : (${selectedProjection == 'adp'} ? 'Undrafted Players - Ranked by NFBC ADP' : (${selectedProjection == 'pitcherlist400'} ? 'Undrafted Players - Ranked by Pitcher List 400' : (${selectedProjection == 'dynasty'} ? 'Undrafted Players - Ranked by Top 500 Dynasty' : 'Undrafted Players - Ranked by Projected WAR')))">Undrafted Players - Ranked by Projected WAR</p>
+                <p class="subtitle" th:text="${selectedProjection == 'savant'} ? 'Undrafted Players - Ranked by Statcast Metrics' : (${selectedProjection == 'adp'} ? 'Undrafted Players - Ranked by NFBC ADP' : (${selectedProjection == 'pitcherlist400'} ? 'Undrafted Players - Ranked by Pitcher List 400' : (${selectedProjection == 'dynasty'} ? 'Undrafted Players - Ranked by Top 500 Dynasty' : (${selectedProjection == 'rengifo'} ? 'Undrafted Players - Ranked by Rengifo Minor League Value' : 'Undrafted Players - Ranked by Projected WAR'))))">Undrafted Players - Ranked by Projected WAR</p>
             </div>
             <div class="header-logo">
                 <img src="/drafty-mcawesome-logo.svg" alt="Scoresheet Drafty McAwesome">
@@ -427,7 +427,7 @@
                             <th class="sortable numeric" data-col="5" data-type="num" style="width: 35px;">Age</th>
                             <th th:if="${selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher'}" class="sortable" data-col="6" data-type="text" style="width: 30px;" title="Throwing Hand">T</th>
                             <th th:if="${activeRosterOnly}" class="sortable" data-col="7" data-type="text" style="width: 80px;" title="Roster Resource Category">RR Cat</th>
-                            <th th:if="${selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="sortable numeric" data-col="7" data-type="num" style="width: 45px;">WAR</th>
+                            <th th:if="${selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="7" data-type="num" style="width: 45px;">WAR</th>
                             <th th:if="${selectedProjection == 'savant'}" class="sortable numeric" data-col="6" data-type="num" style="width: 45px;" title="Barrel% for batters, 100-xERA for pitchers">Rank</th>
                             <!-- ADP columns -->
                             <th th:if="${selectedProjection == 'adp'}" class="sortable numeric" data-col="6" data-type="num" style="width: 50px;" title="Average Draft Position">ADP</th>
@@ -440,21 +440,25 @@
                             <!-- Dynasty columns -->
                             <th th:if="${selectedProjection == 'dynasty'}" class="sortable numeric" data-col="6" data-type="num" style="width: 60px;" title="Top 500 Dynasty Rank">Dyn Rank</th>
                             <th th:if="${selectedProjection == 'dynasty'}" class="sortable" data-col="7" data-type="text" style="width: 60px;" title="Dynasty Position">Dyn Pos</th>
+                            <!-- Rengifo columns -->
+                            <th th:if="${selectedProjection == 'rengifo'}" class="sortable numeric" data-col="6" data-type="num" style="width: 70px;" title="Rengifo Minor League Value">Value</th>
+                            <th th:if="${selectedProjection == 'rengifo'}" class="sortable numeric" data-col="7" data-type="num" style="width: 50px;" title="Age">Age</th>
+                            <th th:if="${selectedProjection == 'rengifo'}" class="sortable numeric" data-col="8" data-type="num" style="width: 50px;" title="Plate Appearances or Innings Pitched">PA/IP</th>
                             <!-- Batting stats - traditional projections (non-pitchers, non-savant) -->
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="7" data-type="num">BB%</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="8" data-type="num">K%</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="9" data-type="num">AVG</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="10" data-type="num">OBP</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="11" data-type="num">SLG</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="12" data-type="num">ISO</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="13" data-type="num">BABIP</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="14" data-type="num">wOBA</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="15" data-type="num">wRC+</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="16" data-type="num">Off</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="sortable numeric" data-col="17" data-type="num">Def</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="7" data-type="num">BB%</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="8" data-type="num">K%</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="9" data-type="num">AVG</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="10" data-type="num">OBP</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="11" data-type="num">SLG</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="12" data-type="num">ISO</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="13" data-type="num">BABIP</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="14" data-type="num">wOBA</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="15" data-type="num">wRC+</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="16" data-type="num">Off</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="17" data-type="num">Def</th>
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="sortable numeric" data-col="18" data-type="num" title="Scoresheet Simulation Value">SS/SIM</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric" title="BA/OBP/SLG adjustment vs RHP" style="font-size: 10px;">vsR</th>
-                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric" title="BA/OBP/SLG adjustment vs LHP" style="font-size: 10px;">vsL</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric" title="BA/OBP/SLG adjustment vs RHP" style="font-size: 10px;">vsR</th>
+                            <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric" title="BA/OBP/SLG adjustment vs LHP" style="font-size: 10px;">vsL</th>
                             <!-- Savant batting stats (non-pitchers, savant projection) -->
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection == 'savant'}" class="sortable numeric" data-col="7" data-type="num" title="Barrel %">Brl%</th>
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection == 'savant'}" class="sortable numeric" data-col="8" data-type="num" title="Average Exit Velocity">AvgEV</th>
@@ -465,15 +469,15 @@
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection == 'savant'}" class="sortable numeric" data-col="13" data-type="num" title="Barrels">Brls</th>
                             <th th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection == 'savant'}" class="sortable numeric" data-col="14" data-type="num" title="Balls hit 95+ mph">EV95+</th>
                             <!-- Pitching stats - traditional projections (P/SR, non-savant) -->
-                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="7" data-type="num">IP</th>
-                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="8" data-type="num">ERA</th>
-                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="9" data-type="num">WHIP</th>
-                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="10" data-type="num">K/9</th>
-                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="11" data-type="num">BB/9</th>
-                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="12" data-type="num">K-BB%</th>
-                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="13" data-type="num">FIP</th>
+                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="7" data-type="num">IP</th>
+                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="8" data-type="num">ERA</th>
+                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="9" data-type="num">WHIP</th>
+                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="10" data-type="num">K/9</th>
+                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="11" data-type="num">BB/9</th>
+                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="12" data-type="num">K-BB%</th>
+                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="13" data-type="num">FIP</th>
                             <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'adp'}" class="sortable numeric" data-col="14" data-type="num" title="Scoresheet Simulation Value">SS/SIM</th>
-                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="sortable numeric" data-col="15" data-type="num">ADP</th>
+                            <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="sortable numeric" data-col="15" data-type="num">ADP</th>
                             <!-- Savant pitching stats (P/SR, savant projection) -->
                             <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection == 'savant'}" class="sortable numeric" data-col="7" data-type="num" title="Expected ERA Percentile">xERA</th>
                             <th th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection == 'savant'}" class="sortable numeric" data-col="8" data-type="num" title="Expected wOBA Percentile">xwOBA</th>
@@ -502,7 +506,7 @@
                                 th:text="${rp.player.handedness != null} ? ${rp.player.handedness} : '-'">R</td>
                             <td th:if="${activeRosterOnly}" class="rr-category"
                                 th:text="${rp.rosterResourceCategory != null} ? ${#strings.replace(#strings.replace(rp.rosterResourceCategory, 'Projected ', ''), 'Starting ', '')} : '-'">Lineup</td>
-                            <td th:if="${selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="war numeric"
+                            <td th:if="${selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400' and selectedProjection != 'rengifo'}" class="war numeric"
                                 th:classappend="${rp.war >= 5} ? 'war-elite' : (${rp.war >= 3} ? 'war-great' : (${rp.war >= 2} ? 'war-good' : (${rp.war >= 1} ? 'war-average' : (${rp.war >= 0} ? 'war-below' : 'war-negative'))))"
                                 th:text="${rp.hasProjection()} ? ${#numbers.formatDecimal(rp.war, 1, 1)} : '-'">2.5</td>
                             <td th:if="${selectedProjection == 'savant'}" class="numeric"
@@ -526,35 +530,42 @@
                                 th:text="${rp.dynastyData != null} ? ${rp.dynastyData.rank} : '-'">1</td>
                             <td th:if="${selectedProjection == 'dynasty'}"
                                 th:text="${rp.dynastyData != null} ? ${rp.dynastyData.position} : '-'">OF</td>
+                            <!-- Rengifo data cells -->
+                            <td th:if="${selectedProjection == 'rengifo'}" class="numeric"
+                                th:text="${rp.rengifoData != null} ? ${#numbers.formatDecimal(rp.rengifoData.value, 1, 2)} : '-'">25.5</td>
+                            <td th:if="${selectedProjection == 'rengifo'}" class="numeric"
+                                th:text="${rp.rengifoData != null} ? ${#numbers.formatDecimal(rp.rengifoData.age, 1, 1)} : '-'">22</td>
+                            <td th:if="${selectedProjection == 'rengifo'}" class="numeric"
+                                th:text="${rp.rengifoData != null} ? ${#numbers.formatDecimal(rp.rengifoData.paOrIp, 1, 0)} : '-'">150</td>
 
                             <!-- Batting stats - traditional projections (non-pitchers, non-savant) -->
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.bbPct * 100, 1, 1)} + '%' : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.kPct * 100, 1, 1)} + '%' : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.avg, 1, 3)} : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.obp, 1, 3)} : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.slg, 1, 3)} : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.iso, 1, 3)} : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.babip, 1, 3)} : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.wOBA, 1, 3)} : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.wRCPlus, 1, 0)} : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.off, 1, 1)} : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.battingProjection.def, 1, 1)} : '-'"></td>
                             <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'adp' and selectedProjection != 'pitcherlist400'}" class="numeric"
                                 th:text="${rp.battingProjection != null} ? ${#numbers.formatDecimal(rp.batterSsSim, 1, 1)} : '-'"></td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric splits"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric splits"
                                 th:text="${rp.player.splitsVsR}">-4/-7/-6</td>
-                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant'}" class="numeric splits"
+                            <td th:if="${selectedPosition != 'P' and selectedPosition != 'SR' and selectedPosition != 'Pitcher' and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric splits"
                                 th:text="${rp.player.splitsVsL}">+9/+15/+14</td>
 
                             <!-- Savant batting stats (non-pitchers, savant projection) -->
@@ -576,23 +587,23 @@
                                 th:text="${rp.savantBattingStats != null} ? ${rp.savantBattingStats.ev95Plus} : '-'"></td>
 
                             <!-- Pitching stats - traditional projections (P/SR, non-savant) -->
-                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.inningsPitched, 1, 0)} : '-'"></td>
-                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.era, 1, 2)} : '-'"></td>
-                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.whip, 1, 2)} : '-'"></td>
-                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.k9, 1, 2)} : '-'"></td>
-                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.bb9, 1, 2)} : '-'"></td>
-                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.kMinusBbPct * 100, 1, 1)} + '%' : '-'"></td>
-                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.fip, 1, 2)} : '-'"></td>
                             <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'adp'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null} ? ${#numbers.formatDecimal(rp.pitchingProjection.ssSim, 1, 1)} : '-'"></td>
-                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant'}" class="numeric"
+                            <td th:if="${(selectedPosition == 'P' or selectedPosition == 'SR' or selectedPosition == 'Pitcher') and selectedProjection != 'savant' and selectedProjection != 'rengifo'}" class="numeric"
                                 th:text="${rp.pitchingProjection != null and rp.pitchingProjection.adp > 0} ? ${#numbers.formatDecimal(rp.pitchingProjection.adp, 1, 0)} : '-'"></td>
 
                             <!-- Savant pitching stats (P/SR, savant projection) -->

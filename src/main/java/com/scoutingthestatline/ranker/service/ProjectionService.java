@@ -9,6 +9,7 @@ import com.scoutingthestatline.ranker.model.ADPData;
 import com.scoutingthestatline.ranker.model.BattingProjection;
 import com.scoutingthestatline.ranker.model.PitcherList400Data;
 import com.scoutingthestatline.ranker.model.PitchingProjection;
+import com.scoutingthestatline.ranker.model.RengifoData;
 import com.scoutingthestatline.ranker.model.SavantBattingStats;
 import com.scoutingthestatline.ranker.model.SavantPitchingStats;
 import jakarta.annotation.PostConstruct;
@@ -29,7 +30,7 @@ public class ProjectionService {
 
     private static final Logger log = LoggerFactory.getLogger(ProjectionService.class);
 
-    private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "oopsy-peak", "steamer", "zips", "spring", "savant", "adp", "pitcherlist400", "dynasty");
+    private static final List<String> PROJECTION_SYSTEMS = List.of("oopsy", "oopsy-peak", "steamer", "zips", "spring", "savant", "adp", "pitcherlist400", "dynasty", "rengifo");
 
     // Map: projection system -> mlbamId -> projection
     private final Map<String, Map<Integer, BattingProjection>> battingProjections = new HashMap<>();
@@ -51,6 +52,13 @@ public class ProjectionService {
     // Active roster players (MLB ID -> section/category)
     private final Map<Integer, String> activeRosterPlayers = new HashMap<>();
 
+    // Rengifo data (keyed by mlbamId)
+    private final Map<Integer, RengifoData> rengifoBattingData = new HashMap<>();
+    private final Map<Integer, RengifoData> rengifoPitchingData = new HashMap<>();
+
+    // Name to MLB ID mapping (for rengifo)
+    private final Map<String, Integer> nameToMlbId = new HashMap<>();
+
     @PostConstruct
     public void loadProjections() throws IOException, CsvException {
         // Load NFBC to MLB ID mapping first (needed for ADP)
@@ -70,11 +78,17 @@ public class ProjectionService {
             } else if ("spring".equals(system)) {
                 loadSpringTrainingBatting();
                 loadSpringTrainingPitching();
+            } else if ("dynasty".equals(system) || "rengifo".equals(system)) {
+                // These are loaded separately - dynasty by Top500DynastyService, rengifo below
             } else {
                 loadBattingProjections(system);
                 loadPitchingProjections(system);
             }
         }
+
+        // Load Rengifo data (must be after loadNfbcMapping which builds nameToMlbId)
+        loadRengifoBattingData();
+        loadRengifoPitchingData();
     }
 
     private String getProjectionFilename(String system, String type) {
@@ -583,9 +597,15 @@ public class ProjectionService {
                 try {
                     int nfbcId = parseIntSafe(getColumn(row, colIndex, "NFBCID"));
                     int mlbId = parseIntSafe(getColumn(row, colIndex, "MLBID"));
+                    String playerName = getColumn(row, colIndex, "PLAYERNAME");
 
                     if (nfbcId > 0 && mlbId > 0) {
                         nfbcToMlbId.put(nfbcId, mlbId);
+                    }
+
+                    // Also build name to MLB ID mapping for rengifo
+                    if (mlbId > 0 && !playerName.isEmpty()) {
+                        nameToMlbId.put(normalizeNameForMatching(playerName), mlbId);
                     }
                 } catch (Exception e) {
                     // Skip invalid rows silently
@@ -593,7 +613,17 @@ public class ProjectionService {
             }
         }
 
-        log.info("Loaded {} NFBC to MLB ID mappings", nfbcToMlbId.size());
+        log.info("Loaded {} NFBC to MLB ID mappings, {} name to MLB ID mappings", nfbcToMlbId.size(), nameToMlbId.size());
+    }
+
+    private String normalizeNameForMatching(String name) {
+        if (name == null) return "";
+        return name.toLowerCase()
+                .replace("á", "a").replace("é", "e").replace("í", "i").replace("ó", "o").replace("ú", "u")
+                .replace("ñ", "n").replace("ü", "u")
+                .replace(".", "").replace("'", "").replace("-", " ")
+                .replaceAll("\\s+", " ")
+                .trim();
     }
 
     private void loadADPData() throws IOException, CsvException {
@@ -809,5 +839,115 @@ public class ProjectionService {
 
     public Optional<PitcherList400Data> getPitcherList400Data(int mlbamId) {
         return Optional.ofNullable(pitcherList400Data.get(mlbamId));
+    }
+
+    public Optional<RengifoData> getRengifoBattingData(int mlbamId) {
+        return Optional.ofNullable(rengifoBattingData.get(mlbamId));
+    }
+
+    public Optional<RengifoData> getRengifoPitchingData(int mlbamId) {
+        return Optional.ofNullable(rengifoPitchingData.get(mlbamId));
+    }
+
+    private void loadRengifoBattingData() throws IOException, CsvException {
+        String filename = "rengifo-batting.csv";
+        Resource resource = new ClassPathResource(filename);
+
+        if (!resource.exists()) {
+            log.warn("Rengifo batting file not found: {}", filename);
+            return;
+        }
+
+        log.info("Loading Rengifo batting data from classpath: {}", filename);
+
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
+            List<String[]> rows = reader.readAll();
+            if (rows.isEmpty()) return;
+
+            String[] header = rows.get(0);
+            Map<String, Integer> colIndex = new HashMap<>();
+            for (int i = 0; i < header.length; i++) {
+                colIndex.put(header[i].replace("\uFEFF", "").trim(), i);
+            }
+
+            int matched = 0;
+            int unmatched = 0;
+            for (int i = 1; i < rows.size(); i++) {
+                String[] row = rows.get(i);
+                try {
+                    String name = getColumn(row, colIndex, "Name");
+                    double value = parseDoubleSafe(getColumn(row, colIndex, "Value"));
+                    double age = parseDoubleSafe(getColumn(row, colIndex, "Age"));
+                    double pa = parseDoubleSafe(getColumn(row, colIndex, "PA"));
+
+                    // Try to find MLB ID by name
+                    Integer mlbId = nameToMlbId.get(normalizeNameForMatching(name));
+                    if (mlbId == null || mlbId == 0) {
+                        log.debug("No MLB ID mapping for Rengifo batter: {}", name);
+                        unmatched++;
+                        continue;
+                    }
+
+                    RengifoData data = new RengifoData(mlbId, name, value, age, pa, "B");
+                    rengifoBattingData.put(mlbId, data);
+                    matched++;
+                } catch (Exception e) {
+                    log.warn("Error parsing Rengifo batting row {}: {}", i, e.getMessage());
+                }
+            }
+            log.info("Loaded {} Rengifo batting entries ({} unmatched)", matched, unmatched);
+        }
+    }
+
+    private void loadRengifoPitchingData() throws IOException, CsvException {
+        String filename = "rengifo-pitching.csv";
+        Resource resource = new ClassPathResource(filename);
+
+        if (!resource.exists()) {
+            log.warn("Rengifo pitching file not found: {}", filename);
+            return;
+        }
+
+        log.info("Loading Rengifo pitching data from classpath: {}", filename);
+
+        try (Reader fileReader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8);
+             CSVReader reader = new CSVReader(fileReader)) {
+            List<String[]> rows = reader.readAll();
+            if (rows.isEmpty()) return;
+
+            String[] header = rows.get(0);
+            Map<String, Integer> colIndex = new HashMap<>();
+            for (int i = 0; i < header.length; i++) {
+                colIndex.put(header[i].replace("\uFEFF", "").trim(), i);
+            }
+
+            int matched = 0;
+            int unmatched = 0;
+            for (int i = 1; i < rows.size(); i++) {
+                String[] row = rows.get(i);
+                try {
+                    String name = getColumn(row, colIndex, "Name");
+                    double value = parseDoubleSafe(getColumn(row, colIndex, "Value"));
+                    double age = parseDoubleSafe(getColumn(row, colIndex, "Age"));
+                    double ip = parseDoubleSafe(getColumn(row, colIndex, "IP"));
+
+                    // Try to find MLB ID by name
+                    Integer mlbId = nameToMlbId.get(normalizeNameForMatching(name));
+                    if (mlbId == null || mlbId == 0) {
+                        log.debug("No MLB ID mapping for Rengifo pitcher: {}", name);
+                        unmatched++;
+                        continue;
+                    }
+
+                    RengifoData data = new RengifoData(mlbId, name, value, age, ip, "P");
+                    rengifoPitchingData.put(mlbId, data);
+                    matched++;
+                } catch (Exception e) {
+                    log.warn("Error parsing Rengifo pitching row {}: {}", i, e.getMessage());
+                }
+            }
+            log.info("Loaded {} Rengifo pitching entries ({} unmatched)", matched, unmatched);
+        }
     }
 }

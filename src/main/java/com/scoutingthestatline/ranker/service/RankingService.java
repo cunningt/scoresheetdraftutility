@@ -7,6 +7,7 @@ import com.scoutingthestatline.ranker.model.PitcherList400Data;
 import com.scoutingthestatline.ranker.model.PitchingProjection;
 import com.scoutingthestatline.ranker.model.Player;
 import com.scoutingthestatline.ranker.model.RankedPlayer;
+import com.scoutingthestatline.ranker.model.RengifoData;
 import com.scoutingthestatline.ranker.model.SavantBattingStats;
 import com.scoutingthestatline.ranker.model.SavantPitchingStats;
 import com.scoutingthestatline.ranker.model.Top500DynastyData;
@@ -101,18 +102,21 @@ public class RankingService {
             SavantPitchingStats savantPitching = null;
             ADPData adpData = null;
             PitcherList400Data pitcherList400Data = null;
+            RengifoData rengifoData = null;
 
             if (player.isPitcher()) {
-                if (!"savant".equals(projectionSystem) && !"adp".equals(projectionSystem) && !"pitcherlist400".equals(projectionSystem)) {
+                if (!"savant".equals(projectionSystem) && !"adp".equals(projectionSystem) && !"pitcherlist400".equals(projectionSystem) && !"rengifo".equals(projectionSystem)) {
                     pitchingProjection = projectionService.getPitchingProjection(projectionSystem, mlbamId).orElse(null);
                 }
                 savantPitching = projectionService.getSavantPitchingStats(mlbamId).orElse(null);
                 pitcherList400Data = projectionService.getPitcherList400Data(mlbamId).orElse(null);
+                rengifoData = projectionService.getRengifoPitchingData(mlbamId).orElse(null);
             } else {
-                if (!"savant".equals(projectionSystem) && !"adp".equals(projectionSystem) && !"pitcherlist400".equals(projectionSystem)) {
+                if (!"savant".equals(projectionSystem) && !"adp".equals(projectionSystem) && !"pitcherlist400".equals(projectionSystem) && !"rengifo".equals(projectionSystem)) {
                     battingProjection = projectionService.getBattingProjection(projectionSystem, mlbamId).orElse(null);
                 }
                 savantBatting = projectionService.getSavantBattingStats(mlbamId).orElse(null);
+                rengifoData = projectionService.getRengifoBattingData(mlbamId).orElse(null);
             }
 
             // Always load ADP data if available
@@ -129,7 +133,7 @@ public class RankingService {
             boolean drafted = !undraftedIds.contains(scoresheetId);
 
             rankedPlayers.add(new RankedPlayer(0, player, battingProjection, pitchingProjection,
-                    savantBatting, savantPitching, adpData, pitcherList400Data, dynastyData, onActiveRoster, rosterResourceCategory, drafted, projectionSystem));
+                    savantBatting, savantPitching, adpData, pitcherList400Data, dynastyData, rengifoData, onActiveRoster, rosterResourceCategory, drafted, projectionSystem));
         }
 
         // Sort by appropriate metric
@@ -153,6 +157,9 @@ public class RankingService {
                 int rankB = b.getDynastyData() != null ? b.getDynastyData().rank() : Integer.MAX_VALUE;
                 return Integer.compare(rankA, rankB);
             });
+        } else if ("rengifo".equals(projectionSystem)) {
+            // For Rengifo: sort by rengifo value descending (higher is better)
+            rankedPlayers.sort((a, b) -> Double.compare(b.getRengifoValue(), a.getRengifoValue()));
         } else {
             // Sort by WAR descending
             rankedPlayers.sort((a, b) -> Double.compare(b.getWar(), a.getWar()));
