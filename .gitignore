@@ -1,6 +1,8 @@
 # secrets
 login.properties
 
+update-projections.sh
+
 target
 
 # Compiled class file
